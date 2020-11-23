@@ -116,7 +116,7 @@
 				}
 			}else{
 				echo '<div class="alert alert-danger" role="alert">';
-				echo '<span class="pull-center "><img src="icons/status/dialog-warning.png"  class="img-reponsive img-rounded"> Usuario o                   Contraseña Incorrecta. O no tiene tiene permisos el entorno ' .$descripcion. '. Reintente Por Favor....';
+				echo '<span class="pull-center "><img src="icons/status/dialog-warning.png"  class="img-reponsive img-rounded"> Usuario o                   Contraseña Incorrecta. O no tiene permisos para el entorno ' .$descripcion. '. Reintente Por Favor....';
 				echo "</div>";
 				echo '<meta http-equiv="refresh" content="5;URL=logout.php "/>';
 				

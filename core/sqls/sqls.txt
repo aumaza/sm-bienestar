@@ -21,6 +21,16 @@ movil varchar(15) not null,
 email varchar(90) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla smb_turnos_gabinete
+create table smb_turnos_gabinete(
+id int(11) auto_increment primary key,
+f_turno date not null,
+especialidad varchar(60) not null,
+hora time not null,
+cliente varchar(90),
+estado enum('Libre','Ocupado') not null,
+solicitud enum('Confirmado','Stand-By','Cancelado') default 'Stand-By'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
