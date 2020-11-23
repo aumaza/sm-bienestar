@@ -1,0 +1,32 @@
+#tabla smb_usuarios
+create table smb_usuarios (
+id int(11) auto_increment primary key, 
+nombre varchar(60) binary not null, 
+user varchar(90) binary not null, 
+password varchar(10) binary not null, 
+email varchar(90) not null, 
+role int(1) default 1 not null,
+entorno set('VP','TG','TE','VE','CA','AD') not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#tabla smb_clientes
+create table smb_clientes(
+id int(11) auto_increment primary key,
+nombre varchar(60) binary not null,
+dni varchar(8) not null,
+direccion varchar(90) not null,
+tel varchar(15) not null,
+movil varchar(15) not null,
+email varchar(90) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+#tabla token
+create table token(
+id int(11) auto_increment primary key,
+usuario varchar(70) binary not null,
+token varchar(25) binary not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -25,6 +25,12 @@
 	<script src="/sm-bienestar/skeleton/js/jquery-3.4.1.min.js"></script>
 	<script src="/sm-bienestar/skeleton/js/bootstrap.min.js"></script>
 	
+	<script>
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+	
   <style>
   body {
     font: 400 15px/1.8 Lato, sans-serif;
@@ -186,14 +192,16 @@
         <li><a href="#promos">PROMOS</a></li>
         <li><a href="#contact">CONTACTO</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MUCHO MAS
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ENTORNOS
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Productos</a></li>
-            <li><a href="#">Turnos Gabinete</a></li>
-            <li><a href="#">Turnos Alquiler Equipos</a></li>
-            <li><a href="#">Venta Equipos</a></li>
-            <li><a href="#">Capacitación</a></li>
+            <li class="active"><a href="core/administracion/" data-toggle="tooltip" title="Entorno Restringido a Admistradores">Administración</a></li>
+            <li class="divider"></li>
+            <li><a href="core/productos/" data-toggle="tooltip" title="Compra de Productos de Belleza">Venta de Productos</a></li>
+            <li><a href="core/gabinete/" data-toggle="tooltip" title="Solicite Turnos para Atenderse en Gabinete">Turnos Gabinete</a></li>
+            <li><a href="core/equipos/#" data-toggle="tooltip" title="Reserve su Equipo por medio de Turnos">Turnos Alquiler Equipos</a></li>
+            <li><a href="core/venta/#" data-toggle="tooltip" title="Compra de Equipos">Venta de Equipos</a></li>
+            <li><a href="core/capacitacion/" data-toggle="tooltip" title="Espacio de Capacitación On-line">Capacitación</a></li>
           </ul>
         </li>
        </ul>

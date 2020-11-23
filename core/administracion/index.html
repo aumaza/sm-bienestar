@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SM Bienestar - Administración</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="../../#"><img class="img-reponsive img-rounded" src="../icons/actions/go-home.png" /> Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center"><br>
+      <p><img src="../../img/logo.png" class="img-rounded" alt="Random Name" width="180" height="50"></p><hr>
+        <h1 class="mt-5">Administración</h1>
+        <p class="lead">Este es el ingreso de los Administradores del Sistema</p>
+        <ul class="list-unstyled">
+          <li><img class="img-reponsive img-rounded" src="../icons/status/task-attention.png" /> Acceso sólo permitido para el Administrador</li>
+         </ul><br><hr>
+         
+          <form action="../form_login.php" method="POST">
+          <input type="hidden" id="entorno" name="entorno" value="AD">
+            <div class="form-group">
+                <label for="email">Usuario:</label>
+                <input type="text" style="text-align:center;" class="form-control" name="usuario" placeholder="ingrese el usuario">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" style="text-align:center;" class="form-control" name="password" placeholder="Ingrese password" id="pwd">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </form> 
+         
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
