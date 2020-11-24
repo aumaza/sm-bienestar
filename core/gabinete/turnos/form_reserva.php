@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>SM Bienestar - Reserva de Turno</title>
+  <title>SM Bienestar - Finaliza Reserva de Turno</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php skeleton(); ?>
@@ -38,7 +38,7 @@
 <div class="container-fluid">
       <div class="row">
       <div class="col-md-12 text-center"><br>
-	<button><span class="glyphicon glyphicon-user"></span> Usuario: <?php echo $nombre; ?></button>
+	<button><span class="glyphicon glyphicon-user"></span> Usuario: <?php echo $nombre ?></button>
 	<?php setlocale(LC_ALL,"es_ES"); ?>
 	<button><span class="glyphicon glyphicon-time"></span> <?php echo "Hora Actual: " . date("H:i"); ?></button>
 	 <?php setlocale(LC_ALL,"es_ES"); ?>
@@ -56,34 +56,29 @@
 
 <div class="panel panel-info" >
   <div class="panel-heading">
-    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/actions/go-jump-today.png"  class="img-reponsive img-rounded"> Reserva de Turno Gabinete</h2>
+    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/actions/go-jump-today.png"  class="img-reponsive img-rounded"> Finaliza Reserva de Turno Gabinete</h2>
   </div>
     <div class="panel-body">
     
     <?php 
-    $id = $_GET['id'];
+    $id = mysqli_real_escape_string($conn,$_POST['id']);
+    $especialidad = mysqli_real_escape_string($conn,$_POST['especialidad']);
+    $nombre = mysqli_real_escape_string($conn,$_POST['cliente']);
+    $estado = 'Ocupado';
+    $solicitud = 'Stand-By';
    
     if($conn){
-	   reservaGabinete($id,$nombre,$conn);
+	   closeReserva($id,$especialidad,$nombre,$estado,$solicitud,$conn);
 	 }else{
 	    mysqli_error($conn);
 	  }
 	  
     
     ?>
-    
-    
-    
-    
-
 </div>
 </div>
 </div>
 </div>
-  
-  
-  
-  
-  
+<meta http-equiv="refresh" content="5;URL=../main/main.php"/>
   </body>
   </html>

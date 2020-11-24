@@ -1,3 +1,27 @@
+#tabla smb_info_gabinete
+create table smb_info_gabinete (
+id int(11) auto_increment primary key, 
+mensaje varchar(240) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla smb_info_productos
+create table smb_info_productos (
+id int(11) auto_increment primary key, 
+mensaje varchar(240) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla smb_info_capacitacion
+create table smb_info_capacitacion (
+id int(11) auto_increment primary key, 
+mensaje varchar(240) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla smb_info_aequipos
+create table smb_info_aequipos (
+id int(11) auto_increment primary key, 
+mensaje varchar(240) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #tabla smb_usuarios
 create table smb_usuarios (
 id int(11) auto_increment primary key, 
@@ -16,20 +40,30 @@ id int(11) auto_increment primary key,
 nombre varchar(60) binary not null,
 dni varchar(8) not null,
 direccion varchar(90) not null,
+direccion1 varchar(90),
+direccion2 varchar(90),
 tel varchar(15) not null,
 movil varchar(15) not null,
-email varchar(90) not null
+email varchar(90) not null,
+avatar varchar(90)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #tabla smb_turnos_gabinete
 create table smb_turnos_gabinete(
 id int(11) auto_increment primary key,
 f_turno date not null,
-especialidad varchar(60) not null,
+especialidad varchar(60),
 hora time not null,
 cliente varchar(90),
 estado enum('Libre','Ocupado') not null,
-solicitud enum('Confirmado','Stand-By','Cancelado') default 'Stand-By'
+solicitud enum('Confirmado','Stand-By','Cancelado')
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#tabla smb_especialidades
+create table smb_especialidades(
+id int(11) auto_increment primary key,
+descripcion varchar(60)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -40,3 +74,14 @@ id int(11) auto_increment primary key,
 usuario varchar(70) binary not null,
 token varchar(25) binary not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#subir csv gabinete
+load data local infile '/var/www/html/sm-bienestar/core/sqls/gabinete2021.csv' 
+into table smb_turnos_gabinete fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(f_turno,hora,estado);
+
+#subir csv especialidades
+load data local infile '/var/www/html/sm-bienestar/core/sqls/especialidades.csv' 
+into table smb_especialidades fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(descripcion);

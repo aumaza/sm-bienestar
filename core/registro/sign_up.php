@@ -80,6 +80,8 @@
   $nombre = mysqli_real_escape_string($conn,$_POST['nombre']);
   $dni = mysqli_real_escape_string($conn,$_POST['dni']);
   $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+  $direccion1 = mysqli_real_escape_string($conn,$_POST['direccion1']);
+  $direccion2 = mysqli_real_escape_string($conn,$_POST['direccion2']);
   $tel = mysqli_real_escape_string($conn,$_POST['tel']);
   $movil = mysqli_real_escape_string($conn,$_POST['movil']);
   $email = mysqli_real_escape_string($conn,$_POST['email']);
@@ -94,7 +96,7 @@
         
         
         addUser($nombre,$password1,$email,$role,$entorno,$conn);
-        addCliente($nombre,$dni,$direccion,$tel,$movil,$email,$conn);
+        addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn);
         
         }else{
         
@@ -161,7 +163,21 @@
                 <div class="form-group">
                 <label for="email">Dirección:</label>
                 <input type="text" class="form-control" id="direccion" placeholder="Ingrese su Dirección" name="direccion" required>
+                </div><hr>             
+                
+                
+                <h1>Para Clientes de Alquiler de Equipos</h1>
+                <p>En caso de tener más de una Dirección, complete las siguientes.</p>
+                
+                <div class="form-group">
+                <label for="email">Dirección (2):</label>
+                <input type="text" class="form-control" id="direccion1" placeholder="Ingrese Dirección Alternativa 2" name="direccion1">
                 </div>
+                
+                <div class="form-group">
+                <label for="email">Dirección (3):</label>
+                <input type="text" class="form-control" id="direccion2" placeholder="Ingrese Dirección Alternativa 3" name="direccion2">
+                </div><hr>
                 
                 <div class="form-group">
                 <label for="email">Tel:</label>

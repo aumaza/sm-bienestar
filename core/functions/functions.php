@@ -42,6 +42,76 @@ function skeleton(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// SECCION ADMINISTRACION DE USUARIOS ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+** funcion formulario de edicion de password de usuario
+*/
+
+function editPassUser($id,$conn){
+
+      $sql = "select * from smb_usuarios where id = '$id'";
+      mysqli_select_db('smb_bienestar');
+      $res = mysqli_query($conn,$sql);
+      $fila = mysqli_fetch_assoc($res);
+      
+
+      echo   '<h2>Cambiar Password</h2><hr>
+	      
+	      <form action="formUpdatePass.php" method="post">
+	      <input type="hidden" id="id" name="id" value="' . $fila['id'].'" />
+   
+         
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	    <input id="text" type="text" class="form-control" value="' . $fila['nombre'].'" name="nombre" value="" onkeyup="this.value=Text(this.value);" readonly required>
+	  </div>
+	
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	    <input id="text" type="text" class="form-control" name="user" onKeyDown="limitText(this,20);" onKeyUp="limitText(this,20);" value="' . $fila['user'].'" readonly required>
+	  </div>
+	  
+	  <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	    <input id="password" type="password" class="form-control" name="pass1" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Password" >
+	  </div>
+	 
+	 <div class="input-group">
+	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	    <input  type="password" class="form-control" name="pass2" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Repita Password" >
+	  </div>
+	  <br>
+	
+	  <button type="submit" class="btn btn-success btn-block" name="A"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded">  Cambiar Password</button>
+	  </form>
+	  <a href="../main/main.php"><button type="button" class="btn btn-primary btn-block"><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
+
+}
+
+/*
+** funcion formulario de edicion de password de usuario
+*/
+function updatePassUser($id,$password1,$conn){
+
+    mysqli_select_db('smb_bienestar');
+	$sqlInsert = "update smb_usuarios set password = '$password1' where id = '$id'";
+    $res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
+		echo "<br>";
+		echo '<div class="alert alert-success" role="alert">';
+		echo 'Password Actualizada Correctamente.  Deberá Ingresar Nuevamente. Aguarde un Instante que será Redireccionado. ';
+		echo "</div>";
+		echo '<meta http-equiv="refresh" content="5;URL=../../logout.php">';
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" role="alert">';
+		echo "Hubo un error al Actualizar el Password!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
+		echo "</div>";
+		echo '<meta http-equiv="refresh" content="5;URL=../main/main.php>';
+	}
+	}
+
 
 /*
 ** funcion para agregar usuarios
@@ -111,14 +181,14 @@ mysqli_select_db('smb_bienestar');
 /*
 ** funcion para agregar clientes
 */
-function addCliente($nombre,$dni,$direccion,$tel,$movil,$email,$conn){
+function addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn){
 
     mysqli_select_db('smb_bienestar');	
 
 	$sql = "INSERT INTO smb_clientes ".
-		"(nombre,dni,direccion,tel,movil,email)".
+		"(nombre,dni,direccion,direccion1,direccion2,tel,movil,email)".
 		"VALUES ".
-      "('$nombre','$dni','$direccion','$tel','$movil','$email')";
+      "('$nombre','$dni','$direccion','$direccion1','$direccion2','$tel','$movil','$email')";
     
     $resp = mysqli_query($conn,$sql);
     
@@ -214,7 +284,7 @@ if($conn){
 			 echo "<td align=center>".$fila['nombre']."</td>";
 			 echo "<td align=center>".$fila['user']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '<a href="../usuarios/editar.php?id='.$fila['id'].'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Cambiar Password</a>';
+			 echo '<a href="../usuarios/edit_password.php?id='.$fila['id'].'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Cambiar Password</a>';
 			 echo "</td>";
 			 $count++;
 		}
@@ -286,6 +356,80 @@ if($conn){
     mysqli_close($conn);
 
 }
+
+/*
+** funcion editar datos de cliente
+*/
+function editCliente($id,$conn){
+
+    $sql = "select * from smb_clientes where id = '$id'";
+    mysqli_select_db('smb_bienestar');
+    $resp = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($resp);
+        
+    echo '<h2>Editar Datos Cliente</h2><hr>
+            
+            <form action="../usuarios/form_update.php" method="POST">
+            <input type="hidden" class="form-control" id="id" name="id" value="'.$id.'">
+            
+                <div class="form-group">
+                <label for="email">Nombre y Apellido:</label>
+                <input type="text" class="form-control" id="nombre" value="'.$row['nombre'].'" name="nombre" readonly required>
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">DNI:</label>
+                <input type="text" class="form-control" id="dni" value="'.$row['dni'].'" name="dni" readonly required>
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" value="'.$row['direccion'].'" name="direccion" required>
+                </div>
+                
+                <h1>Para Clientes de Alquiler de Equipos</h1>
+                <p>En caso de tener más de una Dirección, complete las siguientes.</p>
+                
+                
+                <div class="form-group">
+                <label for="pwd">Dirección (2):</label>
+                <input type="text" class="form-control" id="direccion1" value="'.$row['direccion1'].'" name="direccion1">
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Dirección (3):</label>
+                <input type="text" class="form-control" id="direccion2" value="'.$row['direccion2'].'" name="direccion2">
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Teléfono:</label>
+                <input type="text" class="form-control" id="tel" value="'.$row['tel'].'" name="tel" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Móvil:</label>
+                <input type="text" class="form-control" id="movil" value="'.$row['movil'].'" name="movil" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Email:</label>
+                <input type="email" class="form-control" id="email" value="'.$row['email'].'" name="email" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success btn-block"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>
+            </form>
+            <a href="../main/main.php"><button type="button" class="btn btn-primary btn-block"><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
+
+
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// FIN SECCION ADMINISTRACION DE USUARIOS ////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// SECCION REGENERACION PASSWORD ///////////////////////////////////
@@ -406,7 +550,9 @@ function resetPass($conn,$usuario){
   }
    
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// FIN SECCION GENERACION PASSWORD////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,13 +572,13 @@ if($conn){
 	$count = 0;
 	echo '<div class="panel panel-success" >
 	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> Turnos Disponibles';
-	echo '</div><br>';
+	echo '</div><br>
+            <p><strong>Nota:</strong> Aquí se encuentran todos los turnos disponibles, aquellos que aparecen en color Rojo sobre la fecha, significa que ya fueron tomados, si desea tomar un turno, presione el botón <strong>Reservar</strong> y podrá tramitar dicho turno</p><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
 		    <th class='text-nowrap text-center'>Fecha</th>
-            <th class='text-nowrap text-center'>Especialidad</th>
             <th class='text-nowrap text-center'>Hora</th>
             <th>&nbsp;</th>
             </thead>";
@@ -447,11 +593,10 @@ if($conn){
 			 }else{
 			 echo "<td align=center>".$fila['f_turno']."</td>";
 			 }
-			 echo "<td align=center>".$fila['especialidad']."</td>";
 			 echo "<td align=center>".$fila['hora']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 if($fila['estado'] == 'Libre'){
-			 echo '<a href="../turnos/reservar.php?id='.$fila['id'].'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span> Reservar</a>';
+			 echo '<a href="../turnos/reservar.php?id='.$fila['id'].'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Reservar</a>';
 			 }
 			 echo "</td>";
 			 $count++;
@@ -468,6 +613,185 @@ if($conn){
 
 }
 
+
+/*
+** funcion ver turnos reservados (entorno de usuario)
+*/
+function userTurnos($nombre,$conn){
+
+if($conn){
+	
+	$sql = "SELECT * FROM smb_turnos_gabinete where cliente = '$nombre'";
+    	mysqli_select_db('smb_bienestar');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="panel panel-success" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/documentation.png"  class="img-reponsive img-rounded"> Turnos Reservados';
+	echo '</div><br>
+            <p><strong>Nota: </strong> Todos los turnos que haya solicitado apareceran con estado <strong>Stand-By</strong> por defecto en color Amarillo, cuando el Centro de Estética confirme su solicitud aparecerá como <strong>Confirmado</strong> y en color verde, si lo cancelacen aparecerá con color Rojo</p>
+            <p>En caso de cancelar un turno, por favor hágalo con 48 hs de antelación. Muchas Gracias.</p><hr>';
+
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Fecha</th>
+            <th class='text-nowrap text-center'>Hora</th>
+            <th class='text-nowrap text-center'>Especialidad</th>
+            <th class='text-nowrap text-center'>Solicitud</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+			 if($fila['solicitud'] == 'Stand-By'){
+			 echo '<td align=center style="background-color:yellow"><font color="black">'.$fila['f_turno'].'</font></td>';
+			 }
+			 if($fila['solicitud'] == 'Confirmado'){
+			 echo '<td align=center style="background-color:green"><font color="white">'.$fila['f_turno'].'</font></td>';
+			 }
+			 if($fila['solicitud'] == 'Cancelado'){
+			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
+			 }
+			 echo "<td align=center>".$fila['hora']."</td>";
+			 echo "<td align=center>".$fila['especialidad']."</td>";
+			 echo "<td align=center>".$fila['solicitud']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 if($fila['estado'] == 'Ocupado'){
+			 echo '<a data-toggle="modal" data-target="#myModal" href="#" data-id="'.$fila['id'].'" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar Reserva</button></a>';
+            }
+			 echo "</td>";
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+
+}
+
+
+
+/*
+** funcion formulario de solicutd turno
+*/
+function reservaGabinete($id,$nombre,$conn){
+
+$sql = "select * from smb_turnos_gabinete where id = '$id'";
+mysqli_select_db('smb_bienestar');
+$resp = mysqli_query($conn,$sql);
+while($row = mysqli_fetch_array($resp)){
+    $hora = $row['hora'];
+    $fecha = $row['f_turno'];
+}
+
+ echo '<form action="form_reserva.php" method="POST">
+        <input type="hidden" class="form-control" id="id" name="id" value="'.$id.'">
+  
+  <div class="form-group">
+    <label for="f_turno">Fecha Turno:</label>
+    <input type="date" class="form-control" id="f_turno" value="'.$fecha.'" readonly required>
+  </div>
+  
+         <div class="form-group">
+		  <label for="sel1">Especialidad</label>
+		  <select class="form-control" name="especialidad" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+
+		      $query = "SELECT * FROM smb_especialidades";
+		      mysqli_select_db('smb_bienestar');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res)
+		      {
+			
+			  while ($valores = mysqli_fetch_array($res))
+			    {
+				echo '<option value="'.$valores[descripcion].'">'.$valores[descripcion].'</option>';
+			    }
+			}
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div>
+  
+  <div class="form-group">
+    <label for="hora">Hora:</label>
+    <input type="time" class="form-control" id="hora" name="hora" value="'.$hora.'" readonly required>
+  </div>
+  
+  <div class="form-group">
+    <label for="cliente">Cliente:</label>
+    <input type="text" class="form-control" id="cliente" name="cliente" value="'.$nombre.'" readonly required>
+  </div>
+  
+  <button type="submit" class="btn btn-success btn-block" ><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
+</form>
+<a href="../main/main.php"><button class="btn btn-primary btn-block" ><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
+
+}
+
+/*
+** Funcion finaliza la reserva de turno en gabinete
+*/
+function closeReserva($id,$especialidad,$nombre,$estado,$solicitud,$conn){
+
+    mysqli_select_db('smb_bienestar');
+	$sqlInsert = "update smb_turnos_gabinete set especialidad = '$especialidad', cliente = '$nombre', estado = '$estado', solicitud = '$solicitud' where id = '$id'";
+           
+	$res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
+		echo "<br>";
+		echo '<div class="alert alert-success" role="alert">';
+		echo 'Turno Solicitado Exitosamente. Aguarde un Instante que será Redireccionado';
+		echo "</div>";	
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" role="alert">';
+		echo "Hubo un error al Solicitar Turno!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
+		echo "</div>";
+	}
+}
+
+/*
+** funcion cancelar turno por parte del usuario
+*/
+function cancelReserva($id,$estado,$conn){
+    
+    mysqli_select_db('smb_bienestar');
+	$sqlInsert = "update smb_turnos_gabinete set cliente = '', estado = '$estado' where id = '$id'";
+           
+	$res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
+		echo "<br>";
+		echo '<div class="alert alert-success" role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Ha Cancelado su Turno';
+		echo "</div>";	
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" role="alert">';
+		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al Cancelar Turno!.' .mysqli_error($conn);
+		echo "</div>";
+	}
+
+
+}
 
 
 

@@ -22,9 +22,15 @@
 	echo '<a href="../../logout.php"><br><br><button type="submit" class="btn btn-primary">Aceptar</button></a>';	
 	die();
 	}
+	
+	$qry = "select * from smb_info_gabinete";
+	mysqli_select_db('smb_bienestar');
+	$resp = mysqli_query($conn,$qry);
+	while($fila = mysqli_fetch_array($resp)){
+            $mensaje = $fila['mensaje'];
+	}
+	
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -64,6 +70,10 @@
   });
   </script>
   <!-- END Data Table Script -->
+  
+  
+  
+ 
   
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
@@ -136,11 +146,11 @@
         
       <div class="alert alert-info"> 
       <h4><img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información</h4>
-      </div><hr>
+      </div>
       
-      <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
-      <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span></h5><br>
-      <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><hr>
+      <h5></span> <?php setlocale(LC_ALL,"es_ES"); ?>
+	<button><span class="glyphicon glyphicon-calendar"></span> <?php echo "Fecha Actual: ". strftime("%d de %b de %Y"); ?> </button></h5><hr>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/irc-voice.png" /> <?php echo $mensaje; ?></p><hr>
       
       <?php
             
@@ -149,12 +159,21 @@
       if(isset($_POST['A'])){
         gabineteTurnos($conn);
       }
+      if(isset($_POST['B'])){
+        userTurnos($nombre,$conn);
+      }
       if(isset($_POST['C'])){
         loadUserBio($conn,$nombre);
       }
       if(isset($_POST['D'])){
         loadUserPass($conn,$nombre);
       }
+      
+      if(isset($_POST['cancel'])){
+        $id = mysqli_real_escape_string($conn,$_POST['bookId']);
+        $estado = 'Libre';
+        cancelReserva($id,$estado,$conn);
+       }
       
       
       }else{
@@ -173,6 +192,52 @@
 <footer class="container-fluid">
   <p>Footer Text</p>
 </footer>
+
+<script>
+  $(document).ready(function(e) {
+  $('#myModal').on('show.bs.modal', function(e) {
+    var id = $(e.relatedTarget).data().id;
+    $(e.currentTarget).find('#bookId').val(id);
+  });
+});
+  </script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Desea cancelar Turno?</h4>
+      </div>
+      <div class="modal-body">
+    
+        
+        <form action="main.php" method="POST">
+        <input type="hidden" class="form-control" name="bookId" id="bookId" value="bookId">
+               
+         
+  <button type="submit" class="btn btn-success btn-block" name="cancel"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
+</form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- end Modal -->
+
+
+    
+
+
+
+
 
 </body>
 </html>
