@@ -210,6 +210,31 @@ function addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,
     
 }
 
+/*
+** funcion formulario de edicion de datos de cliente
+*/
+function updateCliente($id,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn){
+
+    mysqli_select_db('smb_bienestar');
+	$sqlInsert = "update smb_clientes set direccion = '$direccion', direccion1 = '$direccion1', direccion2 = '$direccion2', tel = '$tel', movil = '$movil', email = '$email' where id = '$id'";
+    $res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
+		echo "<br>";
+		echo '<div class="alert alert-success" role="alert">';
+		echo 'Cliente Actualizado Correctamente. Aguarde un Instante que será Redireccionado. ';
+		echo "</div>";
+		echo '<meta http-equiv="refresh" content="5;URL=../main/main.php">';
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" role="alert">';
+		echo "Hubo un error al Actualizar el Cliente!. Aguarde un Instante que será Redireccionado" .mysqli_error($conn);
+		echo "</div>";
+		echo '<meta http-equiv="refresh" content="5;URL=../main/main.php>';
+	}
+	}
+
 
 /*
 * Funcion para cambiar los permisos de los usuarios al sistema
@@ -369,7 +394,7 @@ function editCliente($id,$conn){
         
     echo '<h2>Editar Datos Cliente</h2><hr>
             
-            <form action="../usuarios/form_update.php" method="POST">
+            <form action="../usuarios/form_update_cliente.php" method="POST">
             <input type="hidden" class="form-control" id="id" name="id" value="'.$id.'">
             
                 <div class="form-group">
