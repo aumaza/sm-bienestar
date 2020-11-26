@@ -6,16 +6,15 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
-	mysqli_select_db($conn,$dbase);
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
+	mysqli_select_db($conn,'smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
 	      $nombre = $row['nombre'];
 	}
 	
 	$consulta = "select * from smb_clientes where nombre = '$nombre'";
-	mysqli_select_db($conn,$dbase);
+	mysqli_select_db($conn,'smb_bienestar');
 	$retval = mysqli_query($conn,$consulta);
 	while($row = mysqli_fetch_array($retval)){
 	      $avatar = $row['avatar'];
@@ -31,29 +30,12 @@
 	die();
 	}
 	
-	$qry = "select * from smb_info_gabinete";
-	mysqli_select_db($conn,$dbase);
+	$qry = "select * from smb_info_aequipos";
+	mysqli_select_db($conn,'smb_bienestar');
 	$resp = mysqli_query($conn,$qry);
 	while($fila = mysqli_fetch_array($resp)){
             $mensaje = $fila['mensaje'];
 	}
-	
-	
-        if($entorno == 'VP'){
-            $descripcion = "Venta de Productos";
-       }
-       if($entorno == 'TG'){
-            $descripcion = "Turnos Gabinete";
-       }
-       if($entorno == 'TE'){
-            $descripcion = "Alquiler de Equipos";
-       }
-       if($entorno == 'VE'){
-            $descripcion = "Venta de Equipos";
-       }
-       if($entorno == 'CA'){
-            $descripcion = "Capacitación";
-       }
 	
 	
 	
@@ -62,7 +44,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>SM Bienestar - Gabinete</title>
+  <title>SM Bienestar - Alquiler de Equipos</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php skeleton(); ?>
@@ -146,8 +128,7 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
     <hr><div class="alert alert-success">
-      <br><h4 align="left"><strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
-      <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
+      <br><h4 align="left" <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
       </div><hr>
        <div class="panel-group">
         <div class="panel panel-default">
@@ -170,8 +151,6 @@
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li>
-                
-                <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button></a></li>
             <form>
             </ul>
             <div class="panel-footer panel-custom">
@@ -184,7 +163,7 @@
 
     <div class="col-sm-9">
       <hr><div class="alert alert-success">
-        <h4 align="center"><a href="main.php"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> <strong>Turnos Gabinete</strong></a></h4>
+        <h4 align="center"><a href="main.php"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> <strong>Turnos Alquiler de Equipos</strong></a></h4>
         </div><hr>
         
       <div class="alert alert-info"> 
@@ -218,18 +197,11 @@
       if(isset($_POST['submit'])){
          uploadFileAvatar($nombre,$conn);
       }
-      if(isset($_POST['F'])){
-        formModulos($entorno,$descripcion,$nombre,$conn);
-      }
       
       if(isset($_POST['cancel'])){
         $id = mysqli_real_escape_string($conn,$_POST['bookId']);
         $estado = 'Libre';
         cancelReserva($id,$estado,$conn);
-       }
-       if(isset($_POST['modulo'])){
-        $modulo = mysqli_real_escape_string($conn,$_POST['valor']);
-        addModulo($modulo,$nombre,$conn);
        }
       
       

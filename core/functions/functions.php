@@ -9,9 +9,6 @@ function skeleton(){
   echo '<link rel="stylesheet" href="/sm-bienestar/skeleton/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/bootstrap-theme.css" >
 	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/bootstrap-theme.min.css" >
-	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/scrolling-nav.css" >
-	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/fontawesome.css">
-	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/fontawesome.min.css" >
 	<link rel="stylesheet" href="/sm-bienestar/skeleton/css/jquery.dataTables.min.css" >
 	<link rel="stylesheet" href="/sm-bienestar/skeleton/Chart.js/Chart.min.css" >
 	<link rel="stylesheet" href="/sm-bienestar/skeleton/Chart.js/Chart.css" >
@@ -21,8 +18,8 @@ function skeleton(){
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="/sm-bienestar/skeleton/js/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/sm-bienestar/skeleton/js/jquery-3.4.1.min.js"></script>
 	<script src="/sm-bienestar/skeleton/js/bootstrap.min.js"></script>
 	
 	<script src="/sm-bienestar/skeleton/js/jquery.dataTables.min.js"></script>
@@ -30,7 +27,6 @@ function skeleton(){
 	<script src="/sm-bienestar/skeleton/js/dataTables.select.min.js"></script>
 	<script src="/sm-bienestar/skeleton/js/dataTables.buttons.min.js"></script>
 	
-	<script src="/sm-bienestar/js/scrolling-nav.js"></script>
 	<script src="/sm-bienestar/skeleton/Chart.js/Chart.min.js"></script>
 	<script src="/sm-bienestar/skeleton/Chart.js/Chart.bundle.min.js"></script>
 	<script src="/sm-bienestar/skeleton/Chart.js/Chart.bundle.js"></script>
@@ -92,7 +88,7 @@ function editPassUser($id,$conn){
 */
 function updatePassUser($id,$password1,$conn){
 
-    mysqli_select_db('smb_bienestar');
+    mysqli_select_db($conn,'smb_bienestar');
 	$sqlInsert = "update smb_usuarios set password = '$password1' where id = '$id'";
     $res = mysqli_query($conn,$sqlInsert);
 
@@ -118,7 +114,7 @@ function updatePassUser($id,$password1,$conn){
 */
 function addUser($nombre,$password1,$email,$role,$entorno,$conn){
 
-mysqli_select_db('smb_bienestar');	
+mysqli_select_db($conn,'smb_bienestar');	
 
 	$sql = "INSERT INTO smb_usuarios ".
 		"(nombre,user,email,password,role,entorno)".
@@ -183,7 +179,7 @@ mysqli_select_db('smb_bienestar');
 */
 function addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn){
 
-    mysqli_select_db('smb_bienestar');	
+    mysqli_select_db($conn,'smb_bienestar');	
 
 	$sql = "INSERT INTO smb_clientes ".
 		"(nombre,dni,direccion,direccion1,direccion2,tel,movil,email)".
@@ -215,7 +211,7 @@ function addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,
 */
 function updateCliente($id,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn){
 
-    mysqli_select_db('smb_bienestar');
+    mysqli_select_db($conn,'smb_bienestar');
 	$sqlInsert = "update smb_clientes set direccion = '$direccion', direccion1 = '$direccion1', direccion2 = '$direccion2', tel = '$tel', movil = '$movil', email = '$email' where id = '$id'";
     $res = mysqli_query($conn,$sqlInsert);
 
@@ -234,6 +230,194 @@ function updateCliente($id,$direccion,$direccion1,$direccion2,$tel,$movil,$email
 		echo '<meta http-equiv="refresh" content="5;URL=../main/main.php>';
 	}
 	}
+
+/*
+* Funcion para cambiar avatar de usuario
+*/
+function uploadAvatar(){
+
+    echo '<div class="panel panel-success" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir Archivo';
+	echo '</div><br>';
+	           
+                          
+	echo '
+	  <div class="container">
+	    <div class="row">
+	      <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong>Seleccione el Archivo a Subir:</strong><br>
+                <form action="#" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file"><br>
+                <button type="submit" name="submit"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
+                </form>
+                </div>
+            </div>
+	      </div>  
+	    </div>
+	  </div>';
+}
+
+function uploadFileAvatar($nombre,$conn){
+
+// File upload path
+$targetDir = '../../avatar/';
+$fileName = basename($_FILES["file"]["name"]);
+$targetFilePath = $targetDir . $fileName;
+$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+//$destinationPath = '../../avatar/';
+
+if(!empty($_FILES["file"]["name"])){
+    // Allow certain file formats
+    $allowTypes = array('jpg','png','jpeg','gif');
+    
+    if(in_array($fileType, $allowTypes)){
+    
+        // Upload file to server
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+           
+            
+            // Insert image file name into database
+           
+           $sqlInsert = "UPDATE smb_usuarios set avatar = '$targetFilePath' where nombre = '$nombre'";
+			   mysqli_select_db($conn,'smb_bienestar');
+			  $insert = mysqli_query($conn,$sqlInsert);
+           
+           
+            if($insert){
+            
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Base de Datos Actualizada. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
+                          echo "</div><hr>";
+                          //copy($fileName, "$destinationPath/$fileName");
+                          //unlink($fileName);
+                          //echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          
+                                           
+            }else{
+		  
+			  echo '<div class="alert alert-success" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
+                          echo "</div><hr>";
+                          //echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                         
+                
+            } 
+        }else{
+			  echo '<div class="alert alert-warning" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo.</strong>';
+                          echo "</div><hr>";
+                          //echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          
+        }
+    }else{
+			  echo '<div class="alert alert-danger" role="alert">';
+			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: JPG, PNG, BMP, GIF son soportados.</strong>';
+			  echo "</div><hr>";
+                          //cho '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                        
+    }
+}else{
+			  echo '<div class="alert alert-info" role="alert">';
+                          echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
+                          echo "</div><hr>";
+                         // echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          
+}
+}
+
+/*
+* Funcion formulario para agregar modulos de sistema al usuario
+*/
+function formModulos($entorno,$descripcion,$nombre,$conn){
+
+    $sql = "select entorno as entornos from smb_usuarios where nombre = '$nombre'";
+    mysqli_select_db($conn,'smb_bienestar');
+    $resp = mysqli_query($conn,$sql);
+    while($fila = mysqli_fetch_array($resp)){
+            $entornos = $fila['entornos'];
+    }
+
+    echo '<div class="container">
+            <div class="row">
+            <div class="col-sm-8">
+            
+            <div class="panel panel-success">
+            <div class="panel-heading"><img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Suscribirse a Modulo</div>
+            <div class="panel-body">
+            <form action="main.php" method="POST">
+            
+            <div class="form-group">
+                <label for="email">Usted está conectado ahora al Módulo:</label>
+                <input type="text" class="form-control" id="email" value="'.$entorno.' '.$descripcion.'" readonly>
+            </div><hr>
+            
+            <p><strong>Además ya está suscripto en los Módulos:</strong> '.$entornos.'</p><hr>
+            
+            
+            <p><strong>Seleccione el Módulo al que desea sumarse</strong></p><hr>
+             <div class="form-group">
+                <label for="sel1">Módulo:</label>
+                <select class="form-control" id="modulo" name="valor" required>
+                    <option value="" disabled selected>Seleccionar</option>';
+                    if($entorno != "VP"){
+                    echo '<option value="VP">VP - Venta de Productos</option>';
+                    }
+                    if($entorno != "TG"){
+                    echo '<option value="TG">TG - Turnos Gabinete</option>';
+                    }
+                    if($entorno != "TE"){
+                    echo '<option value="TE">TE - Alquiler de Equipos</option>';
+                    }
+                    if($entorno != "VE"){
+                    echo '<option value="VE">VE - Venta de Equipos</option>';
+                    }
+                    if($entorno != "CA"){
+                    echo '<option value="CA">CA - Capacitación</option>';
+                    }
+                echo '</select>
+                </div> 
+            <button type="submit" class="btn btn-success btn-block" name="modulo">Aceptar</button>
+            </form>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            </div>';
+}
+
+/*
+* Funcion agregar modulo al usuario
+*/
+function addModulo($modulo,$nombre,$conn){
+
+        mysqli_select_db($conn,'smb_bienestar');
+        
+	$sql = "update smb_usuarios set entorno = CONCAT(entorno,',$modulo') where nombre = '$nombre'";
+    
+    $resp = mysqli_query($conn,$sql);
+    
+    if($resp){
+            echo "<br>";
+		    echo '<div class="container">';
+		    echo '<div class="alert alert-success" role="alert">';
+		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Módulo Agregado Satisfactoriamente.';
+		    echo "</div>";
+		    echo "</div>";
+    }else{
+			    echo "<br>";
+			    echo '<div class="container">';
+			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al agregar el Modulo.'  .mysqli_error($conn);
+			    echo "</div>";
+			    echo "</div>";
+		    }
+
+}
+
+
 
 
 /*

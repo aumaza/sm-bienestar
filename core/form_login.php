@@ -29,9 +29,25 @@
 	
       if($conn){
 	        
-	mysqli_select_db('smb_bienestar');
+	mysqli_select_db($conn,$dbase);
 	
-	$sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and role = 1 and entorno = '$entorno'";
+	if($entorno == 'VP'){
+            $sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and find_in_set('$entorno', entorno)>0"; 
+       }
+       if($entorno == 'TG'){
+            $sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and find_in_set('$entorno', entorno)>0"; 
+       }
+       if($entorno == 'TE'){
+            $sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and find_in_set('$entorno', entorno)>0"; 
+       }
+       if($entorno == 'VE'){
+            $sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and find_in_set('$entorno', entorno)>0"; 
+       }
+       if($entorno == 'CA'){
+            $sql = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and find_in_set('$entorno', entorno)>0"; 
+       }
+	
+	
 	$q = mysqli_query($conn,$sql);
 	
 	$query = "SELECT * FROM smb_usuarios where user = '$usuario' and password = '$password' and role = 0";
