@@ -169,7 +169,7 @@
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
                 
-                <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li>
+<!--                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li> -->
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button></a></li>
             <form>

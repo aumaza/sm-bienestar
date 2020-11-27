@@ -1002,7 +1002,447 @@ function cancelReserva($id,$estado,$conn){
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// FIN SECCION TURNOS GABINETE ///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// SECCION TURNOS EQUIPOS /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+** funcion ver turnos disponibles EQUIPOS(entorno de usuario)
+*/
+function equiposTurnos($conn){
+
+if($conn){
+	
+	$sql = "SELECT * FROM smb_turnos_equipos where estado = 'Ocupado'";
+    	mysqli_select_db($conn,'smb_bienestar');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="panel panel-success" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> EQUIPOS - Turnos Tomados';
+	echo '</div><br>
+            <p><strong>Nota:</strong> Aquí se encuentran todos los equipos que han sido tomados, aquellos que aparecen en color Rojo sobre la fecha, significa que ya fueron tomados, si desea tomar un turno, presione el botón <strong>Reservar</strong> y podrá tramitar dicho turno</p><hr>';
+
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Fecha</th>
+		    <th class='text-nowrap text-center'>Equipo</th>
+            <th class='text-nowrap text-center'>Hora Desde</th>
+            <th class='text-nowrap text-center'>Hora Hasta</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+			 if($fila['estado'] == 'Ocupado'){
+			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
+			 }else{
+			 echo "<td align=center>".$fila['f_turno']."</td>";
+			 }
+			 echo "<td align=center>".$fila['equipo']."</td>";
+			 echo "<td align=center>".$fila['hora_desde']."</td>";
+			 echo "<td align=center>".$fila['hora_hasta']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo "</td>";
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<form <action="main.php" method="POST">
+		<button type="submit" class="btn btn-success" name="reservar"><img src="../../icons/actions/flag-blue.png"  class="img-reponsive img-rounded"> Reservar</button><br>  
+        </form>';
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+
+}
+
+
+/*
+** funcion ver turnos solicitados por usuario EQUIPOS(entorno de usuario)
+*/
+function equiposTurnosUser($nombre,$conn){
+
+if($conn){
+	
+	$sql = "SELECT * FROM smb_turnos_equipos where cliente = '$nombre'";
+    	mysqli_select_db($conn,'smb_bienestar');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="panel panel-success" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> EQUIPOS - Mis Turnos Reservados';
+	echo '</div><br>
+            <p><strong>Nota:</strong> Aquí se encuentran todos los equipos que usted ha reservado para alquiler, aquellos que aparecen en color Rojo sobre la fecha, significa que fueron Cancelados, en color verde Confirmados y en color Amarillo están en estado Stand-By a la espera de confirmación de parte del administrador</p><hr>';
+
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Fecha</th>
+		    <th class='text-nowrap text-center'>Equipo</th>
+            <th class='text-nowrap text-center'>Hora Desde</th>
+            <th class='text-nowrap text-center'>Hora Hasta</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+			 if($fila['solicitud'] == 'Stand-By'){
+			 echo '<td align=center style="background-color:yellow"><font color="black">'.$fila['f_turno'].'</font></td>';
+			 }
+			 if($fila['solicitud'] == 'Confirmado'){
+			 echo '<td align=center style="background-color:green"><font color="black">'.$fila['f_turno'].'</font></td>';
+			 }
+			 if($fila['solicitud'] == 'Cancelado'){
+			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
+			 }
+			 echo "<td align=center>".$fila['equipo']."</td>";
+			 echo "<td align=center>".$fila['hora_desde']."</td>";
+			 echo "<td align=center>".$fila['hora_hasta']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '<a data-toggle="modal" data-target="#myModal" href="#" data-id="'.$fila['id'].'" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar Reserva</button></a>';
+			 echo "</td>";
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+
+}
+
+/*
+** funcion formulario de solicutd turno equipos
+*/
+function formReservaEquipo($nombre,$conn){
+
+$sql = "select * from smb_clientes where nombre = '$nombre'";
+mysqli_select_db($conn,'smb_bienestar');
+$resp = mysqli_query($conn,$sql);
+while($row = mysqli_fetch_array($resp)){
+        $direccion = $row['direccion'];
+        $direccion1 = $row['direccion1'];
+        $direccion2 = $row['direccion2'];
+        $dni = $row['dni'];
+        $movil = $row['movil'];
+}
+  
+  
+ echo '<div class="container">
+        <div class="row">
+        <div class="col-sm-8">
+        
+        <div class="panel panel-success">
+        <div class="panel-heading"><img src="../../icons/actions/flag-blue.png"  class="img-reponsive img-rounded"> Solicitud Alquier Equipo</div>
+        <div class="panel-body">';
+        
+ echo '<form action="main.php" method="POST">
+          
+  <div class="form-group">
+    <label for="f_turno">Fecha Turno:</label>
+    <input type="date" class="form-control" id="f_turno" name="f_turno" min = '.$hoy=date("Y-m-d").' '.$hoy.' required>
+  </div><hr>
+  
+  <p><strong>Seleccione la Dirección a donde desea que le Entreguen el Equipo si posee más de una.</strong></p>
+   <div class="radio">
+    <label><input type="radio" name="direccion" value="'.$direccion.'" checked > '.$direccion.'</label>
+    </div>
+    <div class="radio">
+    <label><input type="radio" name="direccion" value"'.$direccion1.'" > '.$direccion1.'</label>
+    </div>
+    <div class="radio ">
+    <label><input type="radio" name="direccion" value"'.$direccion2.'" > '.$direccion2.'</label>
+    </div><hr>
+    
+    <p><strong>Especifique a partir de que hora.</strong</p>
+    <div class="form-group">
+    <label for="usr">Hora:</label>
+    <input type="time" class="form-control" id="usr" name="hora_desde" min="08:00" max="20:00" required>
+    </div><hr>
+    
+    <p><strong>Ingrese Cantidad de Horas de alquiler.</strong></<p>
+    
+    <div class="checkbox">
+    <label><input type="radio" value="06:00" name="cantidad_horas" > 6 Horas</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="radio" value="08:00" name="cantidad_horas" > 8 Horas</label>
+    </div>
+    <div class="checkbox ">
+    <label><input type="radio" value="12:00" name="cantidad_horas"> 12 Horas</label>
+    </div><hr>
+  
+         <div class="form-group">
+		  <label for="sel1">Equipo:</label>
+		  <select class="form-control" name="equipo" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+
+		      $query = "SELECT * FROM smb_equipos";
+		      mysqli_select_db('smb_bienestar');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res)
+		      {
+			
+			  while ($valores = mysqli_fetch_array($res))
+			    {
+				echo '<option value="'.$valores[cod_equipo].'">'.$valores[modelo].'</option>';
+			    }
+			}
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div><hr>
+  
+  <h2><strong>Datos del Cliente</strong></h2><hr>
+   <div class="form-group">
+    <label for="cliente">Cliente:</label>
+    <input type="text" class="form-control" id="cliente" name="cliente" value="'.$nombre.'" readonly required>
+  </div>
+  
+  <div class="form-group">
+    <label for="hora">DNI:</label>
+    <input type="text" class="form-control" id="hora" name="dni" value="'.$dni.'" readonly required>
+  </div>
+  
+  <div class="form-group">
+    <label for="hora">Movil:</label>
+    <input type="text" class="form-control" id="hora" name="movil" value="'.$movil.'" readonly required>
+  </div><hr>
+  
+  <button type="submit" class="btn btn-success btn-block" name="reserva_ok"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
+</form>
+
+</div></div></div>
+    </div>
+    </div>';
+
+}
+
+/*
+** funcion sumar horas
+*/
+    function suma_horas($hora1,$hora2){
+
+    $hora1=explode(":",$hora1);
+    $hora2=explode(":",$hora2);
+    $temp=0;
+
+   //sumo segundos 
+
+    $segundos=(int)$hora1[2]+(int)$hora2[2];
+    while($segundos>=60){
+        $segundos=$segundos-60;
+        $temp++;
+    }
+
+    //sumo minutos 
+    $minutos=(int)$hora1[1]+(int)$hora2[1]+$temp;
+    $temp=0;
+    while($minutos>=60){
+        $minutos=$minutos-60;
+        $temp++;
+    }
+
+    //sumo horas 
+    $horas=(int)$hora1[0]+(int)$hora2[0]+$temp;
+
+    if($horas<10)
+        $horas= '0'.$horas;
+
+    if($minutos<10)
+        $minutos= '0'.$minutos;
+
+    if($segundos<10)
+        $segundos= '0'.$segundos;
+
+    $sum_hrs = $horas.':'.$minutos.':'.$segundos;
+
+    return ($sum_hrs);
+
+    }
+    
+    
+/*
+** funcion restar horas
+*/
+function restar_horas($hora1,$hora2){
+
+    $temp1 = explode(":",$hora1);
+    $temp_h1 = (int)$temp1[0];
+    $temp_m1 = (int)$temp1[1];
+    $temp_s1 = (int)$temp1[2];
+    $temp2 = explode(":",$hora2);
+    $temp_h2 = (int)$temp2[0];
+    $temp_m2 = (int)$temp2[1];
+    $temp_s2 = (int)$temp2[2];
+    // si $hora2 es mayor que la $hora1, invierto 
+    if( $temp_h1 < $temp_h2 ){
+
+        $temp  = $hora1;
+        $hora1 = $hora2;
+        $hora2 = $temp;
+
+    }
+
+    /* si $hora2 es igual $hora1 y los minutos de 
+       $hora2 son mayor que los de $hora1, invierto*/
+
+    elseif( $temp_h1 == $temp_h2 && $temp_m1 < $temp_m2){
+        $temp  = $hora1;
+        $hora1 = $hora2;
+        $hora2 = $temp;
+
+    }
+
+    /* horas y minutos iguales, si los segundos de  
+       $hora2 son mayores que los de $hora1,invierto*/
+
+    elseif( $temp_h1 == $temp_h2 && $temp_m1 == $temp_m2 && $temp_s1 < $temp_s2){
+        $temp  = $hora1;
+        $hora1 = $hora2;
+        $hora2 = $temp;
+
+    }
+
+    $hora1=explode(":",$hora1);
+    $hora2=explode(":",$hora2);
+    $temp_horas = 0;
+    $temp_minutos = 0;
+
+    //resto segundos 
+    $segundos;
+    if( (int)$hora1[2] < (int)$hora2[2] ){
+        $temp_minutos = -1;
+        $segundos = ( (int)$hora1[2] + 60 ) - (int)$hora2[2];
+      }else{
+
+        $segundos = (int)$hora1[2] - (int)$hora2[2];
+        }
+        
+    //resto minutos 
+    $minutos;
+
+    if( (int)$hora1[1] < (int)$hora2[1] ){
+        $temp_horas = -1;
+        $minutos = ( (int)$hora1[1] + 60 ) - (int)$hora2[1] + $temp_minutos;
+    }else{
+        $minutos =  (int)$hora1[1] - (int)$hora2[1] + $temp_minutos; 
+     }
+    //resto horas     
+    $horas = (int)$hora1[0]  - (int)$hora2[0] + $temp_horas;
+
+    if($horas<10)
+        $horas= '0'.$horas;
+
+        if($minutos<10)
+            $minutos= '0'.$minutos;
+      
+           if($segundos<10)
+               $segundos= '0'.$segundos;
+
+    $rst_hrs = $horas.':'.$minutos.':'.$segundos;
+
+     return ($rst_hrs);
+     
+     }
+
+/*
+** funcion formulario de solicutd turno equipos
+*/
+function addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$conn){
+    
+    $hora_hasta = suma_horas($hora_desde,$cantidad_horas);
+    $estado = 'Ocupado';
+    $solicitud = 'Stand-By';
+           
+    mysqli_select_db($conn,'smb_bienestar');	
+
+	$sql = "INSERT INTO smb_turnos_equipos ".
+		"(f_turno,direccion,equipo,hora_desde,hora_hasta,cliente,dni,movil,estado,solicitud)".
+		"VALUES ".
+      "('$f_turno','$direccion','$equipo','$hora_desde','$hora_hasta','$cliente','$dni','$movil','$estado','$solicitud')";
+    
+    $resp = mysqli_query($conn,$sql);
+    
+    if($resp){
+            echo "<br>";
+		    echo '<div class="container">';
+		    echo '<div class="alert alert-success" role="alert">';
+		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Turno Gestionado Satisfactoriamente.';
+		    echo "</div>";
+		    echo "</div>";
+    }else{
+			    echo "<br>";
+			    echo '<div class="container">';
+			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Gestionar el Turno.'  .mysqli_error($conn);
+			    echo "</div>";
+			    echo "</div>";
+		    }
+
+}
+
+
+/*
+** funcion cancelar turno de alquiler de equipo por parte del usuario
+*/
+function cancelReservaEquipo($id,$estado,$conn){
+    
+    mysqli_select_db($conn,'smb_bienestar');
+	$sqlInsert = "delete from smb_turnos_equipos where id = '$id'";
+           
+	$res = mysqli_query($conn,$sqlInsert);
+
+
+	if($res){
+		echo "<br>";
+		echo '<div class="alert alert-success" role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Ha Cancelado su Turno';
+		echo "</div>";	
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" role="alert">';
+		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al Cancelar Turno!.' .mysqli_error($conn);
+		echo "</div>";
+	}
+
+
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// FIN SECCION TURNOS EQUIPOS ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

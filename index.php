@@ -192,7 +192,7 @@
         <li><a href="#promos">PROMOS</a></li>
         <li><a href="#contact">CONTACTO</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ENTORNOS
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MODULOS
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="active"><a href="core/administracion/" data-toggle="tooltip" title="Entorno Restringido a Admistradores">Administración</a></li>

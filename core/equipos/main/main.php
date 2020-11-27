@@ -6,7 +6,7 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
 	mysqli_select_db($conn,'smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
@@ -37,6 +37,21 @@
             $mensaje = $fila['mensaje'];
 	}
 	
+	   if($entorno == 'VP'){
+            $descripcion = "Venta de Productos";
+       }
+       if($entorno == 'TG'){
+            $descripcion = "Turnos Gabinete";
+       }
+       if($entorno == 'TE'){
+            $descripcion = "Alquiler de Equipos";
+       }
+       if($entorno == 'VE'){
+            $descripcion = "Venta de Equipos";
+       }
+       if($entorno == 'CA'){
+            $descripcion = "Capacitación";
+       }
 	
 	
 ?>
@@ -128,7 +143,8 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
     <hr><div class="alert alert-success">
-      <br><h4 align="left" <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
+      <br><h4 align="left"><strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
+      <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
       </div><hr>
        <div class="panel-group">
         <div class="panel panel-default">
@@ -142,7 +158,7 @@
             <ul class="list-group">
             <form action="main.php" method="POST">
                 
-                <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Ver Turnos Disponibles"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Disponibles</button></a></li>
+                <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Solicitar Turno de Alquiler de Equipo"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Solicitar Turno</button></a></li>
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Ver Mis Turnos"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/actions/documentation.png" /> Turnos Reservados</button></a></li>
                 
@@ -150,7 +166,9 @@
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
                 
-                <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li>
+<!--                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li> -->
+                
+                <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button></a></li>
             <form>
             </ul>
             <div class="panel-footer panel-custom">
@@ -180,10 +198,10 @@
       if($conn){
       
       if(isset($_POST['A'])){
-        gabineteTurnos($conn);
+        equiposTurnos($conn);
       }
       if(isset($_POST['B'])){
-        userTurnos($nombre,$conn);
+        equiposTurnosUser($nombre,$conn);
       }
       if(isset($_POST['C'])){
         loadUserBio($conn,$nombre);
@@ -197,11 +215,38 @@
       if(isset($_POST['submit'])){
          uploadFileAvatar($nombre,$conn);
       }
+      if(isset($_POST['F'])){
+        formModulos($entorno,$descripcion,$nombre,$conn);
+      }
       
+      // llama a funcion para cancelar turno
       if(isset($_POST['cancel'])){
         $id = mysqli_real_escape_string($conn,$_POST['bookId']);
         $estado = 'Libre';
-        cancelReserva($id,$estado,$conn);
+        cancelReservaEquipo($id,$estado,$conn);
+       }
+       
+       //llama a función para suscribirse a nuevo modulo
+       if(isset($_POST['modulo'])){
+        $modulo = mysqli_real_escape_string($conn,$_POST['valor']);
+        addModulo($modulo,$nombre,$conn);
+       }
+       // llama a función para formulario de reserva de equipo
+       if(isset($_POST['reservar'])){
+        formReservaEquipo($nombre,$conn);
+       }
+       // llama a función para finalizar el pedido de reserva de equipo
+       if(isset($_POST['reserva_ok'])){
+        $f_turno = mysqli_real_escape_string($conn,$_POST['f_turno']);
+        $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+        $hora_desde = mysqli_real_escape_string($conn,$_POST['hora_desde']);
+        $cantidad_horas = mysqli_real_escape_string($conn,$_POST['cantidad_horas']);
+        $equipo = mysqli_real_escape_string($conn,$_POST['equipo']);
+        $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
+        $dni = mysqli_real_escape_string($conn,$_POST['dni']);
+        $movil = mysqli_real_escape_string($conn,$_POST['movil']);
+        addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$conn);
+       
        }
       
       
@@ -236,7 +281,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Desea cancelar Turno?</h4>
+        <h4 class="modal-title">Desea cancelar Reserva de Equipo?</h4>
       </div>
       <div class="modal-body">
     

@@ -60,10 +60,36 @@ solicitud enum('Confirmado','Stand-By','Cancelado')
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+#tabla smb_turnos_equipos
+create table smb_turnos_equipos(
+id int(11) auto_increment primary key,
+f_turno date not null,
+direccion varchar(90),
+equipo varchar(90),
+hora_desde time,
+hora_hasta time,
+cliente varchar(90),
+dni varchar(8),
+movil varchar(15),
+estado enum('Libre','Ocupado') not null,
+solicitud enum('Confirmado','Stand-By','Cancelado')
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 #tabla smb_especialidades
 create table smb_especialidades(
 id int(11) auto_increment primary key,
 descripcion varchar(60)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#tabla smb_equipos
+create table smb_equipos(
+id int(11) auto_increment primary key,
+cod_equipo varchar(6) not null,
+tipo varchar(60) not null,
+marca varchar(60) not null,
+modelo varchar(90) not null,
+nro_serie varchar(30)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
