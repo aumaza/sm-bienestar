@@ -7,7 +7,7 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
 	mysqli_select_db('smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){

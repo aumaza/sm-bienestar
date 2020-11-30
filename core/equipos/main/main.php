@@ -62,6 +62,7 @@
   <title>SM Bienestar - Alquiler de Equipos</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../../icons/devices/printer-laser.png" />
   <?php skeleton(); ?>
   
   <!-- Data Table Script -->
@@ -143,7 +144,7 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
     <hr><div class="alert alert-success">
-      <br><h4 align="left"><strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
+      <br><h4 align="left"><img src="<?php echo $avatar; ?>" alt="Avatar" class="avatar" > <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
       <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
       </div><hr>
        <div class="panel-group">

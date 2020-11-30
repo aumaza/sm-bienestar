@@ -234,7 +234,7 @@ function updateCliente($id,$direccion,$direccion1,$direccion2,$tel,$movil,$email
 /*
 * Funcion para cambiar avatar de usuario
 */
-function uploadAvatar(){
+function uploadAvatar($id){
 
     echo '<div class="panel panel-success" >
 	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/svn-commit.png"  class="img-reponsive img-rounded"> Subir Archivo';
@@ -248,10 +248,13 @@ function uploadAvatar(){
             <div class="panel panel-default">
                 <div class="panel-heading">
                 <strong>Seleccione el Archivo a Subir:</strong><br>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="form_update_avatar.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="'.$id.'">
+                
                 <input type="file" name="file"><br>
                 <button type="submit" name="submit"><span class="glyphicon glyphicon-cloud-upload"></span> Subir</button>
                 </form>
+                <hr><a href="../main/main.php"><button type="button" class="btn btn-primary btn-block"><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>
                 </div>
             </div>
 	      </div>  
@@ -551,6 +554,7 @@ if($conn){
 			 echo "<td align=center>".$fila['email']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<a href="../usuarios/bio_edit.php?id='.$fila['id'].'" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Editar</a>';
+			 echo '<a href="../usuarios/avatar.php?id='.$fila['id'].'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span> Avatar</a>';
 			 echo "</td>";
 			 $count++;
 		}
@@ -989,12 +993,12 @@ function cancelReserva($id,$estado,$conn){
 
 	if($res){
 		echo "<br>";
-		echo '<div class="alert alert-success" role="alert">';
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
 		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Ha Cancelado su Turno';
 		echo "</div>";	
 	}else{
 		echo "<br>";
-		echo '<div class="alert alert-warning" role="alert">';
+		echo '<div class="alert alert-warning" alert-dismissible role="alert">';
 		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al Cancelar Turno!.' .mysqli_error($conn);
 		echo "</div>";
 	}
@@ -1392,14 +1396,14 @@ function addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,
     if($resp){
             echo "<br>";
 		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" role="alert">';
+		    echo '<div class="alert alert-success" alert-dismissible role="alert">';
 		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Turno Gestionado Satisfactoriamente.';
 		    echo "</div>";
 		    echo "</div>";
     }else{
 			    echo "<br>";
 			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<div class="alert alert-warning" alert-dismissible role="alert">';
 			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Gestionar el Turno.'  .mysqli_error($conn);
 			    echo "</div>";
 			    echo "</div>";
@@ -1421,12 +1425,12 @@ function cancelReservaEquipo($id,$estado,$conn){
 
 	if($res){
 		echo "<br>";
-		echo '<div class="alert alert-success" role="alert">';
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
 		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Ha Cancelado su Turno';
 		echo "</div>";	
 	}else{
 		echo "<br>";
-		echo '<div class="alert alert-warning" role="alert">';
+		echo '<div class="alert alert-warning" alert-dismissible role="alert">';
 		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al Cancelar Turno!.' .mysqli_error($conn);
 		echo "</div>";
 	}
@@ -1444,7 +1448,63 @@ function cancelReservaEquipo($id,$estado,$conn){
 //////////////////////////////////////// FIN SECCION TURNOS EQUIPOS ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// SECCION VENTA PRODUCTOS /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+** funciion de carga de cartelera
+*/
+function cartelera($conn){
+
+if($conn)
+{
+	$sql = "SELECT * FROM smb_productos";
+    	mysqli_select_db($conn,'smb_bienestar');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="panel panel-default" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/status/mail-tagged.png"  class="img-reponsive img-rounded"> Productos';
+	echo '</div><br>';
+
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Imagen</th>
+		    <th class='text-nowrap text-center'>Codigo Producto</th>
+		    <th class='text-nowrap text-center'>Marca</th>
+		    <th class='text-nowrap text-center'>Descripción</th>
+                    <th class='text-nowrap text-center'>Precio</th>
+                    
+                    <th>&nbsp;</th>
+                    </thead>";
 
 
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center><img src='$fila[picture]' alt='Avatar' class='avatar' ></td>";
+			 echo "<td align=center>".$fila['cod_producto']."</td>";
+			 echo "<td align=center>".$fila['marca']."</td>";
+			 echo "<td align=center>".$fila['descripcion']."</td>";
+			 echo "<td align=center>".$fila['precio']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo '<a href="../pedidos/newPedido.php?id='.$fila['id'].'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span> Hacer Pedido</a>';
+			 echo "</td>";
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+}
 
 ?>

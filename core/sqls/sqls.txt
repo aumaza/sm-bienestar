@@ -92,7 +92,14 @@ modelo varchar(90) not null,
 nro_serie varchar(30)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+#tabla productos
+create table smb_productos(
+id int(11) auto_increment primary key,
+cod_producto varchar(6) not null,
+marca varchar(25) not null,
+descripcion varchar(60) not null,
+precio float(8,2) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #tabla token
 create table token(

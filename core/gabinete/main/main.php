@@ -146,7 +146,7 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
     <hr><div class="alert alert-success">
-      <br><h4 align="left"><strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
+      <br><h4 align="left"><img src="<?php echo $avatar; ?>" alt="Avatar" class="avatar" > <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
       <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
       </div><hr>
        <div class="panel-group">
@@ -168,9 +168,7 @@
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Editar Datos Personales"><button type="submit" class="btn btn-default btn-sm" name="C"><img class="img-reponsive img-rounded" src="../../icons/actions/user-group-properties.png" /> Datos Personales</button></a></li>
                 
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="D"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
-                
-<!--                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar Avatar de Usuario"><button type="submit" class="btn btn-default btn-sm" name="E"><img class="img-reponsive img-rounded" src="../../icons/actions/view-media-artist.png" /> Cambiar Avatar</button></a></li> -->
-                
+                             
                 <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo"><button type="submit" class="btn btn-default btn-sm" name="F"><img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button></a></li>
             <form>
             </ul>
@@ -211,12 +209,6 @@
       }
       if(isset($_POST['D'])){
         loadUserPass($conn,$nombre);
-      }
-      if(isset($_POST['E'])){
-        uploadAvatar();
-      }
-      if(isset($_POST['submit'])){
-         uploadFileAvatar($nombre,$conn);
       }
       if(isset($_POST['F'])){
         formModulos($entorno,$descripcion,$nombre,$conn);

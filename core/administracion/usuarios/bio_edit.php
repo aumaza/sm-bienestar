@@ -6,7 +6,7 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
 	mysqli_select_db('smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
@@ -27,7 +27,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>SM Bienestar - Reserva de Turno</title>
+  <title>SM Bienestar - Editar Datos Cliente</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php skeleton(); ?>
@@ -56,7 +56,7 @@
 
 <div class="panel panel-info" >
   <div class="panel-heading">
-    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/actions/go-jump-today.png"  class="img-reponsive img-rounded"> Reserva de Turno Gabinete</h2>
+    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/actions/user-group-properties.png"  class="img-reponsive img-rounded"> Editar Datos Cliente</h2>
   </div>
     <div class="panel-body">
     
@@ -64,7 +64,7 @@
     $id = $_GET['id'];
    
     if($conn){
-	   reservaGabinete($id,$nombre,$conn);
+	   editCliente($id,$conn);
 	 }else{
 	    mysqli_error($conn);
 	  }

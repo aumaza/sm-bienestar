@@ -66,10 +66,10 @@
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="icons/actions/bookmarks-organize.png" />
+    <link rel="icon" type="image/png" href="icons/apps/preferences-desktop-accessibility.png" />
    <?php skeleton();?>
 	
-    <title>Bienvenido</title>
+    <title>Ingreso</title>
     </head>
 <!--     <body background="../img/stop.jpg" class="img-fluid" alt="Responsive image" style="background-repeat: no-repeat; background-position: center center; background-size: cover" style="height: 100%"><br> -->
     <div class="container">

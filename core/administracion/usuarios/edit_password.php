@@ -7,7 +7,7 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
 	mysqli_select_db('smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
@@ -31,9 +31,9 @@
 
 <html><head>
 	<meta charset="utf-8">
-	<title>Usuarios - Actualización Password</title>
+	<title>Usuarios - Editar Password</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="../../icons/status/task-recurring.png" />
+	<link rel="icon" type="image/png" href="../../icons/actions/bookmarks-organize.png" />
 	<?php skeleton();?>
 
 	
@@ -140,41 +140,16 @@ function Text(string){//validacion solo letras
 
 <div class="panel panel-info" >
   <div class="panel-heading">
-    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/status/task-recurring.png"  class="img-reponsive img-rounded"> Actualización Password</h2>
+    <h2 class="panel-title text-center text-default "><span class="pull-center "><img src="../../icons/actions/user-group-new.png"  class="img-reponsive img-rounded"> Editar Password</h2>
   </div>
     <div class="panel-body">
     
     <?php 
-    $id = mysqli_real_escape_string($conn,$_POST['id']);
-    $password1 = mysqli_real_escape_string($conn,$_POST['pass1']);
-    $password2 = mysqli_real_escape_string($conn,$_POST['pass2']);
+    $id = $_GET['id'];
    
-     if($conn){
-     
-        if(strlen($password1) <= 15 || strlen($password2) <= 15){
-    
-    if(strcmp($password2,$password1) == 0){
-        
-         updatePassUser($id,$password1,$conn);
-        
-        }else{
-        
-                echo "<br>";
-			    echo '<div class="alert alert-warning" role="alert">';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Las Contraseñas no Coinciden. Intente Nuevamente!.';
-			    echo "</div>";
-			    echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
-    }
-    }else{
-        
-                echo "<br>";
-			    echo '<div class="alert alert-warning" role="alert">';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" />El Password supera los 15 caracteres! Reintentelo.';
-			    echo "</div>";
-			    echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
-			          
-    }
-    }else{
+    if($conn){
+	   editPassUser($id,$conn);
+	 }else{
 	    mysqli_error($conn);
 	  }
 	  

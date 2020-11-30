@@ -7,7 +7,7 @@
 	$password = $_SESSION['password'];
 	$entorno = $_SESSION['entorno'];
 	
-	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password' and entorno = '$entorno'";
+	$sql = "select * from smb_usuarios where user = '$usuario' and password = '$password'";
 	mysqli_select_db('smb_bienestar');
 	$query = mysqli_query($conn,$sql);
 	while($row = mysqli_fetch_array($query)){
@@ -62,14 +62,16 @@
 
 <?php
 
+
+$id = mysqli_real_escape_string($conn,$_POST['id']);
+
 if($conn){
 
 // File upload path
-$targetDir = '../usuarios/';
+$targetDir = '../../user_avatar/';
 $fileName = basename($_FILES["file"]["name"]);
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
-$destinationPath = '../../avatar/';
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
     // Allow certain file formats
@@ -83,8 +85,8 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
             
             // Insert image file name into database
            
-           $sqlInsert = "UPDATE smb_usuarios set avatar = '$targetFilePath' where nombre = '$nombre'";
-			   mysqli_select_db('smb_bienestar');
+           $sqlInsert = "UPDATE smb_clientes set avatar = '$targetFilePath' where id = '$id'";
+			   mysqli_select_db($conn,'smb_bienestar');
 			  $insert = mysqli_query($conn,$sqlInsert);
            
            
@@ -93,9 +95,7 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 			  echo '<div class="alert alert-success" role="alert">';
 			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> Base de Datos Actualizada. El Archivo '.$fileName. ' se ha subido correctamente..</strong>';
                           echo "</div><hr>";
-                          copy($fileName, "$destinationPath/$fileName");
-                          unlink($fileName);
-                          echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          echo '<a href="../main/main.php"><button type="button" class="btn btn-primary "><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
                           
                                            
             }else{
@@ -103,7 +103,7 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 			  echo '<div class="alert alert-success" role="alert">';
 			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /><strong> El Archivo '.$fileName. ' se ha subido correctamente.</strong>';
                           echo "</div><hr>";
-                          echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          echo '<a href="../main/main.php"><button type="button" class="btn btn-primary "><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
                          
                 
             } 
@@ -111,21 +111,21 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 			  echo '<div class="alert alert-warning" role="alert">';
 			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups. Hubo un error subiendo el Archivo.</strong>';
                           echo "</div><hr>";
-                          echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          echo '<a href="../main/main.php"><button type="button" class="btn btn-primary "><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
                           
         }
     }else{
 			  echo '<div class="alert alert-danger" role="alert">';
 			  echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/dialog-cancel.png" /><strong> Ups, solo archivos con extensión: JPG, PNG, BMP, GIF son soportados.</strong>';
 			  echo "</div><hr>";
-                          echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          echo '<a href="../main/main.php"><button type="button" class="btn btn-primary "><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
                         
     }
 }else{
 			  echo '<div class="alert alert-info" role="alert">';
                           echo '<h1 class="panel-title text-left" contenteditable="true"><img class="img-reponsive img-rounded" src="../../icons/actions/system-reboot.png" /><strong> Por favor, seleccione al archivo a subir.</strong>';
                           echo "</div><hr>";
-                          echo '<meta http-equiv="refresh" content="5;URL=../main/main.php "/>';
+                          echo '<a href="../main/main.php"><button type="button" class="btn btn-primary "><img src="../../icons/actions/go-previous-view.png"  class="img-reponsive img-rounded"> Volver</button></a>';
                           
 }
 
