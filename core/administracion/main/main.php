@@ -62,6 +62,13 @@
         $turnos = $fila['cantidad'];
 	}
 	
+	// obtenemos mensajes recibidos
+	$consul = "select count(id) as count from smb_mensajes where fecha = curdate()";
+	mysqli_select_db($conn,$dbase);
+	$valor = mysqli_query($conn,$consul);
+	while($dato = mysqli_fetch_array($valor)){
+        $count = $dato['count'];
+	}
 	
 ?>
 
@@ -150,10 +157,11 @@
 <div class="container-fluid">
   <div class="row content"><br>
     <div class="col-sm-3 sidenav hidden-xs">
-      <br><img src="../../icons/status/meeting-chair.png" alt="Avatar" class="avatar" > <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4><hr>
+      <br><a href="main.php" data-toggle="tooltip" data-placement="right" title="Recargar Menú Principal"><img src="../../icons/status/meeting-chair.png" alt="Avatar" class="avatar" ></a> <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4><hr>
       <div class="alert alert-success">
       <p align="center"><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
-      </div><hr>
+      </div>
+      <hr>
       <ul class="nav nav-pills nav-stacked">
         
         <div class="panel-group" id="accordion">
@@ -166,10 +174,13 @@
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+      <div class="panel-body">
+      <form action="main.php" method="POST">
+      
+      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Ver Turnos Disponibles"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Disponibles</button></a></li>
+      
+      </from>
+      </div>
     </div>
   </div>
   
@@ -241,10 +252,13 @@
       </h4>
     </div>
     <div id="collapse6" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+      <ul class="list-group">
+      <form action="main.php" method="POST">
+      
+      <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="FA"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
+      
+      </form>
+      </ul>
     </div>
   </div>
   
@@ -260,51 +274,100 @@
       <div class="well">
         <img src="../../../img/logo.png" class="img-rounded" alt="Random Name" width="180" height="50"><h2> Panel de Administración</h2>
         <p>Entorno de Administración de todos los Módulos del Sistema</p>
-        <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
-      </div>
+        <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
+        <form action="main.php" method="POST">
+        <div class="alert alert-info">
+        <button type="submit" name="mensajes" class="btn btn-primary btn-sm"><img src="../../icons/actions/mail-mark-unread-new.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge"><?php echo $count; ?></span></button>
+        </div>
+        </form>
+      </div><hr>
+      
       <div class="row">
         <div class="col-sm-3">
           <div class="well">
             <h4>Total Usuarios Registrados</h4>
-            <p><span class="badge"><?php echo $cantidad; ?></span></p> 
+            <p><span class="badge"><?php echo $cantidad; ?></span></p>
+            <form action="main.php" method="POST">
+            <button type="submit" class="btn btn-default btn-sm" name="FB"><img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button>
+            </form>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
             <h4>Turnos Gabinete Hoy</h4>
-            <p><span class="badge"><?php echo $turnos; ?></span></p> 
+            <p><span class="badge"><?php echo $turnos; ?></span></p>
+            <form action="main.php" method="POST">
+            <button type="submit" class="btn btn-default btn-sm" name="BA"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Gabinete</button>
+            </form>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
             <h4>Entrega Equipo Hoy</h4>
-            <p>10 Million</p> 
+            <p>10 Million</p>
+            <form action="main.php" method="POST">
+            <button type="submit" class="btn btn-default btn-sm" name="CA"><img class="img-reponsive img-rounded" src="../../icons/actions/im-aim.png" /> Entregas</button>
+            </form>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
             <h4>Retiro Equipo Hoy</h4>
-            <p>30%</p> 
+            <p>30%</p>
+            <form action="main.php" method="POST">
+            <button type="submit" class="btn btn-default btn-sm" name="CB"><img class="img-reponsive img-rounded" src="../../icons/status/task-reminder.png" /> Retiros</button>
+            </form>
           </div>
         </div>
-      </div>
-                  
+      </div><hr>
+      
+<!--  Inicio espacio funciones  -->
+      <div class="container">
       <div class="row">
-        <div class="col-sm-12">
-          <div class="well">
-          <?php turnosGabinete($conn); ?>
-          </div>
-        </div>
-        </div>
-       
-       <div class="row">
-        <div class="col-sm-12">
-          <div class="well">
-            <p>Tabla Alquiler de equipos</p> 
-          </div>
-        </div>
-        </div>
-       
+      <div class="col-sm-12">
+      <?php
+      
+      if($conn){
+      
+      
+        if(isset($_POST['BA'])){
+            turnosGabinete($conn);
+        }
+        if(isset($_POST['FA'])){
+            loadUserPass($conn,$nombre);
+        }
+        if(isset($_POST['FB'])){
+            loadUsers($conn);
+        }
+        if(isset($_POST['mensajes'])){
+            getMensajes($conn);
+        }
+        
+        // cambio de permisos de usuarios
+        if(isset($_POST['allow'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEditRole($id,$conn);
+        }
+        if(isset($_POST['roles'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $role = mysqli_real_escape_string($conn,$_POST['role']);
+            cambiarPermisos($id,$role,$conn);
+        }
+      
+      
+      
+      }else{
+        mysqli_error($conn);
+      }
+      
+      
+      
+      ?>
+      </div>
+      </div>
+      </div>
+<!--  Fin espacio funciones -->
+                  
       </div>
     </div>
   </div>

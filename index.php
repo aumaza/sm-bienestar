@@ -1,3 +1,8 @@
+<?php include "core/connection/connection.php";
+      include "core/functions/functions.php";
+      
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,6 +34,21 @@
     $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     });
+</script>
+
+<script >
+    function limitText(limitField, limitNum) {
+       if (limitField.value.length > limitNum) {
+          
+           alert("Ha ingresado más caracteres de los requeridos, deben ser: \n" + limitNum);
+            limitField.value = limitField.value.substring(0, limitNum);
+       }
+       
+       if(limitField.value.lenght < limitNum){
+	  alert("Ha ingresado menos caracteres de los requeridos, deben ser:  \n"  + limitNum);
+            limitField.value = limitField.value.substring(0, limitNum);
+       }
+}
 </script>
 	
   <style>
@@ -208,6 +228,22 @@
     </div>
   </div>
 </nav>
+<?php
+    
+    if($conn){
+    
+        if(isset($_POST['mensaje'])){
+            $nombre = mysqli_real_escape_string($conn,$_POST['name']);
+            $email = mysqli_real_escape_string($conn,$_POST['email']);
+            $mensaje = mysqli_real_escape_string($conn,$_POST['comments']);
+            mensajes($nombre,$email,$mensaje,$conn);
+        }
+    
+    }else{
+        mysqli_error($conn);
+    }
+    
+    ?>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
@@ -354,7 +390,8 @@
 <div id="contact" class="container">
   <h3 class="text-center">Contactanos</h3>
   <p class="text-center"><em>Dejanos tu inquietud!</em></p>
-
+    
+        
   <div class="row">
     <div class="col-md-4">
       <p><span class="glyphicon glyphicon-map-marker"></span>Remedios de Escalada, Zárate 64, Lanus, Buenos Aires</p>
@@ -363,6 +400,7 @@
     </div>
     <div class="col-md-8">
       <div class="row">
+      <form action="index.php" method="POST">
         <div class="col-sm-6 form-group">
           <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required>
         </div>
@@ -370,12 +408,13 @@
           <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
         </div>
       </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comentario" rows="5"></textarea>
+      <textarea class="form-control" id="comments" name="comments" onKeyDown="limitText(this,240);" placeholder="Comentario" rows="5"></textarea>
       <br>
       <div class="row">
         <div class="col-md-12 form-group">
-          <button class="btn pull-right" type="submit">Enviar</button>
+          <button class="btn pull-right" type="submit" name="mensaje">Enviar</button>
         </div>
+        </form>
       </div>
     </div>
   </div>

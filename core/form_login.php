@@ -87,13 +87,13 @@
 			
 			}if($user = mysqli_fetch_assoc($retval)){
 				
-
+                 echo '<body background="../img/stop.jpg" class="img-fluid" alt="Responsive image" style="background-repeat: no-repeat; background-position: center center; background-size: cover" style="height: 100%"><br>';
 				echo '<div class="alert alert-danger" role="alert">';
 				echo "<strong>Atención!  </strong>" .$_SESSION["user"];
 				echo "<br>";
 				echo '<span class="pull-center "><img src="icons/status/security-low.png"  class="img-reponsive img-rounded"><strong> Usuario Bloqueado. Contacte al Administrador.</strong>';
 				echo "</div>";
-				echo '<meta http-equiv="refresh" content="5;URL=logout.php "/>';
+				echo '<meta http-equiv="refresh" content="5;URL=logout.php "/></body>';
 				exit;
 			}else if($user = mysqli_fetch_assoc($q)){
 

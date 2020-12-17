@@ -138,7 +138,7 @@
 <div class="jumbotron">
   <div class="container text-center">
    <h1><img src="../../../img/logo.png" class="img-rounded" alt="Random Name" width="180" height="50"></h1>
-   <h2>Venta de Productos</h2> 
+   <h2>Bienvenido/a <strong><?php echo $nombre; ?> </strong>a Venta de Productos</h2> 
    <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
     </div>
 </div>
@@ -213,15 +213,9 @@ if(isset($_POST['modulo'])){
 </div>
 </div>
 </div>
+<hr><br><br><br><br>
 
 
-<footer class="container-fluid text-center">
-  <p>Online Store Copyright</p>  
-  <form class="form-inline">Get deals:
-    <input type="email" class="form-control" size="50" placeholder="Email Address">
-    <button type="button" class="btn btn-danger">Sign Up</button>
-  </form>
-</footer>
 
 </body>
 </html>

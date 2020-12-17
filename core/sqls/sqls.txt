@@ -55,6 +55,7 @@ f_turno date not null,
 especialidad varchar(60),
 hora time not null,
 cliente varchar(90),
+espacio varchar(11),
 estado enum('Libre','Ocupado') not null,
 solicitud enum('Confirmado','Stand-By','Cancelado')
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -101,6 +102,14 @@ descripcion varchar(60) not null,
 precio float(8,2) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla mensaje clientes
+create table smb_mensajes(
+id int(11) auto_increment primary key,
+nombre varchar(60) not null,
+email varchar(60) not null,
+mensaje varchar(240) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #tabla token
 create table token(
 id int(11) auto_increment primary key,
@@ -110,9 +119,9 @@ token varchar(25) binary not null
 
 
 #subir csv gabinete
-load data local infile '/var/www/html/sm-bienestar/core/sqls/gabinete2021.csv' 
+load data local infile '/var/www/html/sm-bienestar/core/sqls/gabinete-ene-2021.csv' 
 into table smb_turnos_gabinete fields terminated by ',' enclosed by '"' lines terminated by '\n'
-(f_turno,hora,estado);
+(f_turno,hora,espacio,estado);
 
 #subir csv especialidades
 load data local infile '/var/www/html/sm-bienestar/core/sqls/especialidades.csv' 
