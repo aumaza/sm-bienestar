@@ -246,7 +246,8 @@
         $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
         $dni = mysqli_real_escape_string($conn,$_POST['dni']);
         $movil = mysqli_real_escape_string($conn,$_POST['movil']);
-        addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$conn);
+        $m_pago = mysqli_real_escape_string($conn,$_POST['m_pago']);
+        addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$m_pago,$monto,$conn);
        
        }
       

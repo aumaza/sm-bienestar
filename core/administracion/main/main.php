@@ -257,6 +257,8 @@
       
       <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="FA"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
       
+      <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades"><button type="submit" class="btn btn-default btn-sm" name="FC"><img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button></a></li>
+      
       </form>
       </ul>
     </div>
@@ -333,12 +335,74 @@
         if(isset($_POST['BA'])){
             turnosGabinete($conn);
         }
+        // carga formulario de cambio estado solicitud turno
+        if(isset($_POST['estado'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEstado($id,$conn);
+        }
+        if(isset($_POST['updateRequest'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $solicitud = mysqli_real_escape_string($conn,$_POST['solicitud']);
+            updateSolicitud($id,$solicitud,$conn);
+        }
+        if(isset($_POST['pay'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           pagos($id,$conn);        
+        }
+        if(isset($_POST['updatePagos'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           $pagos = mysqli_real_escape_string($conn,$_POST['pagos']);
+           $importe = mysqli_real_escape_string($conn,$_POST['importe']);
+           updatePagos($id,$pagos,$importe,$conn);
+        }
+        // fin formularios de cambio estado solicitud y pagos realizados turnos gabinete
+        
         if(isset($_POST['FA'])){
             loadUserPass($conn,$nombre);
         }
         if(isset($_POST['FB'])){
             loadUsers($conn);
         }
+        
+        // =================================================================== //
+        // seccion localidades
+        if(isset($_POST['FC'])){
+            localidades($conn);
+        }
+        if(isset($_POST['add_loc'])){
+            formAddLocalidad();
+        }
+        if(isset($_POST['agregarLoc'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $cod_loc = mysqli_real_escape_string($conn,$_POST['cod_loc']);
+            $cod_loc = strtoupper($cod_loc);
+            $localidad = mysqli_real_escape_string($conn,$_POST['localidad']);
+            $localidad = strtoupper($localidad);
+            $km = mysqli_real_escape_string($conn,$_POST['km']);
+            addLocalidad($cod_loc,$localidad,$km,$conn);
+        }
+        if(isset($_POST['edit_loc'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEditLocalidad($id,$conn);
+        }
+        if(isset($_POST['update_val_km'])){
+            formUpdateValorKm();
+        }
+        if(isset($_POST['updateV_km'])){
+            $v_km = mysqli_real_escape_string($conn,$_POST['v_km']);
+            updateValorKm($v_km,$conn);        
+        }
+        if(isset($_POST['del_loc'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            eliminarLoc($id,$conn);
+        }
+        if(isset($_POST['delete_loc'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteLoc($id,$conn);
+        }
+        // fin seccion localidades
+        // ========================================================================== //
+        
         if(isset($_POST['mensajes'])){
             getMensajes($conn);
         }

@@ -1,7 +1,7 @@
 <?php
 
 /*
-** Funcion que carga el skeleto del sistema
+** Funcion que carga mensajes de usuarios
 */
 function mensajes($nombre,$email,$mensaje,$conn){
 
@@ -34,6 +34,10 @@ function mensajes($nombre,$email,$mensaje,$conn){
 
 
 }
+
+/*
+** Funcion que carga esqueleto del sistema
+*/
 
 function skeleton(){
 
@@ -975,7 +979,7 @@ if($conn){
 	echo '<div class="panel panel-success" >
 	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/documentation.png"  class="img-reponsive img-rounded"> Turnos Reservados';
 	echo '</div><br>
-            <p><strong>Nota: </strong> Todos los turnos que haya solicitado apareceran con estado <strong>Stand-By</strong> por defecto en color Amarillo, cuando el Centro de Estética confirme su solicitud aparecerá como <strong>Confirmado</strong> y en color verde, si lo cancelacen aparecerá con color Rojo</p>
+            <p><strong>Nota: </strong> Todos los turnos que haya solicitado apareceran con estado <strong>Stand-By</strong> por defecto en color Amarillo, cuando el Centro de Estética confirme su solicitud aparecerá como <strong>Confirmado</strong> y en color verde, si lo cancelacen aparecerá con color Rojo, si fue <strong>Atendido</strong> aparecerá en color azul.</p>
             <p>En caso de cancelar un turno, por favor hágalo con 48 hs de antelación. Muchas Gracias.</p><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
@@ -986,6 +990,8 @@ if($conn){
             <th class='text-nowrap text-center'>Especialidad</th>
             <th class='text-nowrap text-center'>Espacio</th>
             <th class='text-nowrap text-center'>Solicitud</th>
+            <th class='text-nowrap text-center'>Estado de Pago</th>
+            <th class='text-nowrap text-center'>Importe</th>
             <th>&nbsp;</th>
             </thead>";
 
@@ -1003,12 +1009,17 @@ if($conn){
 			 if($fila['solicitud'] == 'Cancelado'){
 			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
 			 }
+			 if($fila['solicitud'] == 'Atendido'){
+			 echo '<td align=center style="background-color:blue"><font color="white">'.$fila['f_turno'].'</font></td>';
+			 }
 			 echo "<td align=center>".$fila['hora']."</td>";
 			 echo "<td align=center>".$fila['especialidad']."</td>";
 			 echo "<td align=center>".$fila['espacio']."</td>";
 			 echo "<td align=center>".$fila['solicitud']."</td>";
+			 echo "<td align=center>".$fila['pagos']."</td>";
+			 echo "<td align=center>".$fila['importe']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 if($fila['estado'] == 'Ocupado'){
+			 if($fila['solicitud'] != 'Atendido'){
 			 echo '<a data-toggle="modal" data-target="#myModal" href="#" data-id="'.$fila['id'].'" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar Reserva</button></a>';
             }
 			 echo "</td>";
@@ -1308,24 +1319,63 @@ while($row = mysqli_fetch_array($resp)){
     <input type="date" class="form-control" id="f_turno" name="f_turno" min = '.$hoy=date("Y-m-d").' '.$hoy.' required>
   </div><hr>
   
-  <p><strong>Seleccione la Dirección a donde desea que le Entreguen el Equipo si posee más de una.</strong></p>
+  <p><strong>Seleccione la Dirección en donde desea que le Entreguen el Equipo si posee más de una.</strong></p>
    <div class="radio">
     <label><input type="radio" name="direccion" value="'.$direccion.'" checked > '.$direccion.'</label>
-    </div>
-    <div class="radio">
-    <label><input type="radio" name="direccion" value"'.$direccion1.'" > '.$direccion1.'</label>
-    </div>
-    <div class="radio ">
-    <label><input type="radio" name="direccion" value"'.$direccion2.'" > '.$direccion2.'</label>
-    </div><hr>
+    </div>';
+    
+    if($direccion1 == ''){
+    echo '<div class="radio">
+    <label><input type="radio" name="direccion" value"'.$direccion1.'" hidden> '.$direccion1.'</label>
+    </div>';
+    }else{
+    echo '<div class="radio">
+    <label><input type="radio" name="direccion" value"'.$direccion1.'"> '.$direccion1.'</label>
+    </div>';    
+    }
+    if($direccion2 == ''){
+    echo '<div class="radio ">
+    <label><input type="radio" name="direccion" value"'.$direccion2.'" hidden> '.$direccion2.'</label>
+    </div><hr>';
+    }else{
+    echo '<div class="radio">
+    <label><input type="radio" name="direccion" value"'.$direccion2.'"> '.$direccion2.'</label>
+    </div>';    
+    }
+    
+    echo '<div class="form-group">
+		  <label for="sel1">Seleccione Localidad:</label>
+		  <select class="form-control" name="localidad" required>
+		  <option value="" disabled selected>Seleccionar</option>';
+		    
+		    if($conn){
+
+		      $query = "SELECT * FROM smb_localidades order by localidad ASC";
+		      mysqli_select_db($conn,'smb_bienestar');
+		      $res = mysqli_query($conn,$query);
+
+		      if($res)
+		      {
+			
+			  while ($valores = mysqli_fetch_array($res))
+			    {
+				echo '<option value="'.$valores[cod_loc].'">'.$valores[localidad].'</option>';
+			    }
+			}
+			}
+
+			//mysqli_close($conn);
+		  
+		 echo '</select>
+		</div><hr>
     
     <p><strong>Especifique a partir de que hora.</strong</p>
     <div class="form-group">
     <label for="usr">Hora:</label>
-    <input type="time" class="form-control" id="usr" name="hora_desde" min="08:00" max="20:00" required>
+    <input type="time" class="form-control" id="usr" name="hora_desde" min="08:00" max="21:00" required>
     </div><hr>
     
-    <p><strong>Ingrese Cantidad de Horas de alquiler.</strong></<p>
+    <p><strong>Seleccione la cantidad de Horas de alquiler.</strong></<p>
     
     <div class="checkbox">
     <label><input type="radio" value="06:00" name="cantidad_horas" > 6 Horas</label>
@@ -1378,6 +1428,66 @@ while($row = mysqli_fetch_array($resp)){
     <label for="hora">Movil:</label>
     <input type="text" class="form-control" id="hora" name="movil" value="'.$movil.'" readonly required>
   </div><hr>
+  
+  <h2><strong>Modo de Pago</strong></h2><hr>
+
+   <div class="panel-group" id="accordion">
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        Pago en Efectivo (retiro o entrega)</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body">
+      <label class="checkbox-inline"><input type="checkbox" name="pago" value="Pago Efectivo">Pago en Efectivo</label>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+        Transferencia Bancaria</a>
+      </h4>
+    </div>
+    
+     <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body">
+      <p>BBVA Banco Frances Caja de Ahorro
+      <p>CBU: 0170108740000003458507</p><hr>
+      <div class="form-group">
+        <label for="usr">Nro de Referencia de la Tranferencia:</label>
+        <input type="text" class="form-control" name="pago" value="NRT-">
+      </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+       Mercado Pago</a>
+      </h4>
+    </div>
+    <div id="collapse4" class="panel-collapse collapse">
+      <div class="panel-body">
+      <p align=center><img src="../../../img/sm_bienestar_qr.png"  class="img-reponsive img-rounded"></p><hr>
+      <p>Una vez que haya scaneado y pagado, ingrese el Nro. de Operación que lo encontrará en Actividad desde la app de Mercado Pago</p>
+      <div class="form-group">
+        <label for="usr">Nro de Operación:</label>
+        <input type="text" class="form-control" name="pago" value="NOMP-">
+      </div>
+      </div>
+    </div>
+  </div>
+  
+</div> 
+
   
   <button type="submit" class="btn btn-success btn-block" name="reserva_ok"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
 </form>
@@ -1519,7 +1629,7 @@ function restar_horas($hora1,$hora2){
 /*
 ** funcion formulario de solicutd turno equipos
 */
-function addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$conn){
+function addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$m_pago,$monto,$conn){
     
     $hora_hasta = suma_horas($hora_desde,$cantidad_horas);
     $estado = 'Ocupado';
@@ -1528,9 +1638,9 @@ function addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,
     mysqli_select_db($conn,'smb_bienestar');	
 
 	$sql = "INSERT INTO smb_turnos_equipos ".
-		"(f_turno,direccion,equipo,hora_desde,hora_hasta,cliente,dni,movil,estado,solicitud)".
+		"(f_turno,direccion,equipo,hora_desde,hora_hasta,cliente,dni,movil,m_pago,monto,estado,solicitud)".
 		"VALUES ".
-      "('$f_turno','$direccion','$equipo','$hora_desde','$hora_hasta','$cliente','$dni','$movil','$estado','$solicitud')";
+      "('$f_turno','$direccion','$equipo','$hora_desde','$hora_hasta','$cliente','$dni','$movil','$m_pago','$monto','$estado','$solicitud')";
     
     $resp = mysqli_query($conn,$sql);
     

@@ -110,6 +110,16 @@ email varchar(60) not null,
 mensaje varchar(240) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla localidades
+create table smb_localidades(
+id int(11) auto_increment primary key,
+cod_loc varchar(3) not null,
+localidad varchar(90) not null,
+kilometros int(11),
+valor_kilometro float(8,2),
+monto_final float(8,2)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 #tabla token
 create table token(
 id int(11) auto_increment primary key,
@@ -127,3 +137,8 @@ into table smb_turnos_gabinete fields terminated by ',' enclosed by '"' lines te
 load data local infile '/var/www/html/sm-bienestar/core/sqls/especialidades.csv' 
 into table smb_especialidades fields terminated by ',' enclosed by '"' lines terminated by '\n'
 (descripcion);
+
+#subir csv especialidades
+load data local infile '/var/www/html/sm-bienestar/core/sqls/localidades.csv' 
+into table smb_localidades fields terminated by ',' enclosed by '"' lines terminated by '\n'
+(cod_loc,localidad,kilometros,valor_kilometro,monto_final);
