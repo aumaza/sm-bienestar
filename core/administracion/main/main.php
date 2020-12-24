@@ -385,6 +385,13 @@
             $id = mysqli_real_escape_string($conn,$_POST['id']);
             formEditLocalidad($id,$conn);
         }
+        if(isset($_POST['updateLoc'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $localidad = mysqli_real_escape_string($conn,$_POST['localidad']);
+            $localidad = strtoupper($localidad);
+            $km = mysqli_real_escape_string($conn,$_POST['km']);
+            updateLocalidad($id,$localidad,$km,$conn);        
+        }
         if(isset($_POST['update_val_km'])){
             formUpdateValorKm();
         }
@@ -421,7 +428,12 @@
       
       
       }else{
-        mysqli_error($conn);
+                echo "<br>";
+			    echo '<div class="container">';
+			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo al Intentar Conectarse a la Base de Datos.  '  .mysqli_error($conn);
+			    echo "</div>";
+			    echo "</div>";
       }
       
       

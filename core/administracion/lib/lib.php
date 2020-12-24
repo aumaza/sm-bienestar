@@ -498,6 +498,48 @@ function formEditLocalidad($id,$conn){
 }
 
 /*
+** funcion actualizar localidad en base de datos
+*/
+function updateLocalidad($id,$localidad,$km,$conn){
+
+        $request = "select valor_kilometro from smb_localidades limit 1";
+        mysqli_select_db($conn,'smb_bienestar');
+        $retval = mysqli_query($conn,$request);
+        while($fila = mysqli_fetch_array($retval)){
+            $valor = $fila['valor_kilometro'];
+        }
+    
+        $km = number_format($km,2);
+        $valor = number_format($valor,2);
+        $monto_final  = $km * $valor;
+        
+        $sql = "update smb_localidades set localidad = '$localidad', kilometros = '$km', monto_final = '$monto_final' where id = '$id'";
+        mysqli_select_db($conn,'smb_bienestar');
+        $query = mysqli_query($conn,$sql);
+        
+        if($query){
+            echo "<br>";
+		    echo '<div class="container">';
+		    echo '<div class="alert alert-success" alert-dismissible">
+		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Registro Actualizado Satisfactoriamente.';
+		    echo "</div>";
+		    echo "</div>";
+        }else{
+                    echo "<br>";
+                    echo '<div class="container">';
+                    echo '<div class="alert alert-warning" alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Actualizar el Registro. '  .mysqli_error($conn);
+                    echo "</div>";
+                    echo "</div>";
+                }
+
+
+}
+
+
+/*
 ** funcion para dar el alta a nueva localidad
 */
 function formAddLocalidad(){
@@ -562,9 +604,7 @@ function addLocalidad($cod_loc,$localidad,$km,$conn){
     $km = number_format($km,2);
     $valor = number_format($valor,2);
     $monto_final  = $km * $valor;
-    //$monto = number_format($monto_final,2);
-    //echo $monto;
-    
+        
     if($rows == 0){
             
             $consulta = "INSERT INTO smb_localidades ".
@@ -577,14 +617,16 @@ function addLocalidad($cod_loc,$localidad,$km,$conn){
             if($resp){
             echo "<br>";
 		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" role="alert">';
+		    echo '<div class="alert alert-success" alert-dismissible">
+		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Registro Agregado Satisfactoriamente.';
 		    echo "</div>";
 		    echo "</div>";
     }else{
 			    echo "<br>";
 			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning" role="alert">';
+			     echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Agregar el Registro. '  .mysqli_error($conn);
 			    echo "</div>";
 			    echo "</div>";
@@ -593,7 +635,8 @@ function addLocalidad($cod_loc,$localidad,$km,$conn){
 		    
                 echo "<br>";
 			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning" role="alert">';
+			     echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Ya existe registro de esa Localidad.';
 			    echo "</div>";
 			    echo "</div>";
@@ -650,14 +693,16 @@ function updateValorKm($v_km,$conn){
     if($query){
             echo "<br>";
 		    echo '<div class="container">';
-		    echo '<div class="alert alert-success" role="alert">';
+		    echo '<div class="alert alert-success" alert-dismissible">
+		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 		    echo '<img class="img-reponsive img-rounded" src="../../icons/actions/dialog-ok-apply.png" /> Valor Actualizado Satisfactoriamente.';
 		    echo "</div>";
 		    echo "</div>";
     }else{
 			    echo "<br>";
 			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<div class="alert alert-warning" alert-dismissible">
+			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo un problema al Actualizar el Valor. '  .mysqli_error($conn);
 			    echo "</div>";
 			    echo "</div>";
