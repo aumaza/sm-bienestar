@@ -102,6 +102,24 @@ descripcion varchar(60) not null,
 precio float(8,2) not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#tabla pedidos_productos
+create table smb_pedidos_productos(
+id int(11) auto_increment primary key,
+f_pedido date not null,
+cod_producto varchar(6) not null,
+marca varchar(25) not null,
+descripcion varchar(60) not null,
+precio float(8,2) not null,
+cliente varchar(60) not null,
+movil varchar(11) not null,
+direccion varchar(90) not null,
+email varchar(90) not null,
+cantidad int(11) not null,
+tipo_pago varchar(50) not null,
+importe float(8,2) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 #tabla mensaje clientes
 create table smb_mensajes(
 id int(11) auto_increment primary key,

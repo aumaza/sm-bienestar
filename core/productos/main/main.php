@@ -1,5 +1,6 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
+      include "../lib/lib_user_productos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -97,6 +98,7 @@
   </script>
   <!-- END Data Table Script -->
   
+   
   <style>
     /* Remove the navbar's default rounded borders and increase the bottom margin */ 
     .navbar {
@@ -160,7 +162,7 @@
         
         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Cartelera de Productos"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
         
-        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Pedidos y Productos Adquiridos"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Mis Pedidos</button></a></li>
+        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Pedidos y Productos Adquiridos"><button type="submit" class="btn btn-default btn-sm" name="B"><img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Mis Pedidos</button></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Editar Datos Personales"><button type="submit" class="btn btn-default btn-sm" name="C"><img class="img-reponsive img-rounded" src="../../icons/actions/user-group-properties.png" /> Datos Personales</button></a></li>
@@ -182,10 +184,48 @@
 
 if($conn){
 
+// seccion administración de compra de productos
 if(isset($_POST['A'])){
     cartelera($conn);
 }
+if(isset($_POST['buy_producto'])){
+    $id = mysqli_real_escape_string($conn,$_POST['id']);
+    newPedido($id,$nombre,$conn);
+}
+if(isset($_POST['request_producto'])){
+    $cod_prod = mysqli_real_escape_string($conn,$_POST['cod_prod']);
+    $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+    $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+    $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+    $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
+    $cel = mysqli_real_escape_string($conn,$_POST['cel']);
+    $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $cantidad = mysqli_real_escape_string($conn,$_POST['cantidad']);
+    $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+    formEndPedido($cod_prod,$marca,$descripcion,$precio,$cliente,$cel,$direccion,$email,$cantidad,$pago);
+}
+if(isset($_POST['end_producto'])){
+    $cod_prod = mysqli_real_escape_string($conn,$_POST['cod_prod']);
+    $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+    $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+    $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+    $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
+    $cel = mysqli_real_escape_string($conn,$_POST['cel']);
+    $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $cantidad = mysqli_real_escape_string($conn,$_POST['cantidad']);
+    $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+    $importe = mysqli_real_escape_string($conn,$_POST['importe']);
+    closePedido($cod_prod,$marca,$descripcion,$precio,$cliente,$cel,$direccion,$email,$cantidad,$pago,$importe,$conn);
+}
+// fin seccion administracion de compra de productos
 
+// ================================================================== //
+if(isset($_POST['B'])){
+    misPedidos($nombre,$conn);
+}
+// seccion administración de usuario
 if(isset($_POST['C'])){
     loadUserBio($conn,$nombre);
 }
@@ -195,12 +235,13 @@ if(isset($_POST['D'])){
 if(isset($_POST['F'])){
     formModulos($entorno,$descripcion,$nombre,$conn);
 }
-
-
 if(isset($_POST['modulo'])){
     $modulo = mysqli_real_escape_string($conn,$_POST['valor']);
     addModulo($modulo,$nombre,$conn);
 }
+// fin seccion administracion de usuario
+
+
 
 }else{
     mysqli_error($conn);

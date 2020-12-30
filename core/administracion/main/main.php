@@ -1,6 +1,7 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
       include "../lib/lib.php";
+      include "../lib/lib_productos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -174,13 +175,13 @@
       </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel-body">
+      <ul class="list-group">
       <form action="main.php" method="POST">
       
-      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Ver Turnos Disponibles"><button type="submit" class="btn btn-default btn-sm" name="A"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Disponibles</button></a></li>
+      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos"><button type="submit" class="btn btn-default btn-sm" name="AA"><img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
       
       </from>
-      </div>
+      </ul>
     </div>
   </div>
   
@@ -330,8 +331,55 @@
       <?php
       
       if($conn){
-      
-      
+        
+        // seccion productos
+        if(isset($_POST['AA'])){
+            list_productos($conn);
+        }
+        if(isset($_POST['add_prod'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formAddProducto();
+        }
+        if(isset($_POST['addProd'])){
+            $cod_prod = mysqli_real_escape_string($conn,$_POST['cod_prod']);
+            $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+            $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+            $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+            addProducto($cod_prod,$descripcion,$marca,$precio,$conn);
+        }
+        if(isset($_POST['edit_producto'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEditProducto($id,$conn);
+        }
+        if(isset($_POST['updateProd'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+            $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+            $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+            updateProducto($id,$descripcion,$marca,$precio,$conn);
+        }
+        if(isset($_POST['eliminar_producto'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEliminarProducto($id,$conn);
+        }
+        if(isset($_POST['delete_prod'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteProducto($id,$conn);
+        }
+        if(isset($_POST['add_picture'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            uploadPicture($id);        
+        }
+        if(isset($_POST['upload_pic'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $file = basename($_FILES["file"]["name"]);
+            echo $file;
+            uploadFilePicture($id,$file,$conn);
+        }
+        // fin seccion productos
+        // ========================================================================= //
+        
+        // seccion gabinete
         if(isset($_POST['BA'])){
             turnosGabinete($conn);
         }

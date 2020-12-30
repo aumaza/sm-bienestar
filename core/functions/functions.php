@@ -17,7 +17,7 @@ function mensajes($nombre,$email,$mensaje,$conn){
     if($resp){
             echo "<br>";
 		    echo '<div class="container">';
-		    echo '<div class="alert alert-success alert-dismissible fade in">
+		    echo '<div class="alert alert-success alert-dismissible">
 		    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 		    echo '<img class="img-reponsive img-rounded" src="core/icons/actions/dialog-ok-apply.png" /> Su Mensaje fue enviado Satisfactoriamente.';
 		    echo "</div>";
@@ -25,7 +25,7 @@ function mensajes($nombre,$email,$mensaje,$conn){
     }else{
 			    echo "<br>";
 			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning alert-dismissible fade in">
+			    echo '<div class="alert alert-warning alert-dismissible">
 			    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
 			    echo '<img class="img-reponsive img-rounded" src="core/icons/status/task-attempt.png" /> Hubo un problema al intentar enviar mensaje.'  .mysqli_error($conn);
 			    echo "</div>";
@@ -1698,64 +1698,5 @@ function cancelReservaEquipo($id,$estado,$conn){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// FIN SECCION TURNOS EQUIPOS ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// SECCION VENTA PRODUCTOS /////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-** funciion de carga de cartelera
-*/
-function cartelera($conn){
-
-if($conn)
-{
-	$sql = "SELECT * FROM smb_productos";
-    	mysqli_select_db($conn,'smb_bienestar');
-    	$resultado = mysqli_query($conn,$sql);
-	//mostramos fila x fila
-	$count = 0;
-	echo '<div class="panel panel-default" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/status/mail-tagged.png"  class="img-reponsive img-rounded"> Productos';
-	echo '</div><br>';
-
-            echo "<table class='display compact' style='width:100%' id='myTable'>";
-              echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
-		    <th class='text-nowrap text-center'>Imagen</th>
-		    <th class='text-nowrap text-center'>Codigo Producto</th>
-		    <th class='text-nowrap text-center'>Marca</th>
-		    <th class='text-nowrap text-center'>Descripción</th>
-                    <th class='text-nowrap text-center'>Precio</th>
-                    
-                    <th>&nbsp;</th>
-                    </thead>";
-
-
-	while($fila = mysqli_fetch_array($resultado)){
-			  // Listado normal
-			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
-			 echo "<td align=center><img src='$fila[picture]' alt='Avatar' class='avatar' ></td>";
-			 echo "<td align=center>".$fila['cod_producto']."</td>";
-			 echo "<td align=center>".$fila['marca']."</td>";
-			 echo "<td align=center>".$fila['descripcion']."</td>";
-			 echo "<td align=center>".$fila['precio']."</td>";
-			 echo "<td class='text-nowrap'>";
-			 echo '<a href="../pedidos/newPedido.php?id='.$fila['id'].'" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span> Hacer Pedido</a>';
-			 echo "</td>";
-			 $count++;
-		}
-
-		echo "</table>";
-		echo "<br>";
-		echo '<button type="button" class="btn btn-primary">Cantidad de Registros:  ' .$count; echo '</button>';
-		echo '</div>';
-		}else{
-		  echo 'Connection Failure...';
-		}
-
-    mysqli_close($conn);
-}
 
 ?>
