@@ -44,6 +44,7 @@ if($conn){
                     <button type="submit" class="btn btn-primary btn-sm" name="edit_producto"><img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
                     <button type="submit" class="btn btn-danger btn-sm" name="eliminar_producto"><img src="../../icons/actions/trash-empty.png"  class="img-reponsive img-rounded"> Borrar</button>
                     <button type="submit" class="btn btn-success btn-sm" name="add_picture"><img src="../../icons/actions/fileview-preview.png"  class="img-reponsive img-rounded"> Imagen</button>
+                    <button type="submit" class="btn btn-warning btn-sm" name="sail_producto"><img src="../../icons/actions/help-donate.png"  class="img-reponsive img-rounded"> Venta</button>
                     </form>';
 			 echo "</td>";
 			 $count++;
@@ -418,6 +419,71 @@ if(!empty($_FILES["file"]["name"])){
 }
 }
 
+/*
+** funcion productos pedidos
+*/
+function pedidos($conn){
 
+if($conn)
+{
+	$sql = "SELECT * FROM smb_pedidos_productos";
+    	mysqli_select_db($conn,'smb_bienestar');
+    	$resultado = mysqli_query($conn,$sql);
+	//mostramos fila x fila
+	$count = 0;
+	echo '<div class="panel panel-default" >
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-pim-notes.png"  class="img-reponsive img-rounded"> Pedidos';
+	echo '</div><br>';
+
+            echo "<table class='display compact' style='width:100%' id='myTable'>";
+              echo "<thead>
+		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Fecha Pedido</th>
+		    <th class='text-nowrap text-center'>Cliente</th>
+		    <th class='text-nowrap text-center'>Móvil</th>
+		    <th class='text-nowrap text-center'>Dirección</th>
+		    <th class='text-nowrap text-center'>Email</th>
+		    <th class='text-nowrap text-center'>Código Producto</th>
+		    <th class='text-nowrap text-center'>Descripción</th>
+		    <th class='text-nowrap text-center'>Marca</th>
+		    <th class='text-nowrap text-center'>Precio</th>
+            <th class='text-nowrap text-center'>Cantidad</th>
+            <th class='text-nowrap text-center'>Tipo Pago</th>
+            <th class='text-nowrap text-center'>Importe Total</th>
+            <th>&nbsp;</th>
+            </thead>";
+
+
+	while($fila = mysqli_fetch_array($resultado)){
+			  // Listado normal
+			 echo "<tr>";
+			 echo "<td align=center>".$fila['id']."</td>";
+             echo "<td align=center>".$fila['f_pedido']."</td>";
+			 echo "<td align=center>".$fila['cliente']."</td>";
+			 echo "<td align=center>".$fila['movil']."</td>";
+			 echo "<td align=center>".$fila['direccion']."</td>";
+			 echo "<td align=center>".$fila['email']."</td>";
+			 echo "<td align=center>".$fila['cod_producto']."</td>";
+			 echo "<td align=center>".$fila['descripcion']."</td>";
+			 echo "<td align=center>".$fila['marca']."</td>";
+			 echo "<td align=center>".$fila['precio']."</td>";
+			 echo "<td align=center>".$fila['cantidad']."</td>";
+			 echo "<td align=center>".$fila['tipo_pago']."</td>";
+			 echo "<td align=center>".$fila['importe']."</td>";
+			 echo "<td class='text-nowrap'>";
+			 echo "</td>";
+			 $count++;
+		}
+
+		echo "</table>";
+		echo "<br>";
+		echo '<button type="button" class="btn btn-primary">Cantidad de Pedidos:  ' .$count; echo '</button>';
+		echo '</div>';
+		}else{
+		  echo 'Connection Failure...';
+		}
+
+    mysqli_close($conn);
+}
 
 ?>

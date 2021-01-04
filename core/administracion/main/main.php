@@ -180,7 +180,9 @@
       
       <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos"><button type="submit" class="btn btn-default btn-sm" name="AA"><img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
       
-      </from>
+      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos"><button type="submit" class="btn btn-default btn-sm" name="AB"><img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
+      
+      </form>
       </ul>
     </div>
   </div>
@@ -375,6 +377,9 @@
             $file = basename($_FILES["file"]["name"]);
             echo $file;
             uploadFilePicture($id,$file,$conn);
+        }
+        if(isset($_POST['AB'])){
+            pedidos($conn);
         }
         // fin seccion productos
         // ========================================================================= //
