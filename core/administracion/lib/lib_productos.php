@@ -478,7 +478,7 @@ if($conn)
 		echo "</table>";
 		echo "<br>";
 		echo '<button type="button" class="btn btn-primary">Cantidad de Pedidos:  ' .$count; echo '</button>';
-		echo '</div>';
+		echo '</div><br>';
 		}else{
 		  echo 'Connection Failure...';
 		}

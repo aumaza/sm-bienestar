@@ -22,13 +22,22 @@
 	}
 	
 	if($usuario == null || $usuario == ''){
-	echo '<div class="alert alert-danger" role="alert">';
-	echo "Usuario o Contraseña Incorrecta. Reintente Por Favor...";
-	echo '<br>';
-	echo "O no tiene permisos o no ha iniciado sesion...";
-	echo "</div>";
-	echo '<a href="../../logout.php"><br><br><button type="submit" class="btn btn-primary">Aceptar</button></a>';	
-	die();
+	echo '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+        <title>SMB - Bienestar</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../../../img/favicon.png" />';
+        skeleton();
+        echo '</head><body>';
+        echo '<br><div class="container">
+                <div class="alert alert-danger" role="alert">';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
+        echo "</div></div>";
+        die();
+        echo '</body></html>';
 	}
 	
 	$qry = "select * from smb_info_gabinete";

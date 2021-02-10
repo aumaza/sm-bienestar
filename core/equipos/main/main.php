@@ -1,5 +1,6 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
+      include "../lib/lib_equipos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -21,13 +22,22 @@
 	}
 	
 	if($usuario == null || $usuario == ''){
-	echo '<div class="alert alert-danger" role="alert">';
-	echo "Usuario o Contraseña Incorrecta. Reintente Por Favor...";
-	echo '<br>';
-	echo "O no tiene permisos o no ha iniciado sesion...";
-	echo "</div>";
-	echo '<a href="../../logout.php"><br><br><button type="submit" class="btn btn-primary">Aceptar</button></a>';	
-	die();
+	echo '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+        <title>SMB - Bienestar</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../../../img/favicon.png" />';
+        skeleton();
+        echo '</head><body>';
+        echo '<br><div class="container">
+                <div class="alert alert-danger" role="alert">';
+        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
+        echo "</div></div>";
+        die();
+        echo '</body></html>';
 	}
 	
 	$qry = "select * from smb_info_aequipos";
@@ -236,19 +246,30 @@
        if(isset($_POST['reservar'])){
         formReservaEquipo($nombre,$conn);
        }
-       // llama a función para finalizar el pedido de reserva de equipo
+       // llama a función para verificar si el pedido de reserva de equipo es posible
        if(isset($_POST['reserva_ok'])){
         $f_turno = mysqli_real_escape_string($conn,$_POST['f_turno']);
         $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+        $h_desde = mysqli_real_escape_string($conn,$_POST['hora_desde']);
+        $c_horas = mysqli_real_escape_string($conn,$_POST['cantidad_horas']);
+        $equipo = mysqli_real_escape_string($conn,$_POST['equipo']);
+        $localidad = mysqli_real_escape_string($conn,$_POST['localidad']);
+        formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_horas,$equipo,$conn);       
+       }
+       // carga solicitud de alquiler a la base de datos
+       if(isset($_POST['reserva_final'])){
+        $f_turno = mysqli_real_escape_string($conn,$_POST['f_turno']);
+        $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+        $localidad = mysqli_real_escape_string($conn,$_POST['localidad']);
         $hora_desde = mysqli_real_escape_string($conn,$_POST['hora_desde']);
-        $cantidad_horas = mysqli_real_escape_string($conn,$_POST['cantidad_horas']);
+        $hora_hasta = mysqli_real_escape_string($conn,$_POST['hora_hasta']);
         $equipo = mysqli_real_escape_string($conn,$_POST['equipo']);
         $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
         $dni = mysqli_real_escape_string($conn,$_POST['dni']);
         $movil = mysqli_real_escape_string($conn,$_POST['movil']);
-        $m_pago = mysqli_real_escape_string($conn,$_POST['m_pago']);
-        addTurnoEquipo($f_turno,$direccion,$hora_desde,$cantidad_horas,$equipo,$cliente,$dni,$movil,$m_pago,$monto,$conn);
-       
+        $monto = mysqli_real_escape_string($conn,$_POST['monto']);
+        $m_pago = mysqli_real_escape_string($conn,$_POST['pago']);
+        addTurnoEquipo($f_turno,$direccion,$localidad,$hora_desde,$hora_hasta,$equipo,$cliente,$dni,$movil,$m_pago,$monto,$conn);
        }
       
       
