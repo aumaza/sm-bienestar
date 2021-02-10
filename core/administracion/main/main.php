@@ -2,6 +2,7 @@
       include "../../functions/functions.php";
       include "../lib/lib.php";
       include "../lib/lib_productos.php";
+      include "../lib/lib_alquiler_equipos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -55,10 +56,11 @@
        }
        if($entorno == 'AD'){
             $descripcion = "Administración";
-       }
-    // obtenemos cantidad de usuarios registrados   
-    $consulta = "select count(id) as cantidad from smb_usuarios";
-    mysqli_select_db($conn,$dbase);
+	}
+	
+	// obtenemos cantidad de usuarios registrados   
+	$consulta = "select count(id) as cantidad from smb_usuarios";
+	mysqli_select_db($conn,$dbase);
 	$qry = mysqli_query($conn,$consulta);
 	while($row = mysqli_fetch_array($qry)){
 	      $cantidad = $row['cantidad'];
@@ -79,6 +81,15 @@
 	while($dato = mysqli_fetch_array($valor)){
         $count = $dato['count'];
 	}
+	
+	// obtenemos la cantidad de entregas de alquiler de equipos para el dia de la fecha
+	$request = "select count(id) as cantidad from smb_turnos_equipos where f_turno = curdate()";
+	mysqli_select_db($conn,$dbase);
+	$return = mysqli_query($conn,$request);
+	while($linea = mysqli_fetch_array($return)){
+	  $cant = $linea['cantidad'];
+	}
+	
 	
 ?>
 
@@ -318,7 +329,7 @@
         <div class="col-sm-3">
           <div class="well">
             <h4>Entrega Equipo Hoy</h4>
-            <p>10 Million</p>
+            <p><span class="badge"><?php echo $cant; ?></span></p>
             <form action="main.php" method="POST">
             <button type="submit" class="btn btn-default btn-sm" name="CA"><img class="img-reponsive img-rounded" src="../../icons/actions/im-aim.png" /> Entregas</button>
             </form>
@@ -327,7 +338,7 @@
         <div class="col-sm-3">
           <div class="well">
             <h4>Retiro Equipo Hoy</h4>
-            <p>30%</p>
+            <p><span class="badge"><?php echo $cant; ?></span></p>
             <form action="main.php" method="POST">
             <button type="submit" class="btn btn-default btn-sm" name="CB"><img class="img-reponsive img-rounded" src="../../icons/status/task-reminder.png" /> Retiros</button>
             </form>
@@ -418,6 +429,18 @@
         }
         // fin formularios de cambio estado solicitud y pagos realizados turnos gabinete
         
+        // Sección Equipos a entregar o retirar en el dia de la fecha
+        if(isset($_POST['CA'])){
+	  equiposEntrega($conn);  
+        }
+        if(isset($_POST['CB'])){
+	  equiposRetiro($conn);  
+        }
+        // fin sección Equipos a entregar o retirar en el día de la fecha
+        
+        
+        
+        // sección administración de usuarios
         if(isset($_POST['FA'])){
             loadUserPass($conn,$nombre);
         }
