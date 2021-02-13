@@ -1,8 +1,10 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
-      include "../lib/lib.php";
+      include "../lib/lib_core.php";
       include "../lib/lib_productos.php";
       include "../lib/lib_alquiler_equipos.php";
+      include "../lib/lib_turnos_gabinete.php";
+      include "../lib/lib_localidades.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -38,8 +40,10 @@
         echo '</body></html>';
 	}
 	
-		
-        if($entorno == 'VP'){
+	  
+	//obtenemos la Descripción de los modulos
+	
+       if($entorno == 'VP'){
             $descripcion = "Venta de Productos";
        }
        if($entorno == 'TG'){
@@ -198,9 +202,15 @@
       <ul class="list-group">
       <form action="main.php" method="POST">
       
-      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos"><button type="submit" class="btn btn-default btn-sm" name="AA"><img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
+      <li class="list-group-item" align="center">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos">
+	  <button type="submit" class="btn btn-default btn-sm" name="AA">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
       
-      <li class="list-group-item" align="center"><a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos"><button type="submit" class="btn btn-default btn-sm" name="AB"><img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
+      <li class="list-group-item" align="center">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos">
+	  <button type="submit" class="btn btn-default btn-sm" name="AB">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
       
       </form>
       </ul>
@@ -215,10 +225,21 @@
       </h4>
     </div>    
     <div id="collapse2" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+     <ul class="list-group">
+      <form action="main.php" method="POST">
+      
+      <li class="list-group-item" align="center">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Otorgar Turnos">
+	  <button type="submit" class="btn btn-default btn-sm" name="BB">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos</button></a></li>
+      
+      <li class="list-group-item" align="center">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+	  <button type="submit" class="btn btn-default btn-sm" name="BC">
+	    <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
+      
+      </form>
+      </ul>
     </div>
   </div>
   
@@ -278,9 +299,15 @@
       <ul class="list-group">
       <form action="main.php" method="POST">
       
-      <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña"><button type="submit" class="btn btn-default btn-sm" name="FA"><img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
+      <li class="list-group-item">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
+	  <button type="submit" class="btn btn-default btn-sm" name="FA">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
       
-      <li class="list-group-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades"><button type="submit" class="btn btn-default btn-sm" name="FC"><img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button></a></li>
+      <li class="list-group-item">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades">
+	  <button type="submit" class="btn btn-default btn-sm" name="FC">
+	    <img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button></a></li>
       
       </form>
       </ul>
@@ -298,11 +325,14 @@
     <div class="col-sm-9">
       <div class="well">
         <img src="../../../img/logo.png" class="img-rounded" alt="Random Name" width="180" height="50"><h2> Panel de Administración</h2>
-        <p>Entorno de Administración de todos los Módulos del Sistema</p>
-        <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
+	  <p>Entorno de Administración de todos los Módulos del Sistema</p>
+	    <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema">
+	      <button type="button" class="btn btn-default btn-sm">
+		<img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
         <form action="main.php" method="POST">
-        <div class="alert alert-info">
-        <button type="submit" name="mensajes" class="btn btn-primary btn-sm"><img src="../../icons/actions/mail-mark-unread-new.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge"><?php echo $count; ?></span></button>
+	  <div class="alert alert-info">
+	    <button type="submit" name="mensajes" class="btn btn-primary btn-sm">
+	      <img src="../../icons/actions/mail-mark-unread-new.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge"><?php echo $count; ?></span></button>
         </div>
         </form>
       </div><hr>
@@ -313,7 +343,8 @@
             <h4>Total Usuarios Registrados</h4>
             <p><span class="badge"><?php echo $cantidad; ?></span></p>
             <form action="main.php" method="POST">
-            <button type="submit" class="btn btn-default btn-sm" name="FB"><img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button>
+	      <button type="submit" class="btn btn-default btn-sm" name="FB">
+		<img class="img-reponsive img-rounded" src="../../icons/actions/meeting-attending.png" /> Usuarios</button>
             </form>
           </div>
         </div>
@@ -322,7 +353,8 @@
             <h4>Turnos Gabinete Hoy</h4>
             <p><span class="badge"><?php echo $turnos; ?></span></p>
             <form action="main.php" method="POST">
-            <button type="submit" class="btn btn-default btn-sm" name="BA"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Gabinete</button>
+	      <button type="submit" class="btn btn-default btn-sm" name="BA">
+		<img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Gabinete</button>
             </form>
           </div>
         </div>
@@ -331,7 +363,8 @@
             <h4>Entrega Equipo Hoy</h4>
             <p><span class="badge"><?php echo $cant; ?></span></p>
             <form action="main.php" method="POST">
-            <button type="submit" class="btn btn-default btn-sm" name="CA"><img class="img-reponsive img-rounded" src="../../icons/actions/im-aim.png" /> Entregas</button>
+	      <button type="submit" class="btn btn-default btn-sm" name="CA">
+		<img class="img-reponsive img-rounded" src="../../icons/actions/im-aim.png" /> Entregas</button>
             </form>
           </div>
         </div>
@@ -340,7 +373,8 @@
             <h4>Retiro Equipo Hoy</h4>
             <p><span class="badge"><?php echo $cant; ?></span></p>
             <form action="main.php" method="POST">
-            <button type="submit" class="btn btn-default btn-sm" name="CB"><img class="img-reponsive img-rounded" src="../../icons/status/task-reminder.png" /> Retiros</button>
+	      <button type="submit" class="btn btn-default btn-sm" name="CB">
+		<img class="img-reponsive img-rounded" src="../../icons/status/task-reminder.png" /> Retiros</button>
             </form>
           </div>
         </div>
@@ -406,6 +440,49 @@
         // seccion gabinete
         if(isset($_POST['BA'])){
             turnosGabinete($conn);
+        }
+        if(isset($_POST['BB'])){
+	    gabineteTurno($conn);
+        }
+        if(isset($_POST['reservaTurno'])){
+	   $id = mysqli_real_escape_string($conn,$_POST['id']);
+	   reserva($id,$conn);
+        }
+        if(isset($_POST['BC'])){
+	  filtros();
+        }
+        if(isset($_POST['d'])){
+	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+	  filtroDia($fecha,$pago,$conn);
+	  }
+	  if(isset($_POST['s'])){
+	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+	  filtroSemana($fecha,$pago,$conn);
+	  }
+	  if(isset($_POST['m'])){
+	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+	  filtroMes($fecha,$pago,$conn);
+	  }
+	  if(isset($_POST['a'])){
+	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+	  filtroAnio($fecha,$pago,$conn);
+	  }
+        
+        
+        if(isset($_POST['reservar'])){
+	  $id = mysqli_real_escape_string($conn,$_POST['id']);
+	  $especialidad = mysqli_real_escape_string($conn,$_POST['especialidad']);
+	  $espacio = mysqli_real_escape_string($conn,$_POST['espacio']);
+	  $nombre = mysqli_real_escape_string($conn,$_POST['cliente']);
+	  $hora = mysqli_real_escape_string($conn,$_POST['hora']);
+	  $fecha = mysqli_real_escape_string($conn,$_POST['f_turno']);
+	  $estado = 'Ocupado';
+	  $solicitud = 'Confirmado';
+	  addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$solicitud,$conn);
         }
         // carga formulario de cambio estado solicitud turno
         if(isset($_POST['estado'])){

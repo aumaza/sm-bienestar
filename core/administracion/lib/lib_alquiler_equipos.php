@@ -13,7 +13,7 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="panel panel-success" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> ALQUILER EQUIPOS - A entregar Hoy';
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/im-aim.png"  class="img-reponsive img-rounded"> ALQUILER EQUIPOS - A entregar Hoy';
 	echo '</div><br>';
             
             echo "<table class='display compact' style='width:100%' id='myTable'>";
@@ -52,6 +52,7 @@ if($conn){
 
 		echo "</table>";
 		echo "<br>";
+		echo '<button type="button" class="btn btn-primary">Cantidad de Entregas:  ' .$count; echo '</button>';
 		echo '</div>';
 		}else{
 		  echo 'Connection Failure...';
@@ -75,7 +76,7 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="panel panel-success" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> ALQUILER EQUIPOS - A entregar Hoy';
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/status/task-reminder.png"  class="img-reponsive img-rounded"> ALQUILER EQUIPOS - A Retirar Hoy';
 	echo '</div><br>';
             
             echo "<table class='display compact' style='width:100%' id='myTable'>";
@@ -114,6 +115,7 @@ if($conn){
 
 		echo "</table>";
 		echo "<br>";
+		echo '<button type="button" class="btn btn-primary">Cantidad de Retiros:  ' .$count; echo '</button>';
 		echo '</div>';
 		}else{
 		  echo 'Connection Failure...';
