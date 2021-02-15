@@ -552,7 +552,8 @@ function addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$sol
 function filtros(){
   
    echo '<div class="alert alert-info" align="center">
-	  <h2>Filtros para cierre de Pagos y Deudas por Día / Semana / Mes / Año</h2>
+	  <h3>Turnos Gabinete</h3>
+	  <p>Filtros para cierre de Pagos y Deudas por Día / Semana / Mes / Año</p>
 	 </div><hr>
    
 	  <form action="main.php" method="POST">

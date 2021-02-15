@@ -61,5 +61,38 @@ if($conn){
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+/*
+** funcion para realizar backup de base de datos
+*/
+function dumpMysql($conn){
+
+    if($conn){
+    
+    $dbname = "smb_bienestar";
+    $file = $dbname.'-' . date("d-m-Y") . '.sql';
+    $dump = "mysqldump --user=root --password=slack142 smb_bienestar > $file";
+    $command = system($dump);
+    chmod($file, 0777);
+
+    copy($file, "../../sqls/$file");
+    unlink($file);
+    echo '<div class="alert alert-success" role="alert">';
+    echo '<h1 class="panel-title text-left" contenteditable="true">
+	    <img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"><strong> DataBase Saved Successfully!!!</strong></h1>';
+    echo "</div>";
+        
+    }else{
+       
+	echo '<div class="alert alert-danger" role="alert">';
+	echo '<h1 class="panel-title text-left" contenteditable="true">
+		<img src="../../icons/actions/dialog-ok-apply.png" class="img-reponsive img-rounded"><strong>'. mysqli_error($conn). '</strong></h1>
+	      </div>';
+         
+         }
+         
+
+}
+
+
 
 ?>

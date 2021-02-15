@@ -308,6 +308,11 @@
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades">
 	  <button type="submit" class="btn btn-default btn-sm" name="FC">
 	    <img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button></a></li>
+	    
+      <li class="list-group-item">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Back up Base de Datos">
+	  <button type="submit" class="btn btn-default btn-sm" name="FD">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button></a></li>
       
       </form>
       </ul>
@@ -331,8 +336,18 @@
 		<img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
         <form action="main.php" method="POST">
 	  <div class="alert alert-info">
-	    <button type="submit" name="mensajes" class="btn btn-primary btn-sm">
-	      <img src="../../icons/actions/mail-mark-unread-new.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge"><?php echo $count; ?></span></button>
+	  <?php
+	    if($count > 0){
+	    
+	    echo '<button type="submit" name="mensajes" class="btn btn-primary btn-sm">
+		    <img src="../../icons/actions/mail-mark-unread-new.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge">' .$count. '</span></button>';
+	  }else{
+	    
+	    echo '<button type="submit" name="mensajes" class="btn btn-primary btn-sm">
+		    <img src="../../icons/actions/mail-mark-unread.png"  class="img-reponsive img-rounded"> Mensajes Recibidos <span class="badge">' .$count. '</span></button>';
+	  
+	  }
+        ?>
         </div>
         </form>
       </div><hr>
@@ -570,6 +585,11 @@
         }
         // fin seccion localidades
         // ========================================================================== //
+        
+        // back up de la base de datos
+        if(isset($_POST['FD'])){
+	  dumpMysql($conn);
+        }
         
         if(isset($_POST['mensajes'])){
             getMensajes($conn);
