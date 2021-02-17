@@ -37,7 +37,11 @@ if($conn)
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
+			 if($fila['picture'] != ''){
 			 echo "<td align=center><img src='$fila[picture]' alt='Avatar' class='avatar' ></td>";
+			 }else{
+			 echo "<td align=center><img src='../../icons/categories/system-help.png' alt='Avatar' class='avatar' ></td>";
+			 }
 			 echo "<td align=center>".$fila['cod_producto']."</td>";
 			 echo "<td align=center>".$fila['marca']."</td>";
 			 echo "<td align=center>".$fila['descripcion']."</td>";
@@ -82,6 +86,7 @@ if($conn)
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center'>Estado</th>
 		    <th class='text-nowrap text-center'>Fecha Pedido</th>
 		    <th class='text-nowrap text-center'>Código Producto</th>
 		    <th class='text-nowrap text-center'>Descripción</th>
@@ -98,7 +103,16 @@ if($conn)
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
-			  echo "<td align=center>".$fila['f_pedido']."</td>";
+			 if($fila['estado'] == ''){
+			 echo "<td align=center>".$fila['estado']."</td>";
+			 }
+			 if($fila['estado'] == 'Debe'){
+			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['estado'].'</font></td>';
+			 }
+			 if($fila['estado'] == 'Pago'){
+			 echo '<td align=center style="background-color:green"><font color="black">'.$fila['estado'].'</font></td>';
+			 }
+             echo "<td align=center>".$fila['f_pedido']."</td>";
 			 echo "<td align=center>".$fila['cod_producto']."</td>";
 			 echo "<td align=center>".$fila['descripcion']."</td>";
 			 echo "<td align=center>".$fila['marca']."</td>";
@@ -107,11 +121,7 @@ if($conn)
 			 echo "<td align=center>".$fila['tipo_pago']."</td>";
 			 echo "<td align=center>".$fila['importe']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
-                    <input type="hidden" name="id" value="'.$fila['id'].'">
-                    <button type="submit" class="btn btn-success btn-sm" name="buy_producto"><img src="../../icons/status/wallet-open.png"  class="img-reponsive img-rounded"> Comprar</button>
-                   </form>';
-			echo "</td>";
+			 echo "</td>";
 			 $count++;
 		}
 

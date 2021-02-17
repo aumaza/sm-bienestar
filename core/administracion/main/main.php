@@ -211,6 +211,11 @@
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos">
 	  <button type="submit" class="btn btn-default btn-sm" name="AB">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
+	    
+        <li class="list-group-item" align="center">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+	  <button type="submit" class="btn btn-default btn-sm" name="AC">
+	    <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
       
       </form>
       </ul>
@@ -251,10 +256,9 @@
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+      <div class="panel-body">
+	<img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      </div>
     </div>
   </div>
   
@@ -266,10 +270,9 @@
       </h4>
     </div>
     <div id="collapse4" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+      <div class="panel-body">
+	<img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      </div>
     </div>
   </div>
   
@@ -281,10 +284,9 @@
       </h4>
     </div>
     <div id="collapse5" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
+      <div class="panel-body">
+	<img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+      </div>
     </div>
   </div>
   
@@ -446,8 +448,58 @@
             $file = basename($_FILES["file"]["name"]);
             uploadFilePicture($id,$file,$conn);
         }
+        if(isset($_POST['sail_producto'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formPedido($id,$conn);
+        }
+        if(isset($_POST['venta'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $nombre = mysqli_real_escape_string($conn,$_POST['cliente']);
+            newPedidoProducto($id,$nombre,$conn);
+        }
+        if(isset($_POST['request_producto'])){
+            $cod_prod = mysqli_real_escape_string($conn,$_POST['cod_prod']);
+            $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+            $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+            $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+            $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
+            $cel = mysqli_real_escape_string($conn,$_POST['cel']);
+            $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+            $email = mysqli_real_escape_string($conn,$_POST['email']);
+            $cantidad = mysqli_real_escape_string($conn,$_POST['cantidad']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            endPedido($cod_prod,$marca,$descripcion,$precio,$cliente,$cel,$direccion,$email,$cantidad,$pago);
+        }
+        if(isset($_POST['end_pedido'])){
+            $cod_prod = mysqli_real_escape_string($conn,$_POST['cod_prod']);
+            $marca = mysqli_real_escape_string($conn,$_POST['marca']);
+            $descripcion = mysqli_real_escape_string($conn,$_POST['descripcion']);
+            $precio = mysqli_real_escape_string($conn,$_POST['precio']);
+            $cliente = mysqli_real_escape_string($conn,$_POST['cliente']);
+            $cel = mysqli_real_escape_string($conn,$_POST['cel']);
+            $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+            $email = mysqli_real_escape_string($conn,$_POST['email']);
+            $cantidad = mysqli_real_escape_string($conn,$_POST['cantidad']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            $importe = mysqli_real_escape_string($conn,$_POST['importe']);
+            $estado = mysqli_real_escape_string($conn,$_POST['estado']);
+            cerrarPedido($cod_prod,$marca,$descripcion,$precio,$cliente,$cel,$direccion,$email,$cantidad,$pago,$importe,$estado,$conn);
+        
+        }
         if(isset($_POST['AB'])){
             pedidos($conn);
+        }
+        if(isset($_POST['mod_estado'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            cambiarEstado($id,$conn);
+        }
+        if(isset($_POST['update_estado_prod'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $estado = mysqli_real_escape_string($conn,$_POST['state']);
+            actualizarState($id,$estado,$conn);        
+        }
+        if(isset($_POST['AC'])){
+            filtrosProductos();
         }
         // fin seccion productos
         // ========================================================================= //
@@ -457,47 +509,47 @@
             turnosGabinete($conn);
         }
         if(isset($_POST['BB'])){
-	    gabineteTurno($conn);
+            gabineteTurno($conn);
         }
         if(isset($_POST['reservaTurno'])){
-	   $id = mysqli_real_escape_string($conn,$_POST['id']);
-	   reserva($id,$conn);
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            reserva($id,$conn);
         }
         if(isset($_POST['BC'])){
-	  filtros();
+            filtros();
         }
         if(isset($_POST['d'])){
-	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
-	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
-	  filtroDia($fecha,$pago,$conn);
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroDia($fecha,$pago,$conn);
 	  }
 	  if(isset($_POST['s'])){
-	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
-	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
-	  filtroSemana($fecha,$pago,$conn);
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroSemana($fecha,$pago,$conn);
 	  }
 	  if(isset($_POST['m'])){
-	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
-	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
-	  filtroMes($fecha,$pago,$conn);
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroMes($fecha,$pago,$conn);
 	  }
 	  if(isset($_POST['a'])){
-	  $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
-	  $pago = mysqli_real_escape_string($conn,$_POST['pago']);
-	  filtroAnio($fecha,$pago,$conn);
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroAnio($fecha,$pago,$conn);
 	  }
         
         
         if(isset($_POST['reservar'])){
-	  $id = mysqli_real_escape_string($conn,$_POST['id']);
-	  $especialidad = mysqli_real_escape_string($conn,$_POST['especialidad']);
-	  $espacio = mysqli_real_escape_string($conn,$_POST['espacio']);
-	  $nombre = mysqli_real_escape_string($conn,$_POST['cliente']);
-	  $hora = mysqli_real_escape_string($conn,$_POST['hora']);
-	  $fecha = mysqli_real_escape_string($conn,$_POST['f_turno']);
-	  $estado = 'Ocupado';
-	  $solicitud = 'Confirmado';
-	  addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$solicitud,$conn);
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $especialidad = mysqli_real_escape_string($conn,$_POST['especialidad']);
+            $espacio = mysqli_real_escape_string($conn,$_POST['espacio']);
+            $nombre = mysqli_real_escape_string($conn,$_POST['cliente']);
+            $hora = mysqli_real_escape_string($conn,$_POST['hora']);
+            $fecha = mysqli_real_escape_string($conn,$_POST['f_turno']);
+            $estado = 'Ocupado';
+            $solicitud = 'Confirmado';
+            addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$solicitud,$conn);
         }
         // carga formulario de cambio estado solicitud turno
         if(isset($_POST['estado'])){
@@ -523,10 +575,10 @@
         
         // Sección Equipos a entregar o retirar en el dia de la fecha
         if(isset($_POST['CA'])){
-	  equiposEntrega($conn);  
+            equiposEntrega($conn);  
         }
         if(isset($_POST['CB'])){
-	  equiposRetiro($conn);  
+            equiposRetiro($conn);  
         }
         // fin sección Equipos a entregar o retirar en el día de la fecha
         
@@ -588,7 +640,7 @@
         
         // back up de la base de datos
         if(isset($_POST['FD'])){
-	  dumpMysql($conn);
+            dumpMysql($conn);
         }
         
         if(isset($_POST['mensajes'])){
