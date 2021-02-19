@@ -1,3 +1,9 @@
+#crear nuevo usuario y luego cambiar datos en archivo connection.php
+CREATE USER 'smb_bienestar'@'localhost' IDENTIFIED BY 'smb_bienestar';
+GRANT ALL PRIVILEGES ON smb_bienestar . * TO 'smb_bienestar'@'localhost';
+FLUSH PRIVILEGES;
+
+
 #tabla smb_info_gabinete
 create table smb_info_gabinete (
 id int(11) auto_increment primary key, 

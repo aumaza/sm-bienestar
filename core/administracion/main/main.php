@@ -501,6 +501,26 @@
         if(isset($_POST['AC'])){
             filtrosProductos();
         }
+        if(isset($_POST['d_productos'])){
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroDiaProductos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['s_productos'])){
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroSemanaProductos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['m_productos'])){
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroMesProductos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['a_productos'])){
+            $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+            $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+            filtroAnioProductos($fecha,$pago,$conn);
+        }
         // fin seccion productos
         // ========================================================================= //
         

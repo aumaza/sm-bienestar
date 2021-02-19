@@ -922,18 +922,222 @@ function filtrosProductos(){
             </div><hr>
 	  
 	  <div class="alert alert-warning" align="center">
-	   <button type="submit" class="btn btn-default" name="d">
+	   <button type="submit" class="btn btn-default" name="d_productos">
 	      <img src="../../icons/actions/view-calendar-day.png"  class="img-reponsive img-rounded"> Filtrar Día</button>
-	    <button type="submit" class="btn btn-default" name="s">
+	    <button type="submit" class="btn btn-default" name="s_productos">
 	      <img src="../../icons/actions/view-calendar-week.png"  class="img-reponsive img-rounded"> Filtrar Semana</button>
-	    <button type="submit" class="btn btn-default" name="m">
+	    <button type="submit" class="btn btn-default" name="m_productos">
 	      <img src="../../icons/actions/view-calendar-month.png"  class="img-reponsive img-rounded"> Filtrar Mes</button>
-	    <button type="submit" class="btn btn-default" name="a">
+	    <button type="submit" class="btn btn-default" name="a_productos">
 	      <img src="../../icons/actions/view-calendar.png"  class="img-reponsive img-rounded"> Filtrar Año</button>
 	  </div>
 	 </form><br>';
+
+}
+
+
+/*
+** funcion que devuelve el filtro aplicado para un día
+*/
+function filtroDiaProductos($fecha,$pago,$conn){
   
+  $sql = "select sum(importe) as monto_total from smb_pedidos_productos where f_pedido = '$fecha' and estado = '$pago'";
+  mysqli_select_db($conn,'smb_bienestar');
+  $query = mysqli_query($conn,$sql);
+  while($row = mysqli_fetch_array($query)){
+    $total = $row['monto_total'];
+  }
+  
+  if($total == ''){
+    
+    $total = '0.00';
+    
+    
+  }
+  
+  if($query){
+  
+  setlocale(LC_ALL,"es_ES");
+  $fecha = strftime("%d %b %Y", strtotime($fecha));
+    
+    if($pago == 'Pago'){
+     
+	echo '<div class="alert alert-success" alert-dismissible role="alert">
+		<img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+		  <strong>Atención:</strong> El total de Pagos para la fecha: <strong>'."$fecha".'</strong>  es de <strong>$'."$total".'</strong>
+	      </div>';
+    
+  }
+  if($pago == 'Debe'){
+    
+    echo '<div class="alert alert-warning" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> El total de Deuda para la fecha: <strong>'."$fecha".'</strong> es de <strong>$'."$total".'</strong>
+	  </div>';
+  }
+  }else{
+    
+    echo '<div class="alert alert-success" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
+	  </div>';
+  }
   
 }
+
+/*
+** funcion que devuelve el filtro aplicado para una semana
+*/
+function filtroSemanaProductos($fecha,$pago,$conn){
+  
+  $sql = "select date(date_add('$fecha', interval 1 week)) as semana, sum(importe) as monto_total from smb_pedidos_productos where estado = '$pago'";
+  mysqli_select_db($conn,'smb_bienestar');
+  $query = mysqli_query($conn,$sql);
+  while($row = mysqli_fetch_array($query)){
+    $total = $row['monto_total'];
+    $f_hasta = $row['semana'];
+  }
+  
+  if($total == ''){
+    
+    $total = '0.00';
+    
+    
+  }
+  
+  if($query){
+  
+  setlocale(LC_ALL,"es_ES");
+  $fecha = strftime("%d %b %Y", strtotime($fecha));
+  $f_hasta = strftime("%d %b %Y", strtotime($f_hasta));
+    
+    if($pago == 'Pago'){
+     
+	echo '<div class="alert alert-success" alert-dismissible role="alert">
+		<img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+		  <strong>Atención:</strong> El total de Pagos para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	      </div>';
+    
+  }
+  if($pago == 'Debe'){
+    
+    echo '<div class="alert alert-warning" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> El total de Deuda para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	  </div>';
+  }
+  }else{
+    
+    echo '<div class="alert alert-success" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
+	  </div>';
+  }
+ 
+}
+
+/*
+** funcion que devuelve el filtro aplicado para un mes
+*/
+function filtroMesProductos($fecha,$pago,$conn){
+  
+  $sql = "select date(date_add('$fecha', interval 1 month)) as semana, sum(importe) as monto_total from smb_pedidos_productos where estado = '$pago'";
+  mysqli_select_db($conn,'smb_bienestar');
+  $query = mysqli_query($conn,$sql);
+  while($row = mysqli_fetch_array($query)){
+    $total = $row['monto_total'];
+    $f_hasta = $row['semana'];
+  }
+  
+  if($total == ''){
+    
+    $total = '0.00';
+    
+    
+  }
+  
+  if($query){
+  
+  setlocale(LC_ALL,"es_ES");
+  $fecha = strftime("%d %b %Y", strtotime($fecha));
+  $f_hasta = strftime("%d %b %Y", strtotime($f_hasta));
+    
+    if($pago == 'Pago'){
+     
+	echo '<div class="alert alert-success" alert-dismissible role="alert">
+		<img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+		  <strong>Atención:</strong> El total de Pagos para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	      </div>';
+    
+  }
+  if($pago == 'Debe'){
+    
+    echo '<div class="alert alert-warning" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> El total de Deuda para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	  </div>';
+  }
+  }else{
+    
+    echo '<div class="alert alert-success" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
+	  </div>';
+  }
+  
+}
+
+/*
+** funcion que devuelve el filtro aplicado para un año
+*/
+function filtroAnioProductos($fecha,$pago,$conn){
+  
+  $sql = "select date(date_add('$fecha', interval 1 year)) as semana, sum(importe) as monto_total from smb_pedidos_productos where estado = '$pago'";
+  mysqli_select_db($conn,'smb_bienestar');
+  $query = mysqli_query($conn,$sql);
+  while($row = mysqli_fetch_array($query)){
+    $total = $row['monto_total'];
+    $f_hasta = $row['semana'];
+  }
+  
+  if($total == ''){
+    
+    $total = '0.00';
+    
+    
+  }
+  
+  if($query){
+  
+  setlocale(LC_ALL,"es_ES");
+  $fecha = strftime("%d %b %Y", strtotime($fecha));
+  $f_hasta = strftime("%d %b %Y", strtotime($f_hasta));
+    
+    if($pago == 'Pago'){
+     
+	echo '<div class="alert alert-success" alert-dismissible role="alert">
+		<img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+		  <strong>Atención:</strong> El total de Pagos para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	      </div>';
+    
+  }
+  if($pago == 'Debe'){
+    
+    echo '<div class="alert alert-warning" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> El total de Deuda para el intervalo de fechas: <strong>'."$fecha".'</strong> hasta <strong>'."$f_hasta".'</strong> es de <strong>$'."$total".'</strong>
+	  </div>';
+  }
+  }else{
+    
+    echo '<div class="alert alert-success" alert-dismissible role="alert">
+	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
+	  </div>';
+  }
+  
+}
+
+
 
 ?>
