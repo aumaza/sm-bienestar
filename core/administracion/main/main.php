@@ -33,8 +33,12 @@
         echo '</head><body>';
         echo '<br><div class="container">
                 <div class="alert alert-danger" role="alert">';
-        echo '<p align="center"><img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
-        echo '<a href="../../logout.php"><hr><button type="buton" class="btn btn-default btn-block"><img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
+        echo '<p align="center">
+		<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> 
+		  Su sesión a caducado. Por favor, inicie sesión nuevamente</p>';
+        echo '<a href="../../logout.php"><hr>
+		<button type="buton" class="btn btn-default btn-block">
+		  <img src="../../icons/status/dialog-password.png"  class="img-reponsive img-rounded"> Iniciar</button></a>';	
         echo "</div></div>";
         die();
         echo '</body></html>';
@@ -256,10 +260,22 @@
       </h4>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">
-	<img class="img-reponsive img-rounded" src="../../icons/categories/preferences-system.png" /> En desarrollo
+     	<ul class="list-group">
+	  <form action="main.php" method="POST">
+	    
+	    <li class="list-group-item" align="center">
+	      <a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Turnos Equipos Solicitados">
+		<button type="submit" class="btn btn-default btn-sm" name="CC">
+		  <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos Equipos</button></a></li>
+	    
+	    <li class="list-group-item" align="center">
+	      <a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+		<button type="submit" class="btn btn-default btn-sm" name="CD">
+		  <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
+	    
+	  </form>
+	</ul>
       </div>
-    </div>
   </div>
   
   <div class="panel panel-default">
@@ -592,7 +608,9 @@
            updatePagos($id,$pagos,$importe,$conn);
         }
         // fin formularios de cambio estado solicitud y pagos realizados turnos gabinete
+        // ================================================================================== // 
         
+        // Sección Alquiler de equipos
         // Sección Equipos a entregar o retirar en el dia de la fecha
         if(isset($_POST['CA'])){
             equiposEntrega($conn);  
@@ -601,6 +619,25 @@
             equiposRetiro($conn);  
         }
         // fin sección Equipos a entregar o retirar en el día de la fecha
+        
+        if(isset($_POST['CC'])){
+	  equiposTurnos($conn);
+        }
+        if(isset($_POST['estado_solicitud'])){
+	  $id = mysqli_real_escape_string($conn,$_POST['id']);
+	  formEstadoSolicitud($id,$conn);
+        }
+        if(isset($_POST['updateSolicitud'])){
+	  $id = mysqli_real_escape_string($conn,$_POST['id']);
+	  $solicitud = mysqli_real_escape_string($conn,$_POST['solicitud_equipo']);
+	  updateSolicitudEquipo($id,$solicitud,$conn);  
+        }
+        if(isset($_POST['CD'])){
+	  filtrosEquipos();
+        }
+        
+        // fin sección alquiler de equipos
+        // ================================================================================== //
         
         
         
@@ -682,11 +719,12 @@
       
       }else{
                 echo "<br>";
-			    echo '<div class="container">';
-			    echo '<div class="alert alert-warning" role="alert">';
-			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Hubo al Intentar Conectarse a la Base de Datos.  '  .mysqli_error($conn);
-			    echo "</div>";
-			    echo "</div>";
+		echo '<div class="container">';
+		echo '<div class="alert alert-warning" role="alert">';
+		echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> 
+			Hubo al Intentar Conectarse a la Base de Datos.  '  .mysqli_error($conn);
+		echo "</div>";
+		echo "</div>";
       }
       
       
