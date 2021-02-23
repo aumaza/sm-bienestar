@@ -517,7 +517,7 @@ function filtroDiaEquipos($fecha,$pago,$conn){
   }else{
     
     echo '<div class="alert alert-success" alert-dismissible role="alert">
-	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	    <img src="../../icons/emblems/emblem-important.png"  class="img-reponsive img-rounded">
 	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
 	  </div>';
   }
@@ -569,7 +569,7 @@ function filtroSemanaEquipos($fecha,$pago,$conn){
   }else{
     
     echo '<div class="alert alert-success" alert-dismissible role="alert">
-	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	    <img src="../../icons/emblems/emblem-important.png"  class="img-reponsive img-rounded">
 	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
 	  </div>';
   }
@@ -621,7 +621,7 @@ function filtroMesEquipos($fecha,$pago,$conn){
   }else{
     
     echo '<div class="alert alert-success" alert-dismissible role="alert">
-	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	    <img src="../../icons/emblems/emblem-important.png"  class="img-reponsive img-rounded">
 	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
 	  </div>';
   }
@@ -673,7 +673,7 @@ function filtroAnioEquipos($fecha,$pago,$conn){
   }else{
     
     echo '<div class="alert alert-success" alert-dismissible role="alert">
-	    <img src="../../icons/status/task-complete.png"  class="img-reponsive img-rounded">
+	    <img src="../../icons/emblems/emblem-important.png"  class="img-reponsive img-rounded">
 	      <strong>Atención:</strong> Hubo un error al intentar realizar la consulta...
 	  </div>';
   }
