@@ -64,8 +64,10 @@ if($conn){
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
-                    <button type="submit" class="btn btn-primary btn-sm" name="estado"><img src="../../icons/actions/view-calendar-upcoming-events.png"  class="img-reponsive img-rounded"> Estado Solicitud</button>
-                    <button type="submit" class="btn btn-success btn-sm" name="pay"><img src="../../icons/actions/view-loan.png"  class="img-reponsive img-rounded"> Pagos</button>
+                    <button type="submit" class="btn btn-primary btn-sm" name="estado">
+		      <img src="../../icons/actions/view-calendar-upcoming-events.png"  class="img-reponsive img-rounded"> Estado Solicitud</button>
+                    <button type="submit" class="btn btn-success btn-sm" name="pay">
+		      <img src="../../icons/actions/view-loan.png"  class="img-reponsive img-rounded"> Pagos</button>
                     </form>';
 			 echo "</td>";
 			 $count++;

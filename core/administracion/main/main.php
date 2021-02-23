@@ -632,10 +632,38 @@
 	  $solicitud = mysqli_real_escape_string($conn,$_POST['solicitud_equipo']);
 	  updateSolicitudEquipo($id,$solicitud,$conn);  
         }
+        if(isset($_POST['estado_pagos'])){
+	  $id = mysqli_real_escape_string($conn,$_POST['id']);
+	  cambiarEstadoPago($id,$conn);
+        }
+        if(isset($_POST['update_estado_equi'])){
+	  $id = mysqli_real_escape_string($conn,$_POST['id']);
+	  $estado = mysqli_real_escape_string($conn,$_POST['state']);
+	  actualizarEstadoPagos($id,$estado,$conn);
+        }
         if(isset($_POST['CD'])){
 	  filtrosEquipos();
         }
-        
+        if(isset($_POST['d_equipo'])){
+	   $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+           $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+           filtroDiaEquipos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['s_equipo'])){
+	   $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+           $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+           filtroSemanaEquipos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['m_equipo'])){
+	   $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+           $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+           filtroMesEquipos($fecha,$pago,$conn);
+        }
+        if(isset($_POST['a_equipo'])){
+	   $fecha = mysqli_real_escape_string($conn,$_POST['fecha']);
+           $pago = mysqli_real_escape_string($conn,$_POST['pago']);
+           filtroAnioEquipos($fecha,$pago,$conn);
+        }
         // fin sección alquiler de equipos
         // ================================================================================== //
         

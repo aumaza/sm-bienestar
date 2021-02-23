@@ -44,7 +44,7 @@ if($conn){
 			 echo "<td align=center>".$fila['descripcion']."</td>";
 			 echo "<td align=center>".$fila['precio']."</td>";
 			 echo "<td class='text-nowrap'>";
-			 echo '<form <action="main.php" method="POST">
+			 echo '<form action="main.php" method="POST">
 				<input type="hidden" name="id" value="'.$fila['id'].'">
 				  <button type="submit" class="btn btn-primary btn-sm" name="edit_producto">
 				    <img src="../../icons/actions/document-edit.png"  class="img-reponsive img-rounded"> Editar</button>
