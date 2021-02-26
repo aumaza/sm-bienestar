@@ -62,8 +62,10 @@ especialidad varchar(60),
 hora time not null,
 cliente varchar(90),
 espacio varchar(11),
+pagos varchar(4),
+importe float(8,2),
 estado enum('Libre','Ocupado') not null,
-solicitud enum('Confirmado','Stand-By','Cancelado')
+solicitud enum('Confirmado','Stand-By','Cancelado','Atendido')
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
