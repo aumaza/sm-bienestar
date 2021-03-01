@@ -588,7 +588,7 @@
             addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$solicitud,$conn);
         }
         // carga formulario de cambio estado solicitud turno
-        if(isset($_POST['estado'])){
+        if(isset($_POST['cambiar_estado'])){
             $id = mysqli_real_escape_string($conn,$_POST['id']);
             formEstado($id,$conn);
         }

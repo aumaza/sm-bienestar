@@ -356,11 +356,13 @@ if($conn){
 			 echo "<td align=center>".$fila['espacio']."</td>";
 			 echo "<td align=center>".$fila['cliente']."</td>";
 			 echo "<td class='text-nowrap'>";
+			 
+			 echo '<form <action="main.php" method="POST">
+                    <input type="hidden" name="id" value="'.$fila['id'].'">';
 			 if($fila['estado'] == 'Libre'){
 			  
-			 echo '<form <action="main.php" method="POST">
-				<input type="hidden" name="id" value="'.$fila['id'].'">
-				<button type="submit" class="btn btn-success btn-sm" name="reservaTurno">
+			 
+				echo '<button type="submit" class="btn btn-success btn-sm" name="reservaTurno">
 				  <img src="../../icons/actions/view-calendar-upcoming-events.png"  class="img-reponsive img-rounded"> Reservar</button>';
 				
 			 }
