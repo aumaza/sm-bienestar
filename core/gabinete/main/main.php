@@ -1,5 +1,6 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
+      include "../lib/lib_gabinete.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -155,14 +156,30 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
     <hr><div class="alert alert-success">
-      <br><h4 align="left"><img src="<?php echo $avatar; ?>" alt="Avatar" class="avatar" > <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
-      <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
+      <br><h4 align="left">
+      <?php
+      
+      if($avatar == ''){
+          
+          echo '<img src="../../icons/actions/edit-image-face-recognize.png" alt="Avatar" class="avatar" >';
+          
+        }else{
+         echo '<img src="'.$avatar.'" alt="Avatar" class="avatar" >';
+        }
+      ?>
+        <strong>Bienvenido/a:</strong> <?php echo $nombre; ?></h4>
+         
+         <p><strong>Su Usuario es:</strong> <?php echo $usuario;?></p>
       </div><hr>
+      
+      <p align="center"><img class="img-reponsive img-rounded" src="../../icons/actions/go-down.png" /> 
+        <strong>Para Comenzar haz click sobre Menú</strong></p><hr>
+      
        <div class="panel-group">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" href="#collapse1" data-toggle="tooltip" data-placement="right" title="Menú Principal - Desplegame!"><img class="img-reponsive img-rounded" src="../../icons/categories/preferences-desktop-peripherals.png" /> Menú</a>
+              <a data-toggle="collapse" href="#collapse1" data-toggle="tooltip" data-placement="right" title="Menú Principal - Desplegame!"><img class="img-reponsive img-rounded" src="../../icons/categories/preferences-desktop-peripherals.png" /> Menú</a>
             </h4>
             </div>
             
@@ -209,16 +226,24 @@
 
     <div class="col-sm-9">
       <hr><div class="alert alert-success">
-        <h4 align="center"><a href="main.php"><img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> <strong>Turnos Gabinete - Home</strong></a></h4>
+        <h4 align="center"><a href="main.php">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> <strong>Turnos Gabinete - Home</strong></a></h4>
         </div><hr>
         
       <div class="alert alert-info"> 
       <h4><img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información</h4>
-      </div>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/irc-voice.png" /> <?php echo $mensaje; ?></p>
+      </div><hr>
       
-      <h5></span> <?php setlocale(LC_ALL,"es_ES"); ?>
-	<button><span class="glyphicon glyphicon-calendar"></span> <?php echo "Fecha Actual: ". strftime("%d de %b de %Y"); ?> </button></h5><hr>
-      <p><img class="img-reponsive img-rounded" src="../../icons/actions/irc-voice.png" /> <?php echo $mensaje; ?></p><hr>
+     <?php setlocale(LC_ALL,"es_ES"); ?>
+	<button type="button" class="btn btn-default navbar-btn"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> <?php echo "<strong> Fecha Actual:</strong> ". strftime("%d de %b de %Y"); ?> </button>
+	
+	<!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal2">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Ayuda en línea</button>
+	
+	<hr>
+     
       
       
       <?php
@@ -276,35 +301,12 @@
   </script>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Desea cancelar Turno?</h4>
-      </div>
-      <div class="modal-body">
-    
-        
-        <form action="main.php" method="POST">
-        <input type="hidden" class="form-control" name="bookId" id="bookId" value="bookId">
-               
-         
-  <button type="submit" class="btn btn-success btn-block" name="cancel"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
-</form>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<?php modal_1(); ?>
 <!-- end Modal -->
 
+<!-- Modal 2 -->
+<?php modal_2(); ?>
+<!-- End Modal 2 -->
 
     
 

@@ -1,5 +1,6 @@
 <?php include "../../connection/connection.php";
       include "../../functions/functions.php";
+      include "../lib/lib_gabinete.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
