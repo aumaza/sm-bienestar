@@ -133,7 +133,7 @@ function equiposTurnos($conn){
 
 if($conn){
 	
-	$sql = "SELECT * FROM smb_turnos_equipos";
+	$sql = "SELECT * FROM smb_turnos_equipos WHERE f_turno = CURDATE() + 1 week";
     	mysqli_select_db($conn,'smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila

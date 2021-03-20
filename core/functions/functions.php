@@ -913,7 +913,7 @@ function gabineteTurnos($conn){
 
 if($conn){
 	
-	$sql = "SELECT * FROM smb_turnos_gabinete";
+	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 1 week";
     	mysqli_select_db('smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila

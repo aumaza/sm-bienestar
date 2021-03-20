@@ -12,8 +12,8 @@ function turnosGabinete($conn){
 
 if($conn){
 	
-	//"SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 90 DAY";
-	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno = '2020-01-01' and CURDATE() + INTERVAL 90 DAY and cliente <> 'NULL'";
+	//$sql = "SELECT * FROM smb_turnos_gabinete WHERE f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 1 week";
+	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 1 WEEK and cliente <> 'NULL'";
     	mysqli_select_db($conn,'smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
@@ -64,7 +64,7 @@ if($conn){
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
                     <input type="hidden" name="id" value="'.$fila['id'].'">
-                    <button type="submit" class="btn btn-primary btn-sm" name="estado">
+                    <button type="submit" class="btn btn-primary btn-sm" name="change_estado_tg">
 		      <img src="../../icons/actions/view-calendar-upcoming-events.png"  class="img-reponsive img-rounded"> Estado Solicitud</button>
                     <button type="submit" class="btn btn-success btn-sm" name="pay">
 		      <img src="../../icons/actions/view-loan.png"  class="img-reponsive img-rounded"> Pagos</button>
@@ -322,7 +322,7 @@ function gabineteTurno($conn){
 
 if($conn){
 	
-	$sql = "SELECT * FROM smb_turnos_gabinete";
+	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 1 week";
     	mysqli_select_db('smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila

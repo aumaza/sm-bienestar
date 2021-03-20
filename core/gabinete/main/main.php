@@ -209,7 +209,7 @@
 
     <div class="col-sm-9">
       <hr><div class="alert alert-success">
-        <h4 align="center"><a href="main.php"><img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> <strong>Turnos Gabinete</strong></a></h4>
+        <h4 align="center"><a href="main.php"><img class="img-reponsive img-rounded" src="../../icons/actions/go-home.png" /> <strong>Turnos Gabinete - Home</strong></a></h4>
         </div><hr>
         
       <div class="alert alert-info"> 

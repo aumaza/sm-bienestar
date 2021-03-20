@@ -75,7 +75,7 @@
 	}
 	
 	// obtenemos cantidad de turnos gabinete del dia de hoy
-	$cons = "select count(id) as cantidad from smb_turnos_gabinete where f_turno = NOW()";
+	$cons = "select count(id) as cantidad from smb_turnos_gabinete where f_turno = curdate() and estado = 'Ocupado'";
 	mysqli_select_db($conn,$dbase);
 	$retval = mysqli_query($conn,$cons);
 	while($fila = mysqli_fetch_array($retval)){
@@ -588,7 +588,7 @@
             addReserva($id,$especialidad,$espacio,$nombre,$hora,$fecha,$estado,$solicitud,$conn);
         }
         // carga formulario de cambio estado solicitud turno
-        if(isset($_POST['cambiar_estado'])){
+        if(isset($_POST['cambiar_estado']) || isset($_POST['change_estado_tg'])){
             $id = mysqli_real_escape_string($conn,$_POST['id']);
             formEstado($id,$conn);
         }
