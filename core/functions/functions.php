@@ -106,12 +106,12 @@ function editPassUser($id,$conn){
 	  
 	  <div class="input-group">
 	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	    <input id="password" type="password" class="form-control" name="pass1" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Password" >
+	    <input id="password" type="password" class="form-control" name="pass1" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Password" required>
 	  </div>
 	 
 	 <div class="input-group">
 	    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-	    <input  type="password" class="form-control" name="pass2" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Repita Password" >
+	    <input  type="password" class="form-control" name="pass2" onKeyDown="limitText(this,15);" onKeyUp="limitText(this,15);" placeholder="Repita Password" required>
 	  </div>
 	  <br>
 	

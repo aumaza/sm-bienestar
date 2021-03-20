@@ -907,4 +907,116 @@ function cancelReservaEquipo($id,$estado,$conn){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// FIN SECCION TURNOS EQUIPOS ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// SECCION MENSAJES Y ALERTAS ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function modal_1(){
+
+    echo '<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Desea cancelar Reserva de Equipo?</h4>
+      </div>
+      <div class="modal-body">
+    
+        
+        <form action="main.php" method="POST">
+        <input type="hidden" class="form-control" name="bookId" id="bookId" value="bookId">
+               
+         
+  <button type="submit" class="btn btn-success btn-block" name="cancel"><img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Aceptar</button><br>  
+</form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>';
+
+}
+
+
+function modal_2(){
+
+    echo '<div id="myModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Ayuda en línea</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="container-fluid">
+            <ul class="nav nav-pills ">
+    <li class="active"><a data-toggle="tab" href="#home">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Solicitar Turno</a></li>
+    <li><a data-toggle="tab" href="#menu1">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/documentation.png" /> Turnos Reservados</a></li>
+    <li><a data-toggle="tab" href="#menu2">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-properties.png" /> Datos Personales</a></li>
+    <li><a data-toggle="tab" href="#menu3">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</a></li>
+    <li><a data-toggle="tab" href="#menu4">
+        <img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</a></li>
+    
+    </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h2>Solicitar Turno</h2>
+      <p align="justify">Desde aquí usted visualizará los equipos que ya han sido alquilados. Así mismo aquellos turnos ocupados se mostrarán en color rojo sobre la fecha y mostrará la información de cada equipo. Si usted desea realizar la reserva para el alquiler de algún equipo deberá hacer click en el botón <strong>Reservar</strong>, se le presentará un formulario el cual lo guiará a traves del proceso de alquiler. Cada paso está explicado, sólo debe prestar atención a los mensajes. </p>
+    </div>
+    
+    <div id="menu1" class="tab-pane fade">
+      <h2>Turnos Reservados</h2>
+      <p align="justify">Aquí podrá visualizar el historial de turnos para alquiler de equipos que ha ido reservando, cuando realice la reserva de un nuevo turno, estará habilitado el botón de cancelación del mismo. <strong>Es importante que tenga en cuenta que en caso de no querer continuar manteniendo la reserva para el alquiler, deberá cancelar el turno con una antelación de 48 hs, de lo contrario en el próximo turno de alquiler que solicite le será cobrado una multa.</strong></p>
+    </div>
+    
+    <div id="menu2" class="tab-pane fade">
+      <h2>Datos Personales</h2>
+      <p align="justify">En este apartado usted podrá modificar sus datos, tenga en cuenta que los mismos son vitales para el contacto que tenga el personal de SM-Bienestar con cada cliente. Por lo cual le solicitamos que sean datos reales y en lo posible que siempre estén completos. Para modificar algunos de sus datos, sólo deberá presionar el botón editar a la derecha de sus datos y se le presentará un formulario con sus datos, solo modifique el que desea y luego presione <strong>Aceptar</strong> y sus datos serán actualizados. También se encuentra el botón de <strong>Avatar</strong>. Este le posobilitará subir una imagen que identificará a su usuario. No es obligatorio subir una imagen, pero si lo desea, a SM-Bienestar le ayudará para conocer a sus clientes más estrechamente.</p>
+    </div>
+    
+    <div id="menu3" class="tab-pane fade">
+      <h2>Cambiar Password</h2>
+      <p align="justify">Modificar su password (contraseña) es importante, siempre y cuando usted lo desee. Aquí le vamos a dar algunos consejos a la hora de cambiar su password. Siempre trate de utilizar Letras mayúsculas y minúsculas combinadas con números, esto hará que su contraseña sea más segura. Por otro lado, evite usar como password fechas de cumpleaños o datos que sean fácilmente descifrables. En este caso la contraseña deberá tener una longitud máxima de 15 caracteres, si se excede la aplicación le avisará que se ha excedido. Recuerde siempre que la contraseña es personal y no debe divulgarla.</p>
+    </div>
+    
+    <div id="menu4" class="tab-pane fade">
+      <h2>Agregar Módulo</h2>
+      <p align="justify">Los módulos son los diferentes entornos con los que usted podrá operar en SM-Bienestar. Cada módulo es independiente de los demás. Usted podrá estar suscripto a todos los módulos y no es necesario volver a registrarse en la página. Al presionar sobre el botón <strong>Agregar Módulo</strong> se le informará en que módulo o módulos usted esta suscripto y si desea agregar algún otro, tendrá un desplegable para seleccionar al que desea sumarse. Una vez realizada esta acción usted ya estará suscripto al nuevo módulo y listo para operar. La forma en que deberá ingresar es desconectarse del módulo en el que esté conectado, y desde la página de inicio seleccionar el módulo al que desea ingresar e identificarse con su usuario y contraseña, así de simple.</p>
+
+    </div>
+    
+       
+  </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/window-close.png" /> Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>';
+
+}
+
+
 ?>
