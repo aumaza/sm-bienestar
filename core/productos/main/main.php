@@ -150,7 +150,12 @@
   <div class="container text-center">
    <h1><img src="../../../img/logo.png" class="img-rounded" alt="Random Name" width="180" height="50"></h1>
    <h2>Bienvenido/a <strong><?php echo $nombre; ?> </strong>a Venta de Productos</h2> 
-   <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
+   <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
+   
+   <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal2">
+            <img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Ayuda en línea</button>
+   
     </div>
 </div>
 
@@ -263,6 +268,9 @@ if(isset($_POST['modulo'])){
 </div>
 <hr><br><br><br><br>
 
+<!-- Modal -->
+<?php modal_2(); ?>
+<!-- End Modal -->
 
 
 </body>
