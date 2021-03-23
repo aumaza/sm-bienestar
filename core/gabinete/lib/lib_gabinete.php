@@ -22,7 +22,8 @@ if($conn){
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
+		    <th class='text-nowrap text-center' style='display:none;'>ID</th>
+		    <th>&nbsp;</th>
 		    <th class='text-nowrap text-center'>Fecha</th>
             <th class='text-nowrap text-center'>Hora</th>
             <th class='text-nowrap text-center'>Espacio</th>
@@ -33,7 +34,16 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center style='display:none;'>".$fila['id']."</td>";
+			 if($fila['estado'] == 'Ocupado'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-unmounted.png' class='img-reponsive img-rounded' ></td>";
+			 }
+			 if($fila['estado'] == 'Libre'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-unlocked.png' class='img-reponsive img-rounded'></td>";
+			 }
+			 if($fila['estado'] == 'Deshabilitado'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-locked.png' class='img-reponsive img-rounded' ></td>";
+			 }
 			 if($fila['estado'] == 'Ocupado'){
 			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
 			 }else{
@@ -43,7 +53,10 @@ if($conn){
 			 echo "<td align=center>".$fila['espacio']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 if($fila['estado'] == 'Libre'){
-			 echo '<a href="../turnos/reservar.php?id='.$fila['id'].'" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-ok"></span> Reservar</a>';
+			 echo '<a href="../turnos/reservar.php?id='.$fila['id'].'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="right" title="Fecha habilitada a reserva"><span class="glyphicon glyphicon-ok"></span> Reservar</a>';
+			 }
+			 if($fila['estado'] == 'Deshabilitado'){
+                echo '<button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="right" title="Fecha Deshabilitada por el Administrador"><img src="../../icons/emblems/emblem-locked.png"  class="img-reponsive img-rounded"> Fecha Deshabilitada</button>';
 			 }
 			 echo "</td>";
 			 $count++;

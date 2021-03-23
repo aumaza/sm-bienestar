@@ -328,13 +328,14 @@ if($conn){
 	//mostramos fila x fila
 	$count = 0;
 	echo '<div class="panel panel-success" >
-	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> Turnos Disponibles';
+	      <div class="panel-heading"><span class="pull-center "><img src="../../icons/actions/view-calendar-timeline.png"  class="img-reponsive img-rounded"> Turnos Disponibles - Gabinete';
 	echo '</div><br>
             <p><strong>Nota:</strong> Aquí se encuentran todos los turnos disponibles, aquellos que aparecen en color Rojo sobre la fecha, significa que ya fueron tomados, si desea tomar un turno, presione el botón <strong>Reservar</strong> y podrá tramitar dicho turno</p><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
               echo "<thead>
 		    <th class='text-nowrap text-center'>ID</th>
+		    <th>&nbsp;</th>
 		    <th class='text-nowrap text-center'>Fecha</th>
 		    <th class='text-nowrap text-center'>Hora</th>
 		    <th class='text-nowrap text-center'>Espacio</th>
@@ -347,6 +348,15 @@ if($conn){
 			  // Listado normal
 			 echo "<tr>";
 			 echo "<td align=center>".$fila['id']."</td>";
+			 if($fila['estado'] == 'Ocupado'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-new.png' class='img-reponsive img-rounded' ></td>";
+			 }
+			 if($fila['estado'] == 'Libre'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-unlocked.png' class='img-reponsive img-rounded'></td>";
+			 }
+			 if($fila['estado'] == 'Deshabilitado'){
+                echo "<td align=center><img src='../../icons/emblems/emblem-locked.png' class='img-reponsive img-rounded' ></td>";
+			 }
 			 if($fila['estado'] == 'Ocupado'){
 			 echo '<td align=center style="background-color:red"><font color="white">'.$fila['f_turno'].'</font></td>';
 			 }else{
@@ -378,8 +388,13 @@ if($conn){
 		}
 
 		echo "</table>";
-		echo "<br>";
-		echo '</div>';
+		echo '<button type="button" class="btn btn-warning btn-sm" >Cantidad de Registros: '.$count.'</button>';
+		echo "<hr>";
+		echo '<form <action="main.php" method="POST">
+			<button type="submit" class="btn btn-default btn-sm" name="enable_turno">
+			  <img src="../../icons/emblems/emblem-unlocked.png"  class="img-reponsive img-rounded"> Habilitar / Deshabilitar Turnos</button>
+		      </form>';
+		echo '</div><br>';
 		}else{
 		  echo 'Connection Failure...';
 		}
@@ -408,7 +423,7 @@ while($row = mysqli_fetch_array($resp)){
 	<div class="panel panel-success" >
 	  <div class="panel-heading">
 	    <span class="pull-center ">
-	      <img src="../../icons/actions/documentation.png"  class="img-reponsive img-rounded"> Turno Gabinete
+	      <img src="../../icons/actions/documentation.png"  class="img-reponsive img-rounded"> Reserva Turno Gabinete
 	</div><br>
   
   <div class="form-group">
@@ -807,6 +822,175 @@ function filtroAnio($fecha,$pago,$conn){
   
   
 }
+
+
+/*
+** funcion que permite habilitar o deshabilitar turnos por rango de fechas y horarios
+*/
+function formEnableDisableTurnos(){
+
+    echo '<div class="alert alert-info" align="center">
+	  <h3>Turnos Gabinete</h3>
+	  <p>Filtros para Habilitar o Deshabilitar turnos por Rango de Fecha y Hora</p>
+	 </div><hr>
+   
+	  <form action="main.php" method="POST">
+	    <div class="form-group">
+	      <label>Seleccione Fecha desde:</label>
+	      <input type="date" class="form-control" name="fecha_desde" required>
+	    </div><hr>
+	    
+	    <div class="form-group">
+	      <label>Seleccione Fecha Hasta:</label>
+	      <input type="date" class="form-control" name="fecha_hasta" required>
+	    </div><hr>
+	    
+	    <div class="form-group">
+	      <label>Seleccione Hora Desde:</label>
+	      <select class="form-control" name="hora_desde" >
+		<option value="" disabled selected>Seleccionar</option>
+		<option value="10:00:00">10:00</option>
+		<option value="11:00:00">11:00</option>
+		<option value="12:00:00">12:00</option>
+		<option value="13:00:00">13:00</option>
+		<option value="14:00:00">14:00</option>
+		<option value="15:00:00">15:00</option>
+		<option value="16:00:00">16:00</option>
+		<option value="17:00:00">17:00</option>
+		<option value="18:00:00">18:00</option>
+	      </select>
+	    </div><hr>
+	    
+	     <div class="form-group">
+	      <label>Seleccione Hora Hasta:</label>
+	      <select class="form-control" name="hora_hasta" >
+		<option value="" disabled selected>Seleccionar</option>
+		<option value="10:00:00">10:00</option>
+		<option value="11:00:00">11:00</option>
+		<option value="12:00:00">12:00</option>
+		<option value="13:00:00">13:00</option>
+		<option value="14:00:00">14:00</option>
+		<option value="15:00:00">15:00</option>
+		<option value="16:00:00">16:00</option>
+		<option value="17:00:00">17:00</option>
+		<option value="18:00:00">18:00</option>
+	      </select>
+	    </div><hr>
+	    
+	     <div class="form-group">
+	      <label>Seleccione Acción:</label>
+	      <select class="form-control" name="accion" >
+		<option value="" disabled selected>Seleccionar</option>
+		<option value="Deshabilitado">Deshabilitar</option>
+		<option value="Libre">Habilitar</option>
+		</select>
+	    </div><hr>
+	    
+	    <div class="alert alert-warning" alert-dismissible role="alert" align="center">
+              <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+		<strong>Importante:</strong> Si desea Habilitar o Deshabilitar todos los horarios entre un intervalo de fechas presione el botón <strong>Habilitar / Deshabilitar por Fechas</strong> si desea realizar dicha acción pero para una determinada fecha o rango de fechas y en un horario determinado, será necesario que seleccione la hora además de la/s fecha/s y luego presione el botón <strong>Habilitar / Deshabilitar por fechas y hora</strong>.
+            </div><hr>
+	  
+	  <div class="alert alert-warning" align="center">
+	   <button type="submit" class="btn btn-default" name="enable_disable_fecha">
+	      <img src="../../icons/actions/system-switch-user.png"  class="img-reponsive img-rounded"> Habilitar / Deshabilitar por fechas</button>
+	    <button type="submit" class="btn btn-default" name="enable_disable_fecha_hora">
+	      <img src="../../icons/actions/system-switch-user.png"  class="img-reponsive img-rounded"> Habilitar / Deshabilitar por fechas y hora</button>
+	    </div>
+	 </form><br>';
+
+
+}
+
+
+/*
+** funcion que permite habilitar o deshabilitar turnos por rango de fechas
+*/
+function enableDisableByFecha($fecha_desde,$fecha_hasta,$accion,$conn){
+
+    if($fecha_desde > $fecha_hasta){
+    
+        echo '<div class="alert alert-warning" alert-dismissible role="alert">
+                <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+                <strong>Atención:</strong> La <strong>Fecha Hasta</strong> no puede ser anterior a la <strong>Fecha Desde</strong>, verifíquelo por favor!</strong>
+            </div>';
+            exit;
+    }else{
+
+    $sql = "update smb_turnos_gabinete set estado = '$accion' where f_turno between '$fecha_desde' and '$fecha_hasta'";
+    mysqli_select_db($conn,'smb_bienestar');
+    $query = mysqli_query($conn,$sql);
+    
+    if($query){
+        
+        if($accion == 'Deshabilitado'){
+        
+        echo "<br>";
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Los turnos entre "'.$fecha_desde.'" y "'.$fecha_hasta.'" han sido <strong>Deshabilitados</strong>. Si desea retrotraer la acción repita el proceso pero seleccione <strong>Habilitar</strong>.';
+		echo "</div>";	
+	}
+	if($accion == 'Libre'){
+        echo "<br>";
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Los turnos entre "'.$fecha_desde.'" y "'.$fecha_hasta.'" han sido <strong>Habilitados</strong>. Si desea retrotraer la acción repita el proceso pero seleccione <strong>Deshabilitar</strong>.';
+		echo "</div>";
+	
+	}
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" alert-dismissible role="alert">';
+		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al intentar Deshabilitar los turnos en las fechas establecidas!.' .mysqli_error($conn);
+		echo "</div>";
+        }
+    }
+    
+}
+
+/*
+** funcion que permite habilitar o deshabilitar turnos por rango de fechas
+*/
+function enableDisableByFechaHora($fecha_desde,$fecha_hasta,$hora_desde,$hora_hasta,$accion,$conn){
+
+    if($fecha_desde > $fecha_hasta){
+    
+        echo '<div class="alert alert-warning" alert-dismissible role="alert">
+                <img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded">
+                <strong>Atención:</strong> La <strong>Fecha Hasta</strong> no puede ser anterior a la <strong>Fecha Desde</strong>, verifíquelo por favor!</strong>
+            </div>';
+            exit;
+    }else{
+
+    $sql = "update smb_turnos_gabinete set estado = '$accion' where f_turno between '$fecha_desde' and '$fecha_hasta' and hora between '$hora_desde' and '$hora_hasta'";
+    mysqli_select_db($conn,'smb_bienestar');
+    $query = mysqli_query($conn,$sql);
+    
+    if($query){
+        
+        if($accion == 'Deshabilitado'){
+        
+        echo "<br>";
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Los turnos entre "'.$fecha_desde.'" y "'.$fecha_hasta.'" entre las horarios <strong> '.$hora_desde.'</strong> y <strong>'.$hora_hasta.'</strong> han sido <strong>Deshabilitados</strong>. Si desea retrotraer la acción repita el proceso pero seleccione <strong>Habilitar</strong>.';
+		echo "</div>";	
+	}
+	if($accion == 'Libre'){
+        echo "<br>";
+		echo '<div class="alert alert-success" alert-dismissible role="alert">';
+		echo '<img src="../../icons/actions/dialog-ok-apply.png"  class="img-reponsive img-rounded"> Los turnos entre "'.$fecha_desde.'" y "'.$fecha_hasta.'" entre las horarios <strong> '.$hora_desde.'</strong> y <strong>'.$hora_hasta.'</strong> han sido <strong>Habilitados</strong>. Si desea retrotraer la acción repita el proceso pero seleccione <strong>Deshabilitar</strong>.';
+		echo "</div>";
+	
+	}
+	}else{
+		echo "<br>";
+		echo '<div class="alert alert-warning" alert-dismissible role="alert">';
+		echo '<img src="../../icons/status/task-attempt.png"  class="img-reponsive img-rounded"> Hubo un error al intentar Habilitar / Deshabilitar los turnos en las fechas establecidas!.' .mysqli_error($conn);
+		echo "</div>";
+        }
+    }
+    
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// FIN SECCION TURNOS GABINETE /////////////////////////////////

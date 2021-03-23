@@ -574,9 +574,7 @@
             $pago = mysqli_real_escape_string($conn,$_POST['pago']);
             filtroAnio($fecha,$pago,$conn);
 	  }
-        
-        
-        if(isset($_POST['reservar'])){
+      if(isset($_POST['reservar'])){
             $id = mysqli_real_escape_string($conn,$_POST['id']);
             $especialidad = mysqli_real_escape_string($conn,$_POST['especialidad']);
             $espacio = mysqli_real_escape_string($conn,$_POST['espacio']);
@@ -606,6 +604,24 @@
            $pagos = mysqli_real_escape_string($conn,$_POST['pagos']);
            $importe = mysqli_real_escape_string($conn,$_POST['importe']);
            updatePagos($id,$pagos,$importe,$conn);
+        }
+        if(isset($_POST['enable_turno'])){
+            formEnableDisableTurnos();        
+        }
+        if(isset($_POST['enable_disable_fecha'])){
+            $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
+            $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
+            $accion = mysqli_real_escape_string($conn,$_POST['accion']);
+            enableDisableByFecha($fecha_desde,$fecha_hasta,$accion,$conn);
+        }
+        if(isset($_POST['enable_disable_fecha_hora'])){
+            $fecha_desde = mysqli_real_escape_string($conn,$_POST['fecha_desde']);
+            $fecha_hasta = mysqli_real_escape_string($conn,$_POST['fecha_hasta']);
+            $hora_desde = mysqli_real_escape_string($conn,$_POST['hora_desde']);
+            $hora_hasta = mysqli_real_escape_string($conn,$_POST['hora_hasta']);
+            $accion = mysqli_real_escape_string($conn,$_POST['accion']);
+            enableDisableByFechaHora($fecha_desde,$fecha_hasta,$hora_desde,$hora_hasta,$accion,$conn);
+        
         }
         // fin formularios de cambio estado solicitud y pagos realizados turnos gabinete
         // ================================================================================== // 
