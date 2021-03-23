@@ -10,7 +10,7 @@ function gabineteTurnos($conn){
 
 if($conn){
 	
-	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() and CURDATE() + INTERVAL 1 week";
+	$sql = "SELECT * FROM smb_turnos_gabinete where f_turno BETWEEN CURDATE() + INTERVAL 1 day and CURDATE() + INTERVAL 8 DAY";
     	mysqli_select_db('smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
@@ -21,7 +21,7 @@ if($conn){
             <p><strong>Nota:</strong> Aquí se encuentran todos los turnos disponibles, aquellos que aparecen en color Rojo sobre la fecha, significa que ya fueron tomados, si desea tomar un turno, presione el botón <strong>Reservar</strong> y podrá tramitar dicho turno</p><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
-              echo "<thead>
+            echo "<thead>
 		    <th class='text-nowrap text-center' style='display:none;'>ID</th>
 		    <th>&nbsp;</th>
 		    <th class='text-nowrap text-center'>Fecha</th>
@@ -93,8 +93,9 @@ if($conn){
             <p>En caso de cancelar un turno, por favor hágalo con 48 hs de antelación. Muchas Gracias.</p><hr>';
 
             echo "<table class='display compact' style='width:100%' id='myTable'>";
-              echo "<thead>
-		    <th class='text-nowrap text-center'>ID</th>
+            echo "<thead>
+		    <th class='text-nowrap text-center' style='display:none;'>ID</th>
+		    <th>&nbsp;</th>
 		    <th class='text-nowrap text-center'>Fecha</th>
             <th class='text-nowrap text-center'>Hora</th>
             <th class='text-nowrap text-center'>Especialidad</th>
@@ -109,7 +110,17 @@ if($conn){
 	while($fila = mysqli_fetch_array($resultado)){
 			  // Listado normal
 			 echo "<tr>";
-			 echo "<td align=center>".$fila['id']."</td>";
+			 echo "<td align=center style='display:none;'>".$fila['id']."</td>";
+			 if($fila['solicitud'] == 'Stand-By'){
+                echo "<td align=center><img src='../../icons/actions/im-user-away.png' class='img-reponsive img-rounded' ></td>";
+			 }
+			 if($fila['solicitud'] == 'Confirmado'){
+                echo "<td align=center><img src='../../icons/actions/dialog-ok-apply.png' class='img-reponsive img-rounded'></td>";
+			 }
+			 if($fila['solicitud'] == 'Atendido'){
+                echo "<td align=center><img src='../../icons/actions/dialog-ok.png' class='img-reponsive img-rounded' ></td>";
+			 }
+			 
 			 if($fila['solicitud'] == 'Stand-By'){
 			 echo '<td align=center style="background-color:yellow"><font color="black">'.$fila['f_turno'].'</font></td>';
 			 }
@@ -232,7 +243,7 @@ function closeReserva($id,$especialidad,$nombre,$estado,$solicitud,$conn){
 	if($res){
 		echo "<br>";
 		echo '<div class="alert alert-success" role="alert">';
-		echo 'Turno Solicitado Exitosamente. Aguarde un Instante que será Redireccionado';
+		echo 'Turno Solicitado Exitosamente. Este turno quedará en estado <strong>Stand-By</strong> hasta que SM-Bienestar confirme el mismo. Para saber si ha sido confirmado, desde <strong>Menú</strong> presione el botón <strong>Turnos Reservados</strong> y podrá ver el estado de sus reservas. Aguarde un Instante que será Redireccionado';
 		echo "</div>";	
 	}else{
 		echo "<br>";

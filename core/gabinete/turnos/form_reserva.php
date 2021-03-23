@@ -106,7 +106,7 @@
                     if(($fila['Masajes'] == 0) && ($fila['Tratamiento_Facial'] == 0) && ($fila['Depilacion'] == 0)){
           
                         closeReserva($id,$especialidad,$nombre,$estado,$solicitud,$conn);
-                        echo '<meta http-equiv="refresh" content="5;URL=../main/main.php"/>';
+                        echo '<meta http-equiv="refresh" content="10;URL=../main/main.php"/>';
                         exit;
           
                         }
@@ -114,7 +114,7 @@
                         
                             if(($fila['tecnico'] == 1) || ($fila['corporal'] == 1) || ($fila['tecnico'] == 0) || ($fila['corporal'] == 0)){
                             closeReserva($id,$especialidad,$nombre,$estado,$solicitud,$conn);
-                            echo '<meta http-equiv="refresh" content="5;URL=../main/main.php"/>';
+                            echo '<meta http-equiv="refresh" content="10;URL=../main/main.php"/>';
                             exit;
                     
                         }
