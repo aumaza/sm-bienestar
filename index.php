@@ -220,8 +220,8 @@
             <li><a href="core/productos/" data-toggle="tooltip" title="Compra de Productos de Belleza">Venta de Productos</a></li>
             <li><a href="core/gabinete/" data-toggle="tooltip" title="Solicite Turnos para Atenderse en Gabinete">Turnos Gabinete</a></li>
             <li><a href="core/equipos/#" data-toggle="tooltip" title="Reserve su Equipo por medio de Turnos">Turnos Alquiler Equipos</a></li>
-            <li><a href="core/venta/#" data-toggle="tooltip" title="Compra de Equipos">Venta de Equipos</a></li>
-            <li><a href="core/capacitacion/" data-toggle="tooltip" title="Espacio de Capacitación On-line">Capacitación</a></li>
+<!--             <li><a href="core/venta/#" data-toggle="tooltip" title="Compra de Equipos">Venta de Equipos</a></li> -->
+<!--             <li><a href="core/capacitacion/" data-toggle="tooltip" title="Espacio de Capacitación On-line">Capacitación</a></li> -->
           </ul>
         </li>
        </ul>
@@ -448,8 +448,8 @@
   <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a><br><br>
-  <p>Desarrollo DevelSlack</p><img src="img/devel-slack-logo2.png"  class="img-reponsive img-rounded">
-  <p>Contacto: develslack@gmail.com</p>
+  <p><strong>Desarrollo:</strong> Slackzone Development</p><img src="img/devel-slack-logo2-64x64.png"  class="img-reponsive img-rounded">
+  <p><strong>Contacto:</strong> develslack@gmail.com</p>
 </footer>
 
 <script>

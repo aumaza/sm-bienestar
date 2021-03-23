@@ -78,8 +78,9 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white small">Desarrollo: DevelSlack</p>
-      <p class="m-0 text-center text-white small">Contacto: <a href="mailto:develslack@gmail.com">develslack@gmail.com</a></p>
+      <p class="m-0 text-left text-white small"><strong>Desarrollo:</strong> Slackzone Development</p><img src="../../img/devel-slack-logo2-64x64.png"  class="img-reponsive img-rounded">
+      <p class="m-0 text-left text-white small">Contacto: <a href="mailto:develslack@gmail.com">develslack@gmail.com</a></p>
+    </div>
     </div>
     <!-- /.container -->
   </footer>
@@ -100,12 +101,20 @@
     <input type="hidden" id="entorno" name="entorno" value="TE">
     <div class="form-group">
       <label for="usr">Usuario:</label>
-      <input type="text" name="usuario" class="form-control" id="usr" placeholder="Tipee aquí el mail con el que se registró">
+      <input type="text" name="usuario" class="form-control" id="usr" placeholder="Tipee aquí el mail con el que se registró" required>
     </div>
+    
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" name="password" class="form-control" id="pwd">
+      <input type="password" name="password" class="form-control" id="pwd" required>
     </div>
+    
+    <!-- checkbox que nos permite activar o desactivar la opcion -->
+                <div style="margin-top:15px;">
+                    <input style="margin-left:20px;" type="checkbox" id="mostrar_contrasena" title="Clic para mostrar contraseña"/>
+                        &nbsp;&nbsp;Mostrar Contraseña</div>
+                </div>
+    
     <div class="modal-footer">
         <button type="submit" class="btn btn-success" >Aceptar</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -124,6 +133,18 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+    <script>
+$(document).ready(function () {
+  $('#mostrar_contrasena').click(function () {
+    if ($('#mostrar_contrasena').is(':checked')) {
+      $('#pwd').attr('type', 'text');
+    } else {
+      $('#pwd').attr('type', 'password');
+    }
+  });
+});
+</script>
 
 </body>
 
