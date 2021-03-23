@@ -330,21 +330,21 @@
         <div class="thumbnail">
           <img src="img/img-8.png" alt="Paris" width="400" height="300">
           <p><strong>Promo 1</strong></p>
-          <p>Friday 27 November 2015</p>
+          <p>Envianos tu Consulta desde el formulario aquí debajo</p>
           </div>
       </div>
       <div class="col-sm-4">
         <div class="thumbnail">
           <img src="img/img-9.png" alt="New York" width="400" height="300">
           <p><strong>Promo 2</strong></p>
-          <p>Saturday 28 November 2015</p>
+          <p>Envianos tu Consulta desde el formulario aquí debajo</p>
           </div>
       </div>
       <div class="col-sm-4">
         <div class="thumbnail">
           <img src="img/img-10.png" alt="San Francisco" width="400" height="300">
           <p><strong>Promo 3</strong></p>
-          <p>Sunday 29 November 2015</p>
+          <p>Envianos tu Consulta desde el formulario aquí debajo</p>
           </div>
       </div>
     </div>
@@ -428,10 +428,12 @@
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h2>Silvia Medina, Titular</h2>
+      <img src="img/sil-image.png" alt="New York" width="100" height="150">
       <p>Cosmeatra  • Estetisista • Masoterapeuta • Instrumentadora Quirúrgica</p>
     </div>
     <div id="menu1" class="tab-pane fade">
       <h2>Andrea Scorziello</h2>
+      <img src="img/asistente-image.png" alt="New York" width="100" height="150">
       <p>Secretaria, Asistente</p>
     </div>
     
@@ -446,7 +448,7 @@
   <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a><br><br>
-  <p>Desarrollo DevelSlack</p>
+  <p>Desarrollo DevelSlack</p><img src="img/devel-slack-logo2.png"  class="img-reponsive img-rounded">
   <p>Contacto: develslack@gmail.com</p>
 </footer>
 
