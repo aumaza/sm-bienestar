@@ -152,6 +152,11 @@
    <h2>Bienvenido/a <strong><?php echo $nombre; ?> </strong>a Venta de Productos</h2> 
    <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema"><button type="button" class="btn btn-default btn-sm"><img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a><hr>
    
+   <div class="alert alert-info"> 
+      <h4><img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Información</h4>
+      <p><img class="img-reponsive img-rounded" src="../../icons/actions/irc-voice.png" /> <?php echo $mensaje; ?></p>
+      </div><hr>
+   
    <!-- Trigger the modal with a button -->
         <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal2">
             <img class="img-reponsive img-rounded" src="../../icons/actions/help-contents.png" /> Ayuda en línea</button>

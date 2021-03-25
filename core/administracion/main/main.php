@@ -5,6 +5,7 @@
       include "../lib/lib_alquiler_equipos.php";
       include "../lib/lib_turnos_gabinete.php";
       include "../lib/lib_localidades.php";
+      include "../lib/lib_mensajes_modulos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -206,17 +207,17 @@
       <ul class="list-group">
       <form action="main.php" method="POST">
       
-      <li class="list-group-item" align="center">
+      <li class="list-group-item" align="left">
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos">
 	  <button type="submit" class="btn btn-default btn-sm" name="AA">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
       
-      <li class="list-group-item" align="center">
+      <li class="list-group-item" align="left">
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos">
 	  <button type="submit" class="btn btn-default btn-sm" name="AB">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
 	    
-        <li class="list-group-item" align="center">
+        <li class="list-group-item" align="left">
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
 	  <button type="submit" class="btn btn-default btn-sm" name="AC">
 	    <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
@@ -331,6 +332,11 @@
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Back up Base de Datos">
 	  <button type="submit" class="btn btn-default btn-sm" name="FD">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button></a></li>
+	    
+	    <li class="list-group-item">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Mensajes Informativos para Espacio de Usuario">
+	  <button type="submit" class="btn btn-default btn-sm" name="mensajes_informativos">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Mensajes Informativos</button></a></li>
       
       </form>
       </ul>
@@ -758,6 +764,119 @@
             $role = mysqli_real_escape_string($conn,$_POST['role']);
             cambiarPermisos($id,$role,$conn);
         }
+        
+        // ========================================================================= //
+        // SECCION MENSAJES INFORMATIVOS //
+        if(isset($_POST['mensajes_informativos'])){
+            formMensajesInformativos();
+        }
+        if(isset($_POST['i_mensajes'])){
+           $imensages = mysqli_real_escape_string($conn,$_POST['info_mensajes']);
+           
+           if($imensages == 'i_gabinete'){
+                getMensajesInfoGabinete($conn);
+           }
+           if($imensages == 'i_equipos'){
+                getMensajesInfoEquipos($conn);
+           }
+           if($imensages == 'i_productos'){
+                getMensajesInfoProductos($conn);
+           }
+        }
+        
+        // FORMULARIOS DE EDICION DE MENSAJES
+        
+        if(isset($_POST['edit_imensage_aequipos'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           formEditMensajesAEquipos($id,$conn);
+        }
+        if(isset($_POST['edit_imensage_gabinete'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           formEditMensajesGabinete($id,$conn);
+        }
+        if(isset($_POST['edit_imensage_productos'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           formEditMensajesProductos($id,$conn);
+        }
+        
+        // PERSISTENCIA DE ACTUALIZACION DE MENSAJES
+        
+        if(isset($_POST['update_mensajes_gabinete'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_gabinete']);
+           updateMensajeGabinete($id,$mensaje,$conn);
+        }
+        if(isset($_POST['update_mensajes_aequipos'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_aequipos']);
+           updateMensajeAEquipos($id,$mensaje,$conn);
+        }
+        if(isset($_POST['update_mensajes_productos'])){
+           $id = mysqli_real_escape_string($conn,$_POST['id']);
+           $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_productos']);
+           updateMensajeProductos($id,$mensaje,$conn);
+        }
+        
+        // FORMULARIOS PARA NUEVOS MENSAJES
+        
+        if(isset($_POST['add_imensage_gabinete'])){
+            formNewMensajesGabinete();
+        }
+        if(isset($_POST['add_imensage_aequipos'])){
+            formNewMensajesAEquipos(); 
+        }
+        if(isset($_POST['add_imensage_productos'])){
+            formNewMensajesProductos(); 
+        }
+        
+        // PERSISTENCIA DE NUEVOS MENSAJES
+        
+        if(isset($_POST['new_mensajes_gabinete'])){
+           $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_gabinete']);
+            addMensajeGabinete($mensaje,$conn); 
+        }
+        if(isset($_POST['new_mensajes_aequipos'])){
+            $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_equipos']);
+            addMensajeAEquipos($mensaje,$conn);
+        }
+        if(isset($_POST['new_mensajes_productos'])){
+            $mensaje = mysqli_real_escape_string($conn,$_POST['mensaje_productos']);
+            addMensajeProductos($mensaje,$conn);
+        }
+        
+        // FORMULARIOS DE BORRADO DE MENSAJES
+        
+        if(isset($_POST['del_imensage_gabinete'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEliminarMensajeGabinete($id,$conn);
+        }
+        if(isset($_POST['del_imensage_aequipos'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEliminarMensajeAEquipos($id,$conn);
+        }
+        if(isset($_POST['del_imensage_productos'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEliminarMensajeProductos($id,$conn);
+        }
+        
+        // PERSISTENCIA DE BORRADO EN MENSAJES
+        
+        if(isset($_POST['delete_mensaje_gabinete'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteMensajeGabinete($id,$conn);
+        }
+        if(isset($_POST['delete_mensaje_aequipos'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteMensajeAEquipos($id,$conn);
+        }
+        if(isset($_POST['delete_mensaje_productos'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteMensajeProductos($id,$conn);
+        }
+        
+        
+        // ========================================================================= //
+        // FIN SECCION MENSAJES INFORMATIVOS // 
       
       
       
