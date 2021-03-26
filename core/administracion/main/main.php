@@ -767,6 +767,7 @@
         
         // ========================================================================= //
         // SECCION MENSAJES INFORMATIVOS //
+        
         if(isset($_POST['mensajes_informativos'])){
             formMensajesInformativos();
         }

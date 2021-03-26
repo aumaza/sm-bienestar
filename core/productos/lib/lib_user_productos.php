@@ -432,17 +432,17 @@ function modal_2(){
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h2>Productos</h2>
-      <p align="justify">Desde aquí usted visualizará los equipos que ya han sido alquilados. Así mismo aquellos turnos ocupados se mostrarán en color rojo sobre la fecha y mostrará la información de cada equipo. Si usted desea realizar la reserva para el alquiler de algún equipo deberá hacer click en el botón <strong>Reservar</strong>, se le presentará un formulario el cual lo guiará a traves del proceso de alquiler. Cada paso está explicado, sólo debe prestar atención a los mensajes. </p>
+      <p align="justify">Haciendo click en el botón <strong>Productos</strong> podrá acceder a todos los productos a la venta. Visualizará su descripción y precio, haciendo click en el botón <strong>Comprar</strong> podrá comenzar con el proceso de compra del producto que seleccione, deberá prestar atención en los pasos de compra, no presenta dificultad. Una vez terminado el proceso de compra recuerde que los productos deberá retirarlos desde la sede de SM Bienestar. </p>
     </div>
     
     <div id="menu1" class="tab-pane fade">
       <h2>Mis Pedidos</h2>
-      <p align="justify">Aquí podrá visualizar el historial de turnos para alquiler de equipos que ha ido reservando, cuando realice la reserva de un nuevo turno, estará habilitado el botón de cancelación del mismo. <strong>Es importante que tenga en cuenta que en caso de no querer continuar manteniendo la reserva para el alquiler, deberá cancelar el turno con una antelación de 48 hs, de lo contrario en el próximo turno de alquiler que solicite le será cobrado una multa.</strong></p>
+      <p align="justify">Aquí podrá visualizar todos los productos que ha adquirido, la información estará detallada, como descripción del producto, precio unitario, cantidad de productos adquiridos y el importe total de su compra. Recuerde que si ha seleccionado abonar en efectivo deberá abonar el producto al momento del retiro.</strong></p>
     </div>
     
     <div id="menu2" class="tab-pane fade">
       <h2>Datos Personales</h2>
-      <p align="justify">En este apartado usted podrá modificar sus datos, tenga en cuenta que los mismos son vitales para el contacto que tenga el personal de SM-Bienestar con cada cliente. Por lo cual le solicitamos que sean datos reales y en lo posible que siempre estén completos. Para modificar algunos de sus datos, sólo deberá presionar el botón editar a la derecha de sus datos y se le presentará un formulario con sus datos, solo modifique el que desea y luego presione <strong>Aceptar</strong> y sus datos serán actualizados. También se encuentra el botón de <strong>Avatar</strong>. Este le posobilitará subir una imagen que identificará a su usuario. No es obligatorio subir una imagen, pero si lo desea, a SM-Bienestar le ayudará para conocer a sus clientes más estrechamente.</p>
+      <p align="justify">En este apartado usted podrá modificar sus datos, tenga en cuenta que los mismos son vitales para el contacto que tenga el personal de SM-Bienestar con cada cliente. Por lo cual le solicitamos que sean datos reales y en lo posible que siempre estén completos. Para modificar algunos de sus datos, sólo deberá presionar el botón editar a la derecha de sus datos y se le presentará un formulario con sus datos, solo modifique el que desea y luego presione <strong>Aceptar</strong> y sus datos serán actualizados. También se encuentra el botón de <strong>Avatar</strong>. Este le posibilitará subir una imagen que identificará a su usuario. No es obligatorio subir una imagen, pero si lo desea, a SM-Bienestar le ayudará para conocer a sus clientes más estrechamente.</p>
     </div>
     
     <div id="menu3" class="tab-pane fade">
