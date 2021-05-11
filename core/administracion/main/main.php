@@ -322,6 +322,11 @@
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
 	  <button type="submit" class="btn btn-default btn-sm" name="FA">
 	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
+	    
+	    <li class="list-group-item">
+	<a href="#" data-toggle="tooltip" data-placement="right" title="Alta de Nuevo Usuario / Cliente">
+	  <button type="submit" class="btn btn-default btn-sm" name="new_user">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-new.png" /> Alta Clientes</button></a></li>
       
       <li class="list-group-item">
 	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades">
@@ -692,6 +697,25 @@
         
         
         // sección administración de usuarios
+        if(isset($_POST['new_user'])){
+            formNewCliente();
+        }
+        if(isset($_POST['add_cliente'])){
+            $nombre = mysqli_real_escape_string($conn,$_POST['nombre']);
+            $dni = mysqli_real_escape_string($conn,$_POST['dni']);
+            $direccion = mysqli_real_escape_string($conn,$_POST['direccion']);
+            $direccion1 = mysqli_real_escape_string($conn,$_POST['direccion1']);
+            $direccion2 = mysqli_real_escape_string($conn,$_POST['direccion2']);
+            $tel = mysqli_real_escape_string($conn,$_POST['tel']);
+            $movil = mysqli_real_escape_string($conn,$_POST['movil']);
+            $email = mysqli_real_escape_string($conn,$_POST['email']);
+            $password1 = mysqli_real_escape_string($conn,$_POST['password1']);
+            $password2 = mysqli_real_escape_string($conn,$_POST['password2']);
+            $entorno = mysqli_real_escape_string($conn,$_POST['entorno']);
+            $role = 1;
+            checkPassword($entorno,$nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$password1,$password2,$role,$conn);
+        }
+        
         if(isset($_POST['FA'])){
             loadUserPass($conn,$nombre);
         }

@@ -148,6 +148,144 @@ function updatePassUser($id,$password1,$conn){
 
 
 /*
+** formulario de nuevo cliente para espacio de admionistrador
+*/
+function formNewCliente(){
+
+    echo '<div class="container">
+            <div class="alert alert-info" role="alert">
+          <p><img class="img-reponsive img-rounded" src="../../icons/status/dialog-information.png" /><strong> Importante:</strong></p>
+          <p>Respete las mayúsculas al inicio de Nombres y Apellidos como también en la Dirección.</p>
+          </div></div>
+          
+          <div class="container">
+            <form action="#" method="POST">
+            
+                 <div class="form-group">
+                <label for="sel1">Entorno:</label>
+                <select class="form-control" id="sel1" name="entorno" required>
+                    <option value="" selected disabled>Seleccionar</option>
+                    <option value="VP">Venta de Productos</option>
+                    <option value="TG">Turnos Gabinete</option>
+                    <option value="TE">Turnos Alquiler de Equipos</option>
+                    <option value="VE">Venta de Equipos</option>
+                    <option value="CA">Capacitación</option>
+                </select>
+                </div> 
+            
+                
+                <div class="form-group">
+                <label for="email">Nombre y Apellido:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre y Apellido" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="email">DNI:</label>
+                <input type="text" class="form-control" id="dni" placeholder="Ingrese DNI sin separar por puntos" name="dni" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="email">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" placeholder="Ingrese su Dirección" name="direccion" required>
+                </div><hr>             
+                
+                
+                <h1>Para Clientes de Alquiler de Equipos</h1>
+                <p>En caso de tener más de una Dirección, complete las siguientes.</p>
+                
+                <div class="form-group">
+                <label for="email">Dirección (2):</label>
+                <input type="text" class="form-control" id="direccion1" placeholder="Ingrese Dirección Alternativa 2" name="direccion1">
+                </div>
+                
+                <div class="form-group">
+                <label for="email">Dirección (3):</label>
+                <input type="text" class="form-control" id="direccion2" placeholder="Ingrese Dirección Alternativa 3" name="direccion2">
+                </div><hr>
+                
+                <div class="form-group">
+                <label for="email">Tel:</label>
+                <input type="text" class="form-control" id="tel" placeholder="Ingrese su Teléfono sin separar por guiones" name="tel" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="email">Móvil:</label>
+                <input type="text" class="form-control" id="movil" placeholder="Ingrese su Celular sin separar por guiones" name="movil" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Ingrese su email" name="email" required>
+                </div>
+                               
+                <h2>Datos de Usuario</h2><hr>
+                
+                <div class="container">
+                <div class="alert alert-success" role="alert">
+                <p><img class="img-reponsive img-rounded" src="../../icons/actions/games-hint.png" /><strong> Consejo:</strong> Utilice mayúsculas y minusculas combinado con números para una contraseña segura. 
+                <p><strong>No es aconsejable usar fechas de cumpleaños o datos personales.</strong></p>
+                </div></div>
+                
+                <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Ingrese password (máximo 15 caracteres)" name="password1" required>
+                </div>
+                
+                <div class="form-group">
+                <label for="pwd">Repita Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Repita password (máximo 15 caracteres)" name="password2" required>
+                </div><hr>
+                
+                </div>
+                <button type="submit" class="btn btn-success btn-block" name="add_cliente">Aceptar</button>
+                <button type="reset" class="btn btn-primary btn-block">Limpiar</button>
+            </form>
+        </div><br>
+          
+          
+        </div>
+      </div>
+    </div>';
+
+}
+
+/*
+** funcion para chequear password en el alta de nuevo cliente espacio adminstrador
+*/
+function checkPassword($entorno,$nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$password1,$password2,$role,$conn){
+
+
+    if(strlen($password1) <= 15 || strlen($password2) <= 15){
+    
+    if(strcmp($password2,$password1) == 0){
+        
+        
+        addUser($nombre,$password1,$email,$role,$entorno,$conn);
+        addCliente($nombre,$dni,$direccion,$direccion1,$direccion2,$tel,$movil,$email,$conn);
+        
+        }else{
+        
+                echo "<br>";
+			    echo '<div class="container">';
+			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" /> Las Contraseñas no Coinciden. Intente Nuevamente!.';
+			    echo "</div>";
+			    echo "</div>";
+        }
+    }else{
+        
+                echo "<br>";
+			    echo '<div class="container">';
+			    echo '<div class="alert alert-warning" role="alert">';
+			    echo '<img class="img-reponsive img-rounded" src="../../icons/status/task-attempt.png" />El Password supera los 15 caracteres! Reintentelo.';
+			    echo "</div>";
+			    echo "</div>";
+        
+    }
+
+}
+
+/*
 ** funcion para agregar usuarios
 */
 function addUser($nombre,$password1,$email,$role,$entorno,$conn){
@@ -164,7 +302,7 @@ mysqli_select_db($conn,'smb_bienestar');
             echo "<br>";
 		    echo '<div class="container">';
 		    echo '<div class="alert alert-success" role="alert">';
-		    echo '<img class="img-reponsive img-rounded" src="../icons/actions/dialog-ok-apply.png" /> Usuario Creado Satisfactoriamente.';
+		    echo 'Usuario Creado Satisfactoriamente.';
 		    echo "</div>";
 		    echo "</div>";
 		    
@@ -205,7 +343,7 @@ mysqli_select_db($conn,'smb_bienestar');
 			    echo "<br>";
 			    echo '<div class="container">';
 			    echo '<div class="alert alert-warning" role="alert">';
-			    echo '<img class="img-reponsive img-rounded" src="../icons/status/task-attempt.png" /> Hubo un problema al intentar crear el Usuario.'  .mysqli_error($conn);
+			    echo 'Hubo un problema al intentar crear el Usuario.'  .mysqli_error($conn);
 			    echo "</div>";
 			    echo "</div>";
 		    }
