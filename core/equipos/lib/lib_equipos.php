@@ -305,9 +305,9 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
    $banda3 = strtotime('12:00:00');
    $limA = strtotime('15:00:00');
    $limB = strtotime('13:00:00');
-   $limC = strtotime('09:00:00');
+   $limC = strtotime('08:00:00');
    
-   if(($hora1 <= $limA && $hora2 == $banda1) || ($hora1 <= $limB && $hora2 == $banda2) || ($hora1 == $limC && $hora2 == $banda3)){
+   if(($hora1 <= $limA && $hora2 == $banda1) || ($hora1 <= $limB && $hora2 == $banda2) || ($hora1 >= $limC && $hora2 == $banda3)){
    
       while($rows = mysqli_fetch_array($resp)){     
                       
@@ -375,10 +375,10 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
     
     <h2><strong>Información sobre Alquiler</strong></h2><hr>';
     
-    if($km > 10.00){
+    if($km > 15.00){
         
         if($c_horas == "06:00"){
-            $total = $monto + 5000;
+            $total = $monto + 6500;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -386,7 +386,7 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
             </div><hr>';
         }
         if($c_horas == "08:00"){
-            $total = $monto + 5500;
+            $total = $monto + 7000;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -394,7 +394,7 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
             </div><hr>';
         }
         if($c_horas == "12:00"){
-            $total = $monto + 7000;
+            $total = $monto + 8000;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -404,7 +404,7 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
     }else{
         
         if($c_horas == "06:00"){
-            $total = 5000;
+            $total = 6500;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -412,7 +412,7 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
             </div><hr>';
         }
         if($c_horas == "08:00"){
-            $total = 5500;
+            $total = 7000;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -420,7 +420,7 @@ function formReservaEquipo2($nombre,$f_turno,$direccion,$localidad,$h_desde,$c_h
             </div><hr>';
         }
         if($c_horas == "12:00"){
-            $total = 7000;
+            $total = 8000;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -547,10 +547,10 @@ break;
     
     <h2><strong>Información sobre Alquiler</strong></h2><hr>';
     
-    if($km > 10.00){
+    if($km > 15.00){
         
         if($h_resto == "06:00:00"){
-            $total = $monto + 5000;
+            $total = $monto + 6500;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>
@@ -560,7 +560,7 @@ break;
        
     }else{
         if($h_resto == "06:00:00"){
-            $total = 5000;
+            $total = 6500;
             $total = number_format($total, 2, '.', '');
             echo '<div class="form-group">
             <label for="usr">Monto total:</label>

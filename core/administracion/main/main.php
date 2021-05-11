@@ -643,7 +643,7 @@
         // fin sección Equipos a entregar o retirar en el día de la fecha
         
         if(isset($_POST['CC'])){
-	  equiposTurnos($conn);
+            equiposTurnos($conn);
         }
         if(isset($_POST['estado_solicitud'])){
 	  $id = mysqli_real_escape_string($conn,$_POST['id']);

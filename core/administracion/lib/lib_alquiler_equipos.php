@@ -26,6 +26,7 @@ if($conn){
 		    <th class='text-nowrap text-center'>Dirección</th>
 		    <th class='text-nowrap text-center'>Localidad</th>
 		    <th class='text-nowrap text-center'>Móvil</th>
+		    <th class='text-nowrap text-center'>A Pagar</th>
 		    <th>&nbsp;</th>
 		    </thead>";
 
@@ -45,6 +46,7 @@ if($conn){
 			 echo "<td align=center>".$fila['direccion']."</td>";
 			 echo "<td align=center>".$fila['localidad']."</td>";
 			 echo "<td align=center>".$fila['movil']."</td>";
+			 echo "<td align=center>$".$fila['monto']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo "</td>";
 			 $count++;
@@ -89,6 +91,7 @@ if($conn){
 		    <th class='text-nowrap text-center'>Dirección</th>
 		    <th class='text-nowrap text-center'>Localidad</th>
 		    <th class='text-nowrap text-center'>Móvil</th>
+		    <th class='text-nowrap text-center'>A Pagar</th>
 		    <th>&nbsp;</th>
 		    </thead>";
 
@@ -108,6 +111,7 @@ if($conn){
 			 echo "<td align=center>".$fila['direccion']."</td>";
 			 echo "<td align=center>".$fila['localidad']."</td>";
 			 echo "<td align=center>".$fila['movil']."</td>";
+			 echo "<td align=center>$".$fila['monto']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo "</td>";
 			 $count++;
@@ -133,7 +137,7 @@ function equiposTurnos($conn){
 
 if($conn){
 	
-	$sql = "SELECT * FROM smb_turnos_equipos WHERE f_turno = CURDATE() + 1 week";
+	$sql = "SELECT * FROM smb_turnos_equipos where f_turno BETWEEN CURDATE() and CURDATE() + interval 1 week";
     	mysqli_select_db($conn,'smb_bienestar');
     	$resultado = mysqli_query($conn,$sql);
 	//mostramos fila x fila
@@ -155,6 +159,7 @@ if($conn){
 		    <th class='text-nowrap text-center'>Dirección</th>
 		    <th class='text-nowrap text-center'>Localidad</th>
 		    <th class='text-nowrap text-center'>Móvil</th>
+		    <th class='text-nowrap text-center'>A Pagar</th>
 		    <th>&nbsp;</th>
 		    </thead>";
 
@@ -192,6 +197,7 @@ if($conn){
 			 echo "<td align=center>".$fila['direccion']."</td>";
 			 echo "<td align=center>".$fila['localidad']."</td>";
 			 echo "<td align=center>".$fila['movil']."</td>";
+			 echo "<td align=center>$".$fila['monto']."</td>";
 			 echo "<td class='text-nowrap'>";
 			 echo '<form <action="main.php" method="POST">
 				

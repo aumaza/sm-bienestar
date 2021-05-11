@@ -1,12 +1,16 @@
-#!/usr/local/bin/bash
-chmod -R 777 /products_pictures
+#!/bin/bash
+
+chmod -R 777 administracion/main/
 echo "Permisos Modificados con exito"
 
-chmod -R 777 /registro/gen_pass/
+chmod -R 777 products_pictures/
 echo "Permisos Modificados con exito"
 
-chmod -R 777 /sqls
+chmod -R 777 registro/gen_pass/
 echo "Permisos Modificados con exito"
 
-chmod -R 777 /user_avatar
+chmod -R 777 sqls/
+echo "Permisos Modificados con exito"
+
+chmod -R 777 user_avatar/
 echo "Permisos Modificados con exito"
