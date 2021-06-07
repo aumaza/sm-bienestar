@@ -187,36 +187,36 @@
             <ul class="list-group">
             <form action="main.php" method="POST">
                 
-                <li class="list-group-item">
-		  <a href="#" data-toggle="tooltip" data-placement="right" title="Ver Turnos Disponibles">
-		    <button type="submit" class="btn btn-default btn-sm" name="A">
-		      <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Disponibles</button></a></li>
+          <li class="list-group-item">
+		  <button type="submit" class="btn btn-default btn-xs btn-block" name="A" data-toggle="tooltip" data-placement="right" title="Ver Turnos Disponibles">
+          <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-timeline.png" /> Turnos Disponibles</button>
+         </li>
                 
-                <li class="list-group-item">
-		  <a href="#" data-toggle="tooltip" data-placement="right" title="Ver Mis Turnos">
-		    <button type="submit" class="btn btn-default btn-sm" name="B">
-		      <img class="img-reponsive img-rounded" src="../../icons/actions/documentation.png" /> Turnos Reservados</button></a></li>
+         <li class="list-group-item">
+		  <button type="submit" class="btn btn-default btn-xs btn-block" name="B" data-toggle="tooltip" data-placement="right" title="Ver Mis Turnos">
+		      <img class="img-reponsive img-rounded" src="../../icons/actions/documentation.png" /> Turnos Reservados</button>
+         </li>
                 
-                <li class="list-group-item">
-		  <a href="#" data-toggle="tooltip" data-placement="right" title="Editar Datos Personales">
-		    <button type="submit" class="btn btn-default btn-sm" name="C">
-		      <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-properties.png" /> Datos Personales</button></a></li>
+        <li class="list-group-item">
+		<button type="submit" class="btn btn-default btn-xs btn-block" name="C" data-toggle="tooltip" data-placement="right" title="Editar Datos Personales">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-properties.png" /> Datos Personales</button>
+		</li>
                 
-                <li class="list-group-item">
-		  <a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
-		    <button type="submit" class="btn btn-default btn-sm" name="D">
-		      <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
+        <li class="list-group-item">
+		<button type="submit" class="btn btn-default btn-xs btn-block" name="D" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
+        <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button>
+        </li>
                              
-                <li class="list-group-item">
-		  <a href="#" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo">
-		    <button type="submit" class="btn btn-default btn-sm" name="F">
-		      <img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button></a></li>
+        <li class="list-group-item">
+		<button type="submit" class="btn btn-default btn-xs btn-block" name="F" data-toggle="tooltip" data-placement="right" title="Susbribirse a otro Módulo">
+		<img class="img-reponsive img-rounded" src="../../icons/apps/kcmdf.png" /> Agregar Módulo</button>
+		</li>
             
             <form>
             </ul>
             <div class="panel-footer panel-custom">
             <a href="../../logout.php" data-toggle="tooltip" data-placement="right" title="Salir del Sistema">
-	      <button type="button" class="btn btn-default btn-sm">
+	      <button type="button" class="btn btn-default btn-xs btn-block">
 		<img class="img-reponsive img-rounded" src="../../icons/actions/go-previous-view.png" /> Salir</button></a>
             </div>
             </div>

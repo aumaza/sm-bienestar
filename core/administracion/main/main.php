@@ -6,6 +6,7 @@
       include "../lib/lib_turnos_gabinete.php";
       include "../lib/lib_localidades.php";
       include "../lib/lib_mensajes_modulos.php";
+      include "../lib_equipos/lib_equipos.php";
       
 	session_start();
 	$usuario = $_SESSION['usuario'];
@@ -208,19 +209,19 @@
       <form action="main.php" method="POST">
       
       <li class="list-group-item" align="left">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Productos">
-	  <button type="submit" class="btn btn-default btn-sm" name="AA">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button></a></li>
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="AA" data-toggle="tooltip" data-placement="right" title="Listado de Productos">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/feed-subscribe.png" /> Productos</button>
+     </li>
       
       <li class="list-group-item" align="left">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Productos Pedidos">
-	  <button type="submit" class="btn btn-default btn-sm" name="AB">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button></a></li>
+        <button type="submit" class="btn btn-default btn-xs btn-block" name="AB" data-toggle="tooltip" data-placement="right" title="Productos Pedidos">
+	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-pim-notes.png" /> Pedidos</button>
+     </li>
 	    
-        <li class="list-group-item" align="left">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
-	  <button type="submit" class="btn btn-default btn-sm" name="AC">
-	    <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
+    <li class="list-group-item" align="left">
+	<button type="submit" class="btn btn-default btn-xs btn-block" name="AC" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+	<img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button>
+	</li>
       
       </form>
       </ul>
@@ -239,14 +240,14 @@
       <form action="main.php" method="POST">
       
       <li class="list-group-item" align="center">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Otorgar Turnos">
-	  <button type="submit" class="btn btn-default btn-sm" name="BB">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos</button></a></li>
+        <button type="submit" class="btn btn-default btn-xs btn-block" name="BB" data-toggle="tooltip" data-placement="right" title="Otorgar Turnos">
+      <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos</button>
+      </li>
       
       <li class="list-group-item" align="center">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
-	  <button type="submit" class="btn btn-default btn-sm" name="BC">
-	    <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="BC" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+	  <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button>
+	  </li>
       
       </form>
       </ul>
@@ -265,14 +266,14 @@
 	  <form action="main.php" method="POST">
 	    
 	    <li class="list-group-item" align="center">
-	      <a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Turnos Equipos Solicitados">
-		<button type="submit" class="btn btn-default btn-sm" name="CC">
-		  <img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos Equipos</button></a></li>
+        <button type="submit" class="btn btn-default btn-xs btn-block" name="CC" data-toggle="tooltip" data-placement="right" title="Listado de Turnos Equipos Solicitados">
+		<img class="img-reponsive img-rounded" src="../../icons/actions/view-calendar-day.png" /> Turnos Equipos</button>
+		</li>
 	    
 	    <li class="list-group-item" align="center">
-	      <a href="#" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
-		<button type="submit" class="btn btn-default btn-sm" name="CD">
-		  <img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button></a></li>
+	    <button type="submit" class="btn btn-default btn-xs btn-block" name="CD" data-toggle="tooltip" data-placement="right" title="Análisis de Cobros">
+		<img class="img-reponsive img-rounded" src="../../icons/places/folder-activities.png" /> Filtros</button>
+		</li>
 	    
 	  </form>
 	</ul>
@@ -319,29 +320,34 @@
       <form action="main.php" method="POST">
       
       <li class="list-group-item">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
-	  <button type="submit" class="btn btn-default btn-sm" name="FA">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button></a></li>
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="FA" data-toggle="tooltip" data-placement="right" title="Cambiar mi Contraseña">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/view-refresh.png" /> Cambiar Password</button>
+	  </li>
 	    
-	    <li class="list-group-item">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Alta de Nuevo Usuario / Cliente">
-	  <button type="submit" class="btn btn-default btn-sm" name="new_user">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-new.png" /> Alta Clientes</button></a></li>
+	  <li class="list-group-item">
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="new_user" data-toggle="tooltip" data-placement="right" title="Alta de Nuevo Usuario / Cliente">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/user-group-new.png" /> Alta Clientes</button>
+	  </li>
+	  
+	  <li class="list-group-item">
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="alta_equipos" data-toggle="tooltip" data-placement="right" title="Alta de Nuevo Equipo">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/list-add.png" /> Alta Equipos</button>
+	  </li>
       
       <li class="list-group-item">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Listado de Localidades">
-	  <button type="submit" class="btn btn-default btn-sm" name="FC">
-	    <img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button></a></li>
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="FC" data-toggle="tooltip" data-placement="right" title="Listado de Localidades">
+	  <img class="img-reponsive img-rounded" src="../../icons/apps/lokalize.png" /> Localidades</button>
+	  </li>
 	    
       <li class="list-group-item">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Back up Base de Datos">
-	  <button type="submit" class="btn btn-default btn-sm" name="FD">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button></a></li>
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="FD" data-toggle="tooltip" data-placement="right" title="Back up Base de Datos">
+      <img class="img-reponsive img-rounded" src="../../icons/actions/svn-update.png" /> BackUp Base</button>
+      </li>
 	    
-	    <li class="list-group-item">
-	<a href="#" data-toggle="tooltip" data-placement="right" title="Mensajes Informativos para Espacio de Usuario">
-	  <button type="submit" class="btn btn-default btn-sm" name="mensajes_informativos">
-	    <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Mensajes Informativos</button></a></li>
+      <li class="list-group-item">
+	  <button type="submit" class="btn btn-default btn-xs btn-block" name="mensajes_informativos" data-toggle="tooltip" data-placement="right" title="Mensajes Informativos para Espacio de Usuario">
+	  <img class="img-reponsive img-rounded" src="../../icons/actions/help-about.png" /> Mensajes Informativos</button>
+	  </li>
       
       </form>
       </ul>
@@ -901,7 +907,49 @@
         
         
         // ========================================================================= //
-        // FIN SECCION MENSAJES INFORMATIVOS // 
+        // FIN SECCION MENSAJES INFORMATIVOS //
+        
+        
+        // ========================================================================= //
+        // SECCION ADMINISTRACION DE EQUIPOS // 
+        if(isset($_POST['alta_equipos'])){
+            equipos($conn);
+        }
+        if(isset($_POST['add_equipo'])){
+            formAltaEquipos();
+        }
+        if(isset($_POST['agregarEquipo'])){
+            $cod_equipo = mysqli_real_escape_string($conn,$_POST['cod_equipo']);
+            $tipo_equipo = mysqli_real_escape_string($conn,$_POST['tipo_equipo']);
+            $marca_equipo = mysqli_real_escape_string($conn,$_POST['marca_equipo']);
+            $modelo_equipo = mysqli_real_escape_string($conn,$_POST['modelo_equipo']);
+            $nro_serie = mysqli_real_escape_string($conn,$_POST['nro_serie']);
+            addNuevoEquipo($cod_equipo,$tipo_equipo,$marca_equipo,$modelo_equipo,$nro_serie,$conn);
+        }
+        if(isset($_POST['del_equipo'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            eliminarEquipo($id,$conn);
+        }
+        if(isset($_POST['delete_equipo'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            deleteEquipo($id,$conn);
+        }
+        if(isset($_POST['edit_equipo'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            formEditarEquipos($id,$conn);
+        }
+        if(isset($_POST['updateEquipo'])){
+            $id = mysqli_real_escape_string($conn,$_POST['id']);
+            $cod_equipo = mysqli_real_escape_string($conn,$_POST['cod_equipo']);
+            $tipo_equipo = mysqli_real_escape_string($conn,$_POST['tipo_equipo']);
+            $marca_equipo = mysqli_real_escape_string($conn,$_POST['marca_equipo']);
+            $modelo_equipo = mysqli_real_escape_string($conn,$_POST['modelo_equipo']);
+            $nro_serie = mysqli_real_escape_string($conn,$_POST['nro_serie']);
+            updateEquipo($id,$cod_equipo,$tipo_equipo,$marca_equipo,$modelo_equipo,$nro_serie,$conn);
+        }
+        
+        // ========================================================================= //
+        // FIN SECCION ADMINISTRACION DE EQUIPOS // 
       
       
       
